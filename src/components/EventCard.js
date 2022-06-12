@@ -26,7 +26,7 @@ const ImageStyle = {
   marginTop: '-40px',
   marginBottom: '10px',
   position: 'relative',
-  height: '100px',
+  height: '200px',
   width: '100%',
   filter: 'drop-shadow(0 2mm 2mm rgb(160, 0, 210))'
 }
