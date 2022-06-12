@@ -38,7 +38,8 @@ const TypeStyle = {
 const TitleStyle = {
   fontSize: '35px',
   fontWeight: 'bold',
-  margin: '20px'
+  margin: '20px',
+  width: '300px',
 }
 
 const DateStyle = {
@@ -55,7 +56,7 @@ const DateStyle = {
 export const EventCard = ({title, type, location, datetime, imgUrl}) => {
 
   return (
-    <VStack paddingTop='30px'>
+    <VStack paddingTop='30px' width='400px'>
       <Box
         textAlign="left"
         borderWidth={0.1}
@@ -67,8 +68,8 @@ export const EventCard = ({title, type, location, datetime, imgUrl}) => {
           sx={ImageStyle}/>
         <Flex>
           <VStack align="left" spacing={0}>
-            <Text sx={TypeStyle}>{type}</Text>
-            <Text sx={TitleStyle}>{title}</Text>
+            <Text noOfLines={1} sx={TypeStyle}>{type}</Text>
+            <Text noOfLines={1} sx={TitleStyle}>{title}</Text>
           </VStack>
           <Spacer/>
           <Box textAlign="center" sx={DateStyle}>
