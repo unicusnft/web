@@ -15,7 +15,7 @@ export const HomeScreen = () => {
       <Stack backgroundColor={colors.backgroundComponent}>
         <Filters />
       </Stack>
-      <SimpleGrid minChildWidth='400px' spacing='20px' padding='10px'>
+      <SimpleGrid minChildWidth='700px' spacing='20px' padding='10px'>
         <NFTCard
           title="Duki"
           type="Music"
