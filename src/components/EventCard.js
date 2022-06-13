@@ -50,7 +50,8 @@ const DateStyle = {
   paddingBottom: '5px',
   fontWeight: 'bold',
   borderRadius: '12px',
-  height: '0%'
+  height: '64px',
+  width: '64px',
 }
 
 export const EventCard = ({title, type, location, datetime, imgUrl}) => {
@@ -59,7 +60,6 @@ export const EventCard = ({title, type, location, datetime, imgUrl}) => {
     <VStack paddingTop='30px' width='400px'>
       <Box
         textAlign="left"
-        borderWidth={0.1}
         fontFamily="Montserrat"
         sx={BoxStyle}
       >

@@ -7,14 +7,22 @@ import {
 import { colors } from "../../core/theme";
 import { Filters } from "./Filters";
 import { EventCard } from "../../components/EventCard.js";
+import { NFTCard } from "../../components/NFTCard.js";
 
 export const HomeScreen = () => {
   return (
-    <Box>
+    <Box backgroundColor="#121212">
       <Stack backgroundColor={colors.backgroundComponent}>
         <Filters />
       </Stack>
-      <SimpleGrid minChildWidth='400px' spacing='20px'>
+      <SimpleGrid minChildWidth='400px' spacing='20px' padding='10px'>
+        <NFTCard
+          title="Duki"
+          type="Music"
+          location="Estadio Velez Sarsfield"
+          datetime={new Date(2022, 10, 12, 21, 0)}
+          imgUrl="https://cloudfront-us-east-1.images.arcpublishing.com/infobae/ST5Q635BZZHVTFJ3WN3E7NFF5A.jpg"
+          nftNumber={547532}/>
         <EventCard
           title="Duki"
           type="Music"
