@@ -43,16 +43,6 @@ const TitleStyle = {
     width: '300px',
 }
 
-const DateStyle = {
-    backgroundColor: colors.mainColor,
-    paddingLeft: '10px',
-    paddingRight: '10px',
-    paddingTop: '10px',
-    paddingBottom: '5px',
-    fontWeight: 'bold',
-    borderRadius: '12px',
-    height: '0%'
-}
 
 export const EventCard = ({title, type, location, datetime, imgUrl}) => {
 

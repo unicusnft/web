@@ -4,7 +4,6 @@ import {
     Box,
     SimpleGrid
 } from "@chakra-ui/react";
-import {colors} from "../../core/theme";
 import {Filters} from "./Filters";
 import {EventCard} from "../../components/EventCard.js";
 import {Toolbar} from "../../components/Toolbar";
