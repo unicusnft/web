@@ -1,5 +1,10 @@
 import React, { useState } from "react";
-import { Stack, Box, SimpleGrid } from "@chakra-ui/react";
+import {
+  Stack,
+  Wrap,
+  WrapItem,
+  Box
+} from "@chakra-ui/react";
 import { Filters } from "../../components/Filters.js";
 import { EventCard } from "../../components/EventCard.js";
 import { Toolbar } from "../../components/Toolbar";
@@ -15,7 +20,9 @@ export const HomeScreen = () => {
         <Stack backgroundColor={colors.backgroundComponent} alignItems="center">
           <Filters event={event} setEvent={setEvent} title="Events" description="Search an event"/>
         </Stack>
-        <SimpleGrid minChildWidth="700px" spacing="10px">
+
+        <br/>
+        <Wrap spacing="25px" justify="center">
           {events
             .filter(
               (x) =>
@@ -26,17 +33,19 @@ export const HomeScreen = () => {
                     .includes(event.toLocaleLowerCase()))
             )
             .map((e) => (
-              <EventCard
-                key={e.title}
-                title={e.title}
-                type={e.type}
-                location={e.location}
-                datetime={e.datetime}
-                imgUrl={e.eventImageUrl}
-                nftNumber={e.nftNumber}
-              />
+              <WrapItem>
+                <EventCard
+                  key={e.title}
+                  title={e.title}
+                  type={e.type}
+                  location={e.location}
+                  datetime={e.datetime}
+                  imgUrl={e.eventImageUrl}
+                  nftNumber={e.nftNumber}
+                />
+              </WrapItem>
             ))}
-        </SimpleGrid>
+        </Wrap>
       </Box>
     </>
   );
