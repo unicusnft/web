@@ -43,14 +43,12 @@ const TitleStyle = {
     width: '300px',
 }
 
-
 export const EventCard = ({title, type, location, datetime, imgUrl}) => {
 
     return (
         <VStack paddingTop='30px' width='400px'>
             <Box
                 textAlign="left"
-                borderWidth={0.1}
                 fontFamily="Montserrat"
                 sx={BoxStyle}
             >
@@ -78,4 +76,5 @@ export const EventCard = ({title, type, location, datetime, imgUrl}) => {
             </Box>
         </VStack>
     );
+// >>>>>>> main
 };
