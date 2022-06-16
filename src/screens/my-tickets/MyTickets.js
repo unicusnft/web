@@ -10,9 +10,9 @@ export const MyTickets = () => {
     const [event, setEvent] = useState("");
     return (
         <>
-            <Toolbar title="My Tickets"/>
+            <Toolbar title="Mis tickets"/>
             <Stack alignItems="center" px={4} mt={6}>
-                <Filters event={event} setEvent={setEvent} description="Search owned tickets"/>
+                <Filters event={event} setEvent={setEvent} description="Buscar en mis tickets"/>
             </Stack>
             <br/>
             <Container maxW='8xl' padding='0px'>
