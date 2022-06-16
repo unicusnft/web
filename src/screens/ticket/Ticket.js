@@ -62,12 +62,20 @@ export const Ticket = () => {
                     </div>
                     <Box
                         w='350px'
+                        h='450px'
                         rounded={40}
                         color='white'
                         boxShadow='dark-xs'
                         objectFit='cover'
                     >
-                        <Image src={ticket?.buyImage1} alt="Ticket photo" w='350px' rounded={40}/>
+                        <Image
+                            src={ticket?.buyImage1}
+                            alt="Ticket photo"
+                            w='350px'
+                            h='400px'
+                            objectFit='cover'
+                            rounded={40}
+                        />
                         <Center mb={5}>
                             <HStack spacing={0}>
                                 <SocialMediaButton img={facebook} alt='facebook'/>
