@@ -18,7 +18,7 @@ const EventInfoStyle = {
   color: colors.white,
   fontSize: '10px',
   borderRadius: '0px 20px 0px 0px',
-  height: '142px',
+  height: '162px',
   width: '235px',
   margin: '0px',
 }
@@ -31,7 +31,7 @@ const NFTInfoStyle = {
   color: colors.white,
   fontSize: '10px',
   borderRadius: '0px 0px 20px 0px',
-  height: '86px',
+  height: '66px',
   width: '235px',
   margin: '0px',
 }
@@ -102,15 +102,13 @@ export const NFTCard = ({title, type, location, datetime, imgUrl, nftNumber}) =>
           sx={EventInfoStyle}
         >
           <Text noOfLines={1} sx={NFTNumberStyle}>NFT#{nftNumber}</Text>
-          <HStack spacing={5}>
-            <HStack>
-              <HiLocationMarker />
-              <Text noOfLines={1}>{location}</Text>
-            </HStack>
-            <HStack>
-              <BsClockFill />
-              <Text>21:00</Text>
-            </HStack>
+          <HStack>
+            <HiLocationMarker />
+            <Text fontSize="12px" noOfLines={1}>{location}</Text>
+          </HStack>
+          <HStack>
+            <BsClockFill />
+            <Text fontSize="12px">{datetime.getHours()}:{String(datetime.getMinutes()).padStart(2, '0')}</Text>
           </HStack>
           <br/>
           <Text sx={TicketForStyle}>Ticket for</Text>
