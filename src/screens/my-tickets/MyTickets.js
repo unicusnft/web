@@ -26,11 +26,11 @@ export const MyTickets = () => {
           { events
               .filter(
                 (x) =>
-                  event === "" ||
+                  x.owned && (event === "" ||
                   (event !== "" &&
                     x.title
                       .toLocaleLowerCase()
-                      .includes(event.toLocaleLowerCase()))
+                      .includes(event.toLocaleLowerCase())))
               )
               .map(e => (
                 <WrapItem>
