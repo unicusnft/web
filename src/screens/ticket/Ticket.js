@@ -41,7 +41,7 @@ export const Ticket = () => {
         }
 
         fetchData()
-    }, [])
+    }, [params?.ticketId])
 
     return (
         <>

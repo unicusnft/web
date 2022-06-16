@@ -153,7 +153,7 @@ export const Buy = () => {
         }
 
         fetchData()
-    }, [])
+    }, [params?.eventId])
 
     return (
         <>
