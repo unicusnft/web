@@ -32,7 +32,7 @@ export const events = [
     ],
     history: [
       {
-        type: "MINADO",
+        type: "CREADO",
         from: "-",
         to: "Renzo Jacinto",
         date: new Date(2022, 3, 9, 14, 9, 0)
@@ -72,7 +72,7 @@ export const events = [
     ],
     history: [
       {
-        type: "MINADO",
+        type: "CREADO",
         from: "-",
         to: "Juan Pablo Rombola",
         date: new Date(2022, 3, 9, 14, 9, 0)
@@ -128,7 +128,7 @@ export const events = [
         date: new Date(2022, 3, 9, 14, 15, 0)
       },
       {
-        type: "MINADO",
+        type: "CREADO",
         from: "-",
         to: "Camila Dvorkin",
         date: new Date(2022, 3, 9, 14, 9, 0)
@@ -184,7 +184,7 @@ export const events = [
         date: new Date(2022, 3, 9, 14, 15, 0)
       },
       {
-        type: "MINADO",
+        type: "CREADO",
         from: "-",
         to: "Camila Dvorkin",
         date: new Date(2022, 3, 9, 14, 9, 0)
@@ -228,7 +228,7 @@ export const events = [
     ],
     history: [
       {
-        type: "MINADO",
+        type: "CREADO",
         from: "-",
         to: "Camila Dvorkin",
         date: new Date(2022, 3, 9, 14, 9, 0)
@@ -268,7 +268,7 @@ export const events = [
     ],
     history: [
       {
-        type: "MINADO",
+        type: "CREADO",
         from: "-",
         to: "Fransisco Nasif",
         date: new Date(2022, 3, 9, 14, 9, 0)
@@ -324,7 +324,7 @@ export const events = [
         date: new Date(2022, 3, 9, 14, 15, 0)
       },
       {
-        type: "MINADO",
+        type: "CREADO",
         from: "-",
         to: "Camila Dvorkin",
         date: new Date(2022, 3, 9, 14, 9, 0)

@@ -132,7 +132,7 @@ export const Ticket = () => {
                                     key={h?.type + h?.date}
                                 >
                                     <HStack spacing={0} mx={8}>
-                                        {h.type === 'MINADO' && <AiOutlinePlus color={colors.mainColor}/>}
+                                        {h.type === 'CREADO' && <AiOutlinePlus color={colors.mainColor}/>}
                                         {h.type === 'REVENTA' && <MdSell color={colors.mainColor}/>}
                                         {h.type === 'TRANSFERENCIA' && <BiTransfer color={colors.mainColor}/>}
                                         <Text p={1} fontSize='xs' color={colors.mainColor}>
