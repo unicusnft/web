@@ -46,15 +46,7 @@ const TitleStyle = {
 export const EventCard = ({ title, type, location, datetime, imgUrl }) => {
   return (
     <VStack paddingTop="30px" width="400px">
-      <Box
-        textAlign="left"
-        fontFamily="Montserrat"
-        sx={BoxStyle}
-        onClick={(event) => {
-          event.preventDefault();
-          window.location.href = "/buy";
-        }}
-      >
+      <Box textAlign="left" fontFamily="Montserrat" sx={BoxStyle}>
         <Image src={imgUrl} sx={ImageStyle} />
         <Flex>
           <VStack align="left" spacing={0}>
