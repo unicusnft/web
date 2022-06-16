@@ -1,6 +1,5 @@
 import {useParams} from "react-router-dom";
-import {Box, Button, Center, Divider, HStack, Image, Stack, Text, VStack} from "@chakra-ui/react";
-import Duki1 from "../../img/Duki1.png";
+import {Box, Button, Center, Divider, HStack, Image, Text, VStack} from "@chakra-ui/react";
 import facebook from "../../img/facebook.png";
 import instagram from "../../img/instagram.png";
 import tikTok from "../../img/tik_tok.png";
@@ -11,9 +10,8 @@ import {Toolbar} from "../../components/Toolbar";
 import {colors} from "../../core/theme";
 import {DateCard} from "../../components/DateCard";
 import {GoLocation} from "react-icons/go";
-import {AiOutlineClockCircle} from "react-icons/ai";
+import {AiOutlineClockCircle, AiOutlinePlus} from "react-icons/ai";
 import {TbArrowsDownUp} from "react-icons/tb";
-import {AiOutlinePlus} from "react-icons/ai";
 import {BiTransfer} from "react-icons/bi";
 import {MdSell} from "react-icons/md";
 import {events} from "../../data/events";
