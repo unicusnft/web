@@ -19,6 +19,7 @@ import {AiOutlineClockCircle} from "react-icons/ai";
 import {GoLocation} from "react-icons/go";
 import './Buy.css'
 import {DateCard} from "../../components/DateCard";
+import {colors} from "../../core/theme";
 
 const TicketsNFT = () => {
     return (
@@ -91,7 +92,7 @@ const SelectTicketCard = () => {
 
     return (
         <Box
-            bg="#1F1F1F"
+            bg={colors.backgroundComponent}
             w={['300px', '400px', '500px']}
             rounded={20}
             p={6}

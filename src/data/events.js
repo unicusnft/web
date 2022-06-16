@@ -34,10 +34,10 @@ export const events = [
     ],
     history: [
       {
-        type: "MINTED",
-        from: "-",
-        to: "Camila Dvorkin",
-        date: new Date(2022, 3, 9, 14, 9, 0)
+        type: "TRANSFER",
+        from: "Juan Pablo R.",
+        to: "Javier Di Santo",
+        date: new Date(2022, 3, 9, 14, 20, 0)
       },
       {
         type: "RESELL",
@@ -47,10 +47,10 @@ export const events = [
       },
       {
         type: "MINTED",
-        from: "Juan Pablo R.",
-        to: "Javier Di Santo",
-        date: new Date(2022, 3, 9, 14, 20, 0)
-      },
+        from: "-",
+        to: "Camila Dvorkin",
+        date: new Date(2022, 3, 9, 14, 9, 0)
+      }
     ]
   },
   {
