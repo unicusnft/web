@@ -94,23 +94,23 @@ export const events = [
     contractId: "0x32fc2d09343ab12c",
     ticketTypes: [
       {
-        label: "Tier S - Front Line + Meet & Greet",
+        label: "Preferencial - Campo VIP + Meet & Greet",
         price: "25000"
       },
       {
-        label: "Tier A - Stalls from 1-50 Lines",
+        label: "Campo VIP",
         price: "9000"
       },
       {
-        label: "Tier B - Stalls from 50-100 Lines",
+        label: "Platea Baja",
         price: "7000"
       },
       {
-        label: "Tier C - General with Sits",
+        label: "Platea Alta",
         price: "5000"
       },
       {
-        label: "Tier D - General Stand",
+        label: "Campo",
         price: "3000"
       },
     ],
@@ -150,23 +150,23 @@ export const events = [
     contractId: "0x32fc2d09343ab12c",
     ticketTypes: [
       {
-        label: "Tier S - Front Line + Meet & Greet",
+        label: "Preferencial - Campo VIP + Meet & Greet",
         price: "25000"
       },
       {
-        label: "Tier A - Stalls from 1-50 Lines",
+        label: "Campo VIP",
         price: "9000"
       },
       {
-        label: "Tier B - Stalls from 50-100 Lines",
+        label: "Platea Baja",
         price: "7000"
       },
       {
-        label: "Tier C - General with Sits",
+        label: "Platea Alta",
         price: "5000"
       },
       {
-        label: "Tier D - General Stand",
+        label: "Campo",
         price: "3000"
       },
     ],
