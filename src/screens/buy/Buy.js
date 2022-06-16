@@ -161,7 +161,7 @@ export const Buy = () => {
             {loading ? (
                 <Loading/>
             ) : (
-                <div style={{marginTop: '20px'}}>
+                <div style={{marginTop: '20px', overflowX: 'hidden'}}>
                     <Center marginRight={['-72px', '-130px', '-182px']}>
                         <TicketsNFT img1={event?.buyImage1} img2={event?.buyImage2}/>
                     </Center>
