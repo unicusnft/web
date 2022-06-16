@@ -52,7 +52,7 @@ export const Ticket = () => {
                 <VStack py={5} spacing={5}>
                     <div>
                         <Text fontSize='xl' sx={{fontWeight: 600}}>
-                            Ticket for
+                            Ticket para
                         </Text>
                         <Center>
                             <Text fontSize='4xl' sx={{fontWeight: 700}} color={colors.mainColor}>
@@ -107,11 +107,11 @@ export const Ticket = () => {
                                 </VStack>
                             </HStack>
                             <Text px={4} fontSize='sm' textAlign='center'>
-                                You can transfer this item <br/>
-                                as many times as you want!
+                                Podés transferir este ticket <br/>
+                                las veces que quieras!
                             </Text>
                             <Button colorScheme='main' size='xl' py={3} px={10}>
-                                Resell
+                                Revender
                             </Button>
                         </VStack>
                         <Divider inset my={6}/>
@@ -119,7 +119,7 @@ export const Ticket = () => {
                             <Box bg='black' w='300px' roundedTop={20}>
                                 <Center>
                                     <TbArrowsDownUp color='white'/>
-                                    <Text p={2} fontSize='sm'>Item Activity</Text>
+                                    <Text p={2} fontSize='sm'>Historial del ticket</Text>
                                 </Center>
                             </Box>
                             {ticket?.history.map((h, index) => (
@@ -132,16 +132,16 @@ export const Ticket = () => {
                                     key={h?.type + h?.date}
                                 >
                                     <HStack spacing={0} mx={8}>
-                                        {h.type === 'MINTED' && <AiOutlinePlus color={colors.mainColor}/>}
-                                        {h.type === 'RESELL' && <MdSell color={colors.mainColor}/>}
-                                        {h.type === 'TRANSFER' && <BiTransfer color={colors.mainColor}/>}
+                                        {h.type === 'MINADO' && <AiOutlinePlus color={colors.mainColor}/>}
+                                        {h.type === 'REVENTA' && <MdSell color={colors.mainColor}/>}
+                                        {h.type === 'TRANSFERENCIA' && <BiTransfer color={colors.mainColor}/>}
                                         <Text p={1} fontSize='xs' color={colors.mainColor}>
                                             {h.type}
                                         </Text>
                                     </HStack>
                                     <HStack spacing={0} mx={8}>
                                         <Text p={1} fontSize='xs'>
-                                            FROM:
+                                            DESDE:
                                         </Text>
                                         <Text p={1} fontSize='xs'>
                                             {h.from}
@@ -149,7 +149,7 @@ export const Ticket = () => {
                                     </HStack>
                                     <HStack spacing={0} mx={8}>
                                         <Text p={1} fontSize='xs'>
-                                            TO:
+                                            HACIA:
                                         </Text>
                                         <Text p={1} fontSize='xs'>
                                             {h.to}
@@ -157,7 +157,7 @@ export const Ticket = () => {
                                     </HStack>
                                     <HStack spacing={0} mx={8}>
                                         <Text p={1} fontSize='xs'>
-                                            Date:
+                                            FECHA:
                                         </Text>
                                         <Text p={1} fontSize='xs'>
                                             {h.date.toLocaleString()}

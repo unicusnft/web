@@ -17,7 +17,7 @@ export const HomeScreen = () => {
       <Toolbar/>
       <Box backgroundColor="#121212">
         <Stack alignItems="center" px={4} mt={6}>
-          <Filters event={event} setEvent={setEvent} description="Search an event"/>
+          <Filters event={event} setEvent={setEvent} description="Buscar un evento"/>
         </Stack>
 
         <br/>

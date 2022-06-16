@@ -107,7 +107,7 @@ export const NFTCard = ({title, type, location, datetime, imgUrl, nftNumber}) =>
                                 fontSize="12px">{datetime.getHours()}:{String(datetime.getMinutes()).padStart(2, '0')}</Text>
                         </HStack>
                         <br/>
-                        <Text sx={TicketForStyle}>Ticket for</Text>
+                        <Text sx={TicketForStyle}>Ticket para</Text>
                         <Text noOfLines={1} sx={TitleStyle}>{title}</Text>
                     </Box>
                     <Box
@@ -125,7 +125,7 @@ export const NFTCard = ({title, type, location, datetime, imgUrl, nftNumber}) =>
                                 <Text noOfLines={1}>{nftNumber}</Text>
                             </VStack>
                             <VStack width='60px' align='left'>
-                                <Text noOfLines={1} as='b'>CONTRACT</Text>
+                                <Text noOfLines={1} as='b'>CONTRATO</Text>
                                 <Text noOfLines={1}>0xabbcef01f232CC40</Text>
                             </VStack>
                         </HStack>

@@ -20,6 +20,7 @@ const BoxStyle = {
     color: colors.white,
     fontSize: "16px",
     borderRadius: "20px",
+    width: "356px"
 };
 
 const ImageStyle = {
@@ -29,7 +30,7 @@ const ImageStyle = {
     marginBottom: "10px",
     position: "relative",
     height: "200px",
-    width: "100%",
+    width: "316px",
     filter: "drop-shadow(0 2mm 2mm #515151)",
 };
 
@@ -42,13 +43,13 @@ const TitleStyle = {
     fontSize: "30px",
     fontWeight: "bold",
     margin: "20px",
-    width: "300px",
+    width: "250px",
 };
 
 export const EventCard = ({id, title, type, location, datetime, imgUrl}) => {
     return (
         <Link to={`/buy/${id}`}>
-            <VStack paddingTop="30px" width="400px" style={{cursor: 'pointer'}}>
+            <VStack paddingTop="30px" width="350px" style={{cursor: 'pointer'}}>
                 <Box textAlign="left" fontFamily="Montserrat" sx={BoxStyle}>
                     <Image src={imgUrl} sx={ImageStyle}/>
                     <Flex pt={2}>
@@ -70,7 +71,7 @@ export const EventCard = ({id, title, type, location, datetime, imgUrl}) => {
                         </HStack>
                         <HStack>
                             <BsClockFill/>
-                            <Text fontSize='sm'>21:00</Text>
+                            <Text fontSize='sm'>{datetime.getHours()}:{String(datetime.getMinutes()).padStart(2, '0')}</Text>
                         </HStack>
                     </HStack>
                 </Box>

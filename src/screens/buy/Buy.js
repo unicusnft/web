@@ -109,7 +109,7 @@ const SelectTicketCard = ({event}) => {
             </HStack>
             <Divider my={6}/>
             <div>
-                <div>Choose a Tier for your ticket</div>
+                <div>Seleccioná el tipo de ticket</div>
                 <RadioGroup onChange={setRadio} value={radio} defaultValue={event?.ticketTypes?.[0].label} my={2}>
                     <Stack spacing={0.5}>
                         {event?.ticketTypes?.map(({label, price}) => (
@@ -127,13 +127,13 @@ const SelectTicketCard = ({event}) => {
                 </RadioGroup>
             </div>
             <HStack mt={6}>
-                <div>Amount:</div>
+                <div>Cantidad:</div>
                 <Button {...dec} size='xs' variant='ghost' colorScheme='white'>{'<'}</Button>
                 <div style={{minWidth: 20, textAlign: 'center'}}>{input?.value}</div>
                 <Button {...inc} size='xs' variant='ghost' colorScheme='white'>{'>'}</Button>
             </HStack>
             <Flex mt={8} direction={{base: 'column-reverse'}}>
-                <Button colorScheme='main' size='xl' py={3} px={10}>BUY NOW</Button>
+                <Button colorScheme='main' size='xl' py={3} px={10}>COMPRAR</Button>
             </Flex>
         </Box>
     )

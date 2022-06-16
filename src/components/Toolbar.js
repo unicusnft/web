@@ -25,7 +25,7 @@ export const Toolbar = ({title}) => {
                 size="sm"
                 px={4}
               >
-                <Link to="/my-tickets">My Tickets</Link>
+                <Link to="/my-tickets">Mis Tickets</Link>
               </Button>
             </Stack>
           </Flex>
