@@ -20,6 +20,7 @@ const BoxStyle = {
     color: colors.white,
     fontSize: "16px",
     borderRadius: "20px",
+    width: "356px"
 };
 
 const ImageStyle = {
@@ -29,7 +30,7 @@ const ImageStyle = {
     marginBottom: "10px",
     position: "relative",
     height: "200px",
-    width: "100%",
+    width: "316px",
     filter: "drop-shadow(0 2mm 2mm #515151)",
 };
 
