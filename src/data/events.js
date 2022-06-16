@@ -53,4 +53,42 @@ export const events = [
       },
     ]
   },
+  {
+    title: "Boca vs River",
+    type: "Sports",
+    location: "La Bombonera",
+    datetime: new Date(2022, 5, 23, 20, 0),
+    eventImageUrl: "https://images.ole.com.ar/2021/07/19/9chV9ETfI_1256x620__2.jpg#1626727436151",
+    ticketImageUrl: "https://www.telediariodigital.net/wp-content/uploads/2018/11/Boca-River.jpg",
+    buyImage1: "https://www.ole.com.ar/futbol-primera/boca-river-final-publico_0_TlqoDg8qVL.html",
+    buyImage2: "https://www.ole.com.ar/futbol-primera/boca-ranking-titulos-copa-argentina_0_XSrXiXNic.html",
+    nftNumber: 547573,
+    contractId: "0x32fc2d09343ad54f",
+    ticketTypes: [
+      {
+        label: "Tier S - Front Line",
+        price: "25000"
+      },
+    ],
+    history: [
+      {
+        type: "MINTED",
+        from: "-",
+        to: "Camila Dvorkin",
+        date: new Date(2022, 3, 9, 14, 9, 0)
+      },
+      {
+        type: "RESELL",
+        from: "Camila Dvorkin",
+        to: "Juan Pablo R.",
+        date: new Date(2022, 3, 9, 14, 15, 0)
+      },
+      {
+        type: "MINTED",
+        from: "Juan Pablo R.",
+        to: "Javier Di Santo",
+        date: new Date(2022, 3, 9, 14, 20, 0)
+      },
+    ]
+  },
 ]
