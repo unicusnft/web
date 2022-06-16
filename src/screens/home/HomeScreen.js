@@ -1,37 +1,52 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Stack,
-  Box,
-  SimpleGrid
+  Wrap,
+  WrapItem,
+  Box
 } from "@chakra-ui/react";
-import { Filters } from "./Filters";
+import { Filters } from "../../components/Filters.js";
 import { EventCard } from "../../components/EventCard.js";
 import { Toolbar } from "../../components/Toolbar";
 import { colors } from "../../core/theme";
 import { events } from "../../data/events.js";
 
 export const HomeScreen = () => {
+  const [event, setEvent] = useState("");
   return (
     <>
       <Toolbar/>
       <Box backgroundColor="#121212">
-        <Stack backgroundColor={colors.backgroundComponent}>
-          <Filters />
+        <Stack backgroundColor={colors.backgroundComponent} alignItems="center">
+          <Filters event={event} setEvent={setEvent} title="Events" description="Search an event"/>
         </Stack>
-        <SimpleGrid minChildWidth='700px' spacing='20px' padding='10px'>
-          {
-            events.map(e => <EventCard
-              title={e.title}
-              type={e.type}
-              location={e.location}
-              datetime={e.datetime}
-              imgUrl={e.eventImageUrl}
-              nftNumber={e.nftNumber}
-            />)
-          }
-        </SimpleGrid>
+
+        <br/>
+        <Wrap spacing="25px" justify="center">
+          {events
+            .filter(
+              (x) =>
+                event === "" ||
+                (event !== "" &&
+                  x.title
+                    .toLocaleLowerCase()
+                    .includes(event.toLocaleLowerCase()))
+            )
+            .map((e) => (
+              <WrapItem>
+                <EventCard
+                  key={e.title}
+                  title={e.title}
+                  type={e.type}
+                  location={e.location}
+                  datetime={e.datetime}
+                  imgUrl={e.eventImageUrl}
+                  nftNumber={e.nftNumber}
+                />
+              </WrapItem>
+            ))}
+        </Wrap>
       </Box>
-
     </>
-
-  )};
+  );
+};

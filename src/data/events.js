@@ -9,6 +9,7 @@ export const events = [
     buyImage1: "https://commons.wikimedia.org/wiki/File:Duko_concierto.jpg",
     buyImage2: "https://los40es00.epimg.net/los40/imagenes/2019/07/03/musica/1562149419_336088_1562151870_noticia_normal.jpg",
     nftNumber: 547532,
+    owned: true,  // if owned == true, it will appear in the NFT ticket page
     contractId: "0x32fc2d09343ab12c",
     ticketTypes: [
       {
@@ -63,6 +64,7 @@ export const events = [
     buyImage1: "https://www.ole.com.ar/futbol-primera/boca-river-final-publico_0_TlqoDg8qVL.html",
     buyImage2: "https://www.ole.com.ar/futbol-primera/boca-ranking-titulos-copa-argentina_0_XSrXiXNic.html",
     nftNumber: 547573,
+    owned: true,
     contractId: "0x32fc2d09343ad54f",
     ticketTypes: [
       {

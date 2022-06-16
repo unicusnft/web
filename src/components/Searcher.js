@@ -1,37 +1,21 @@
 import React from "react";
-import {
-  Editable,
-  EditableInput,
-  EditablePreview,
-  Input,
-} from "@chakra-ui/react";
+import { InputGroup, InputLeftElement, Input } from "@chakra-ui/react";
 import { colors } from "../core/theme";
-import { HStack } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 
-export const Searcher = () => {
-  const [search, setSearch] = React.useState("Search an event");
-
+export const Searcher = ({ event, setEvent, description }) => {
   return (
-    <Editable
-      textAlign="center"
-      textColor={colors.white}
-      borderColor={colors.white}
-      borderWidth={0.1}
-      borderRadius={3}
-      defaultValue={search}
-      fontSize="2xl"
-      minWidth={300}
-      maxWidth="25%"
-    >
-      <HStack marginLeft={"10px"}>
-        <SearchIcon boxSize={5} />
-        <EditablePreview fontSize={16} />
-        <Input
-          as={EditableInput}
-          onChange={(text) => setSearch(text.target.value)}
-        />
-      </HStack>
-    </Editable>
+    <InputGroup borderRadius={4}>
+      <InputLeftElement
+        pointerEvents="none"
+        children={<SearchIcon color={colors.white} />}
+      />
+      <Input
+        textColor={colors.white}
+        placeholder={description}
+        focusBorderColor={colors.mainColor}
+        onChange={(text) => setEvent(text.target.value)}
+      />
+    </InputGroup>
   );
 };
