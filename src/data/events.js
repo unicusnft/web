@@ -1,12 +1,13 @@
 export const events = [
   {
+    id: 1,
     title: "Duki",
     type: "Music",
     location: "Estadio Velez Sarsfield",
     datetime: new Date(2022, 10, 12, 21, 0),
     eventImageUrl: "https://static6.ticketek.com.ar/cms_static/sites/default/files/images/show-header/duki_ticketek_960-x-400-4.png",
     ticketImageUrl: "https://cloudfront-us-east-1.images.arcpublishing.com/infobae/ST5Q635BZZHVTFJ3WN3E7NFF5A.jpg",
-    buyImage1: "https://commons.wikimedia.org/wiki/File:Duko_concierto.jpg",
+    buyImage1: "https://upload.wikimedia.org/wikipedia/commons/9/98/Duko_concierto.jpg",
     buyImage2: "https://los40es00.epimg.net/los40/imagenes/2019/07/03/musica/1562149419_336088_1562151870_noticia_normal.jpg",
     nftNumber: 547532,
     owned: true,  // if owned == true, it will appear in the NFT ticket page
@@ -35,10 +36,10 @@ export const events = [
     ],
     history: [
       {
-        type: "MINTED",
-        from: "-",
-        to: "Camila Dvorkin",
-        date: new Date(2022, 3, 9, 14, 9, 0)
+        type: "TRANSFER",
+        from: "Juan Pablo R.",
+        to: "Javier Di Santo",
+        date: new Date(2022, 3, 9, 14, 20, 0)
       },
       {
         type: "RESELL",
@@ -48,13 +49,14 @@ export const events = [
       },
       {
         type: "MINTED",
-        from: "Juan Pablo R.",
-        to: "Javier Di Santo",
-        date: new Date(2022, 3, 9, 14, 20, 0)
-      },
+        from: "-",
+        to: "Camila Dvorkin",
+        date: new Date(2022, 3, 9, 14, 9, 0)
+      }
     ]
   },
   {
+    id: 2,
     title: "Boca vs River",
     type: "Sports",
     location: "La Bombonera",
