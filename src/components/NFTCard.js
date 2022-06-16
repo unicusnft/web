@@ -85,10 +85,10 @@ export const NFTCard = ({title, type, location, datetime, imgUrl, nftNumber}) =>
   return (
     <Flex width="413px" align="top" fontFamily="Montserrat">
       <Box textAlign="center" sx={DateStyle}>
-        <Text fontSize="22px" padding="0px" lineHeight="70%">
+        <Text fontSize="28px" padding="2px" lineHeight="70%">
           {datetime.getDate()}
         </Text>
-        <Text paddingBottom="0px">
+        <Text paddingBottom="0px" fontSize='12px'>
           {datetime.toLocaleString('default', { month: 'short' }).toUpperCase()}
         </Text>
       </Box>
