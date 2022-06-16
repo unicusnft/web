@@ -1,9 +1,9 @@
 import React from "react";
-import { InputGroup, InputLeftElement, Input, color } from "@chakra-ui/react";
+import { InputGroup, InputLeftElement, Input } from "@chakra-ui/react";
 import { colors } from "../core/theme";
 import { SearchIcon } from "@chakra-ui/icons";
 
-export const Searcher = ({ event, setEvent }) => {
+export const Searcher = ({ event, setEvent, description }) => {
   return (
     <InputGroup borderRadius={4}>
       <InputLeftElement
@@ -12,7 +12,7 @@ export const Searcher = ({ event, setEvent }) => {
       />
       <Input
         textColor={colors.white}
-        placeholder="Search an event"
+        placeholder={description}
         focusBorderColor={colors.mainColor}
         onChange={(text) => setEvent(text.target.value)}
       />

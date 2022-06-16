@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Stack, Box, SimpleGrid } from "@chakra-ui/react";
-import { Filters } from "./Filters";
+import { Filters } from "../../components/Filters.js";
 import { EventCard } from "../../components/EventCard.js";
 import { Toolbar } from "../../components/Toolbar";
 import { colors } from "../../core/theme";
@@ -10,12 +10,12 @@ export const HomeScreen = () => {
   const [event, setEvent] = useState("");
   return (
     <>
-      <Toolbar />
+      <Toolbar/>
       <Box backgroundColor="#121212">
         <Stack backgroundColor={colors.backgroundComponent} alignItems="center">
-          <Filters event={event} setEvent={setEvent} />
+          <Filters event={event} setEvent={setEvent} title="Events" description="Search an event"/>
         </Stack>
-        <SimpleGrid minChildWidth="700px" spacing="10px" padding="10px">
+        <SimpleGrid minChildWidth="700px" spacing="10px">
           {events
             .filter(
               (x) =>

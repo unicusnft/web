@@ -1,9 +1,8 @@
 import { Box, Button, Flex, Stack } from "@chakra-ui/react";
 import { FaTicketAlt } from "react-icons/fa";
-import { colors } from "../core/theme";
 import { Link } from "react-router-dom";
 
-export const Toolbar = () => {
+export const Toolbar = ({title}) => {
   return (
     <>
       <Box bg="#1F1F1F" px={4}>
