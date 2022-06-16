@@ -14,19 +14,22 @@ import {
 } from "@chakra-ui/react";
 import Duki1 from "../../img/Duki1.png"
 import Duki2 from "../../img/Duki2.png"
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {AiOutlineClockCircle} from "react-icons/ai";
 import {GoLocation} from "react-icons/go";
 import './Buy.css'
 import {DateCard} from "../../components/DateCard";
 import {colors} from "../../core/theme";
 import {useParams} from "react-router-dom";
+import {sleep} from "../../utils/helpers";
+import {events} from "../../data/events";
+import {Loading} from "../../components/Loading";
 
 const TicketsNFT = () => {
     return (
         <HStack my={4}>
             <Box
-                w={['150px', '250px', '350px']}
+                w={['200px', '250px', '350px']}
                 h={['250px', '350px', '450px']}
                 rounded={40}
                 color='white'
@@ -35,7 +38,7 @@ const TicketsNFT = () => {
                 <Image src={Duki1} alt="Ticket photo" rounded={40}/>
             </Box>
             <Box
-                w={['150px', '250px', '350px']}
+                w={['200px', '250px', '350px']}
                 h={['250px', '350px', '450px']}
                 rounded={40}
                 color='white'
@@ -94,7 +97,7 @@ const SelectTicketCard = () => {
     return (
         <Box
             bg={colors.backgroundComponent}
-            w={['300px', '400px', '500px']}
+            w={['350px', '400px', '500px']}
             rounded={20}
             p={6}
             color='white'
@@ -144,17 +147,35 @@ const SelectTicketCard = () => {
 
 export const Buy = () => {
     let params = useParams();
+    const [loading, setLoading] = useState(false)
+    const [event, setEvent] = useState(null)
+
+    useEffect(() => {
+        async function fetchData() {
+            setLoading(true)
+            await sleep(1500)
+            setEvent(events.filter(t => t?.id === params?.eventId))
+            setLoading(false)
+        }
+
+        fetchData()
+    }, [])
+
     return (
         <>
             <Toolbar/>
-            <div style={{ marginTop: '20px', marginBottom: '20px' }}>
-                <Center marginRight={['-72px', '-130px', '-182px']}>
-                    <TicketsNFT/>
-                </Center>
-                <Center>
-                    <SelectTicketCard/>
-                </Center>
-            </div>
+            {loading ? (
+                <Loading/>
+            ) : (
+                <div style={{ marginTop: '20px' }}>
+                    <Center marginRight={['-72px', '-130px', '-182px']}>
+                        <TicketsNFT/>
+                    </Center>
+                    <Center mt={5}>
+                        <SelectTicketCard />
+                    </Center>
+                </div>
+            )}
         </>
     )
 }

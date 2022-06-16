@@ -7,7 +7,7 @@ export const events = [
     datetime: new Date(2022, 10, 12, 21, 0),
     eventImageUrl: "https://static6.ticketek.com.ar/cms_static/sites/default/files/images/show-header/duki_ticketek_960-x-400-4.png",
     ticketImageUrl: "https://cloudfront-us-east-1.images.arcpublishing.com/infobae/ST5Q635BZZHVTFJ3WN3E7NFF5A.jpg",
-    buyImage1: "https://commons.wikimedia.org/wiki/File:Duko_concierto.jpg",
+    buyImage1: "https://upload.wikimedia.org/wikipedia/commons/9/98/Duko_concierto.jpg",
     buyImage2: "https://los40es00.epimg.net/los40/imagenes/2019/07/03/musica/1562149419_336088_1562151870_noticia_normal.jpg",
     nftNumber: 547532,
     owned: true,  // if owned == true, it will appear in the NFT ticket page
