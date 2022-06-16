@@ -83,7 +83,7 @@ const DateStyle = {
 export const NFTCard = ({title, type, location, datetime, imgUrl, nftNumber}) => {
 
   return (
-    <Flex width="413px" align="top" fontFamily="Montserrat">
+    <Flex align="top" fontFamily="Montserrat">
       <Box textAlign="center" sx={DateStyle}>
         <Text fontSize="28px" padding="2px" lineHeight="70%">
           {datetime.getDate()}
