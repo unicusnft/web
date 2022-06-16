@@ -1,5 +1,6 @@
 export const events = [
   {
+    id: 1,
     title: "Duki",
     type: "Music",
     location: "Estadio Velez Sarsfield",
@@ -55,6 +56,7 @@ export const events = [
     ]
   },
   {
+    id: 2,
     title: "Boca vs River",
     type: "Sports",
     location: "La Bombonera",

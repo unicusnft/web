@@ -17,8 +17,8 @@ export const MyTickets = () => {
   return (
     <>
       <Toolbar title="My Tickets"/>
-      <Stack backgroundColor={colors.backgroundComponent} alignItems="center">
-        <Filters event={event} setEvent={setEvent} title="Tickets" description="Search owned tickets"/>
+      <Stack alignItems="center" px={4} mt={6}>
+        <Filters event={event} setEvent={setEvent} description="Search owned tickets"/>
       </Stack>
       <br/>
       <Container maxW='8xl' padding='0px'>
@@ -33,9 +33,8 @@ export const MyTickets = () => {
                       .includes(event.toLocaleLowerCase())))
               )
               .map(e => (
-                <WrapItem>
+                <WrapItem key={e.title}>
                   <NFTCard
-                    key={e.title}
                     title={e.title}
                     type={e.type}
                     location={e.location}

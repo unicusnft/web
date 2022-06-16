@@ -20,6 +20,7 @@ import {GoLocation} from "react-icons/go";
 import './Buy.css'
 import {DateCard} from "../../components/DateCard";
 import {colors} from "../../core/theme";
+import {useParams} from "react-router-dom";
 
 const TicketsNFT = () => {
     return (
@@ -142,6 +143,7 @@ const SelectTicketCard = () => {
 }
 
 export const Buy = () => {
+    let params = useParams();
     return (
         <>
             <Toolbar/>

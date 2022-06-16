@@ -16,7 +16,7 @@ export const HomeScreen = () => {
     <>
       <Toolbar/>
       <Box backgroundColor="#121212">
-        <Stack alignItems="center" px={4} mt={5} mb={2}>
+        <Stack alignItems="center" px={4} mt={6}>
           <Filters event={event} setEvent={setEvent} description="Search an event"/>
         </Stack>
 
@@ -34,6 +34,7 @@ export const HomeScreen = () => {
             .map((e) => (
               <WrapItem   key={e.title}>
                 <EventCard
+                  id={e.id}
                   title={e.title}
                   type={e.type}
                   location={e.location}
