@@ -8,7 +8,6 @@ import {
 import { Filters } from "../../components/Filters.js";
 import { EventCard } from "../../components/EventCard.js";
 import { Toolbar } from "../../components/Toolbar";
-import { colors } from "../../core/theme";
 import { events } from "../../data/events.js";
 
 export const HomeScreen = () => {
@@ -17,8 +16,8 @@ export const HomeScreen = () => {
     <>
       <Toolbar/>
       <Box backgroundColor="#121212">
-        <Stack backgroundColor={colors.backgroundComponent} alignItems="center">
-          <Filters event={event} setEvent={setEvent} title="Events" description="Search an event"/>
+        <Stack alignItems="center" px={4} mt={5} mb={2}>
+          <Filters event={event} setEvent={setEvent} description="Search an event"/>
         </Stack>
 
         <br/>
