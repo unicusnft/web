@@ -29,7 +29,7 @@ const SocialMediaButton = ({img, alt}) => {
 
 export const Ticket = () => {
     let params = useParams()
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
     const [ticket, setTicket] = useState(null)
 
     useEffect(() => {

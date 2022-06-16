@@ -141,7 +141,7 @@ const SelectTicketCard = ({event}) => {
 
 export const Buy = () => {
     let params = useParams();
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
     const [event, setEvent] = useState(null)
 
     useEffect(() => {
