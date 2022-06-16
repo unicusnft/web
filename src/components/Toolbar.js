@@ -8,7 +8,13 @@ export const Toolbar = () => {
     <>
       <Box bg="#1F1F1F" px={4}>
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
-          <Box style={{ fontFamily: "'Goldman', cursive", fontSize: "36px" }}>
+          <Box
+            style={{
+              fontFamily: "'Goldman', cursive",
+              fontSize: "36px",
+              color: "#8886FC",
+            }}
+          >
             <Link to="/">ünicus</Link>
           </Box>
 
