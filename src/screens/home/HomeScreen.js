@@ -32,9 +32,8 @@ export const HomeScreen = () => {
                     .includes(event.toLocaleLowerCase()))
             )
             .map((e) => (
-              <WrapItem>
+              <WrapItem   key={e.title}>
                 <EventCard
-                  key={e.title}
                   title={e.title}
                   type={e.type}
                   location={e.location}

@@ -15,7 +15,7 @@ import { DateCard } from "./DateCard";
 
 const BoxStyle = {
   backgroundColor: colors.backgroundComponent,
-  padding: "15px",
+  padding: "20px 22px",
   color: colors.white,
   fontSize: "16px",
   borderRadius: "20px",
@@ -29,15 +29,16 @@ const ImageStyle = {
   position: "relative",
   height: "200px",
   width: "100%",
-  filter: "drop-shadow(0 2mm 2mm rgb(160, 0, 210))",
+  filter: "drop-shadow(0 2mm 2mm #515151)",
 };
 
 const TypeStyle = {
+  fontSize: "14px",
   color: colors.textSecondaryColor,
 };
 
 const TitleStyle = {
-  fontSize: "35px",
+  fontSize: "30px",
   fontWeight: "bold",
   margin: "20px",
   width: "300px",
@@ -48,7 +49,7 @@ export const EventCard = ({ title, type, location, datetime, imgUrl }) => {
     <VStack paddingTop="30px" width="400px">
       <Box textAlign="left" fontFamily="Montserrat" sx={BoxStyle}>
         <Image src={imgUrl} sx={ImageStyle} />
-        <Flex>
+        <Flex pt={2}>
           <VStack align="left" spacing={0}>
             <Text noOfLines={1} sx={TypeStyle}>
               {type}
@@ -58,16 +59,16 @@ export const EventCard = ({ title, type, location, datetime, imgUrl }) => {
             </Text>
           </VStack>
           <Spacer />
-          <DateCard datetime={datetime} />
+          <DateCard datetime={datetime} size='lg' />
         </Flex>
         <HStack spacing={5}>
           <HStack>
             <HiLocationMarker />
-            <Text>{location}</Text>
+            <Text fontSize='sm'>{location}</Text>
           </HStack>
           <HStack>
             <BsClockFill />
-            <Text>21:00</Text>
+            <Text fontSize='sm'>21:00</Text>
           </HStack>
         </HStack>
       </Box>
