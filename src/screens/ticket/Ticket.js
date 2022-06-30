@@ -8,6 +8,7 @@ import {
   Image,
   Text,
   VStack,
+  useDisclosure,
 } from "@chakra-ui/react";
 import facebook from "../../img/facebook.png";
 import instagram from "../../img/instagram.png";
@@ -26,6 +27,7 @@ import { MdSell } from "react-icons/md";
 import { events } from "../../data/events";
 import { sleep } from "../../utils/helpers";
 import { Loading } from "../../components/Loading";
+import ModalTransferir from "../../components/Modals/ModalTransferir";
 
 const SocialMediaButton = ({ img, alt }) => {
   return (
@@ -39,6 +41,12 @@ export const Ticket = () => {
   let params = useParams();
   const [loading, setLoading] = useState(true);
   const [ticket, setTicket] = useState(null);
+
+  const {
+    isOpen: isOpenModalTransferir,
+    onOpen: onOpenModalTransferir,
+    onClose: onCloseModalTransferir,
+  } = useDisclosure();
 
   useEffect(() => {
     async function fetchData() {
@@ -59,157 +67,166 @@ export const Ticket = () => {
       {loading ? (
         <Loading />
       ) : (
-        <VStack py={5} spacing={5}>
-          <div>
-            <Text fontSize="xl" sx={{ fontWeight: 600 }}>
-              Ticket para
-            </Text>
-            <Center>
-              <Text
-                fontSize="4xl"
-                sx={{ fontWeight: 700 }}
-                color={colors.mainColor}
-              >
-                {ticket?.title}
+        <>
+          <ModalTransferir
+            isOpen={isOpenModalTransferir}
+            onClose={onCloseModalTransferir}
+          />
+          <VStack py={5} spacing={5}>
+            <div>
+              <Text fontSize="xl" sx={{ fontWeight: 600 }}>
+                Ticket para
               </Text>
-            </Center>
-          </div>
-          <Box
-            w="350px"
-            h="450px"
-            rounded={40}
-            color="white"
-            boxShadow="dark-xs"
-            objectFit="cover"
-          >
-            <Image
-              src={ticket?.buyImage1}
-              alt="Ticket photo"
-              w="350px"
-              h="400px"
-              objectFit="cover"
-              rounded={40}
-            />
-            <Center mb={5}>
-              <HStack spacing={0}>
-                <SocialMediaButton img={facebook} alt="facebook" />
-                <SocialMediaButton img={instagram} alt="instagram" />
-                <SocialMediaButton img={tikTok} alt="tik tok" />
-                <SocialMediaButton img={twitter} alt="twitter" />
-                <SocialMediaButton img={whatsapp} alt="whatsapp" />
-              </HStack>
-            </Center>
-          </Box>
-          <Box
-            w="350px"
-            rounded={40}
-            color="white"
-            boxShadow="dark-xs"
-            bg={colors.backgroundComponent}
-            py={6}
-          >
-            <VStack spacing={5}>
-              <Text fontSize="3xl" sx={{ fontWeight: 600 }}>
-                NFT#{ticket?.nftNumber}
-              </Text>
-              <HStack>
-                <DateCard datetime={ticket?.datetime} />
-                <VStack alignItems="left">
-                  <HStack>
-                    <GoLocation />
-                    <Text fontSize="xs">{ticket?.location}</Text>
-                  </HStack>
-                  <HStack>
-                    <AiOutlineClockCircle />
-                    <Text fontSize="xs">
-                      {ticket?.datetime?.toLocaleTimeString("en-GB", {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
-                    </Text>
-                  </HStack>
-                </VStack>
-              </HStack>
-              <Text px={4} fontSize="sm" textAlign="center">
-                Podés transferir este ticket <br />
-                las veces que quieras!
-              </Text>
-              <Button colorScheme="main" size="xl" py={3} px={10}>
-                Revender
-              </Button>
-              <Button
-                colorScheme="main"
-                size="xl"
-                py={3}
-                px={10}
-                variant="outline"
-                color={colors.mainColor}
-              >
-                Transferir
-              </Button>
-            </VStack>
-            <Divider inset my={6} />
-            <VStack spacing={1}>
-              <Box bg="black" w="300px" roundedTop={20}>
-                <Center>
-                  <TbArrowsDownUp color="white" />
-                  <Text p={2} fontSize="sm">
-                    Historial del ticket
-                  </Text>
-                </Center>
-              </Box>
-              {ticket?.history.map((h, index) => (
-                <Box
-                  bg="#121212"
-                  w="300px"
-                  rounded={2}
-                  roundedBottom={index + 1 === ticket?.history?.length ? 20 : 2}
-                  py={4}
-                  key={h?.type + h?.date}
+              <Center>
+                <Text
+                  fontSize="4xl"
+                  sx={{ fontWeight: 700 }}
+                  color={colors.mainColor}
                 >
-                  <HStack spacing={0} mx={8}>
-                    {h.type === "CREADO" && (
-                      <AiOutlinePlus color={colors.mainColor} />
-                    )}
-                    {h.type === "REVENTA" && (
-                      <MdSell color={colors.mainColor} />
-                    )}
-                    {h.type === "TRANSFERENCIA" && (
-                      <BiTransfer color={colors.mainColor} />
-                    )}
-                    <Text p={1} fontSize="xs" color={colors.mainColor}>
-                      {h.type}
+                  {ticket?.title}
+                </Text>
+              </Center>
+            </div>
+            <Box
+              w="350px"
+              h="450px"
+              rounded={40}
+              color="white"
+              boxShadow="dark-xs"
+              objectFit="cover"
+            >
+              <Image
+                src={ticket?.buyImage1}
+                alt="Ticket photo"
+                w="350px"
+                h="400px"
+                objectFit="cover"
+                rounded={40}
+              />
+              <Center mb={5}>
+                <HStack spacing={0}>
+                  <SocialMediaButton img={facebook} alt="facebook" />
+                  <SocialMediaButton img={instagram} alt="instagram" />
+                  <SocialMediaButton img={tikTok} alt="tik tok" />
+                  <SocialMediaButton img={twitter} alt="twitter" />
+                  <SocialMediaButton img={whatsapp} alt="whatsapp" />
+                </HStack>
+              </Center>
+            </Box>
+            <Box
+              w="350px"
+              rounded={40}
+              color="white"
+              boxShadow="dark-xs"
+              bg={colors.backgroundComponent}
+              py={6}
+            >
+              <VStack spacing={5}>
+                <Text fontSize="3xl" sx={{ fontWeight: 600 }}>
+                  NFT#{ticket?.nftNumber}
+                </Text>
+                <HStack>
+                  <DateCard datetime={ticket?.datetime} />
+                  <VStack alignItems="left">
+                    <HStack>
+                      <GoLocation />
+                      <Text fontSize="xs">{ticket?.location}</Text>
+                    </HStack>
+                    <HStack>
+                      <AiOutlineClockCircle />
+                      <Text fontSize="xs">
+                        {ticket?.datetime?.toLocaleTimeString("en-GB", {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                      </Text>
+                    </HStack>
+                  </VStack>
+                </HStack>
+                <Text px={4} fontSize="sm" textAlign="center">
+                  Podés transferir este ticket <br />
+                  las veces que quieras!
+                </Text>
+                <Button colorScheme="main" size="xl" py={3} px={10}>
+                  Revender
+                </Button>
+                <Button
+                  colorScheme="main"
+                  size="xl"
+                  py={3}
+                  px={10}
+                  variant="outline"
+                  color={colors.mainColor}
+                  onClick={onOpenModalTransferir}
+                >
+                  Transferir
+                </Button>
+              </VStack>
+              <Divider inset my={6} />
+              <VStack spacing={1}>
+                <Box bg="black" w="300px" roundedTop={20}>
+                  <Center>
+                    <TbArrowsDownUp color="white" />
+                    <Text p={2} fontSize="sm">
+                      Historial del ticket
                     </Text>
-                  </HStack>
-                  <HStack spacing={0} mx={8}>
-                    <Text p={1} fontSize="xs">
-                      DESDE:
-                    </Text>
-                    <Text p={1} fontSize="xs">
-                      {h.from}
-                    </Text>
-                  </HStack>
-                  <HStack spacing={0} mx={8}>
-                    <Text p={1} fontSize="xs">
-                      HACIA:
-                    </Text>
-                    <Text p={1} fontSize="xs">
-                      {h.to}
-                    </Text>
-                  </HStack>
-                  <HStack spacing={0} mx={8}>
-                    <Text p={1} fontSize="xs">
-                      FECHA:
-                    </Text>
-                    <Text p={1} fontSize="xs">
-                      {h.date.toLocaleString()}
-                    </Text>
-                  </HStack>
+                  </Center>
                 </Box>
-              ))}
-            </VStack>
-          </Box>
-        </VStack>
+                {ticket?.history.map((h, index) => (
+                  <Box
+                    bg="#121212"
+                    w="300px"
+                    rounded={2}
+                    roundedBottom={
+                      index + 1 === ticket?.history?.length ? 20 : 2
+                    }
+                    py={4}
+                    key={h?.type + h?.date}
+                  >
+                    <HStack spacing={0} mx={8}>
+                      {h.type === "CREADO" && (
+                        <AiOutlinePlus color={colors.mainColor} />
+                      )}
+                      {h.type === "REVENTA" && (
+                        <MdSell color={colors.mainColor} />
+                      )}
+                      {h.type === "TRANSFERENCIA" && (
+                        <BiTransfer color={colors.mainColor} />
+                      )}
+                      <Text p={1} fontSize="xs" color={colors.mainColor}>
+                        {h.type}
+                      </Text>
+                    </HStack>
+                    <HStack spacing={0} mx={8}>
+                      <Text p={1} fontSize="xs">
+                        DESDE:
+                      </Text>
+                      <Text p={1} fontSize="xs">
+                        {h.from}
+                      </Text>
+                    </HStack>
+                    <HStack spacing={0} mx={8}>
+                      <Text p={1} fontSize="xs">
+                        HACIA:
+                      </Text>
+                      <Text p={1} fontSize="xs">
+                        {h.to}
+                      </Text>
+                    </HStack>
+                    <HStack spacing={0} mx={8}>
+                      <Text p={1} fontSize="xs">
+                        FECHA:
+                      </Text>
+                      <Text p={1} fontSize="xs">
+                        {h.date.toLocaleString()}
+                      </Text>
+                    </HStack>
+                  </Box>
+                ))}
+              </VStack>
+            </Box>
+          </VStack>
+        </>
       )}
     </>
   );
