@@ -39,7 +39,7 @@ const TabPanelModalTransferir = ({
   return (
     <>
       <InputGroup borderRadius={4}>
-        <InputRightElement width="25%">
+        <InputRightElement width="30%">
           <Button
             size="sm"
             mr={2}
