@@ -153,7 +153,7 @@ const SelectTicketCard = ({ event }) => {
           {">"}
         </Button>
       </HStack>
-      <Link to={`/buy/payment/${event?.id}/cant/${1}/spot/${radio}`}>
+      <Link to={`/buy/${event?.id}/cant/${1}/spot/${radio}`}>
         <Flex mt={8} direction={{ base: "column-reverse" }}>
           <Button colorScheme="main" size="xl" py={3} px={10}>
             COMPRAR

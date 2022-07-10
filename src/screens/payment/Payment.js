@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Flex,
   HStack,
   Image,
@@ -11,7 +12,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { BsClockFill } from "react-icons/bs";
 import { HiLocationMarker } from "react-icons/hi";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { DateCard } from "../../components/DateCard";
 import { Loading } from "../../components/Loading";
 import { Toolbar } from "../../components/Toolbar";
@@ -72,6 +73,7 @@ export const Payment = () => {
             <Box
               w="350px"
               rounded={16}
+              roundedTop={200}
               color="white"
               boxShadow="dark-xs"
               bg={colors.backgroundComponent}
@@ -172,6 +174,24 @@ export const Payment = () => {
                 )}
               </VStack>
             </Box>
+            <HStack paddingLeft={5} paddingRight={15}>
+              <Link to={`/buy/${event?.id}/`}>
+                <Button
+                  colorScheme="main"
+                  size="xl"
+                  py={3}
+                  px={10}
+                  variant="outline"
+                  color={colors.mainColor}
+                  w="170px"
+                >
+                  Volver al evento
+                </Button>
+              </Link>
+              <Button colorScheme="main" size="xl" py={3} px={10} w="170px">
+                Confirmar
+              </Button>
+            </HStack>
           </VStack>
         )
       )}

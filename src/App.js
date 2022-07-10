@@ -15,7 +15,7 @@ const App = () => {
           <Route path="/" element={<HomeScreen />} />
           <Route path="/buy/:eventId" element={<Buy />} />
           <Route
-            path="/buy/payment/:eventId/cant/:cant/spot/:spot"
+            path="/buy/:eventId/cant/:cant/spot/:spot"
             element={<Payment />}
           />
           <Route path="/my-tickets" element={<MyTickets />} />
