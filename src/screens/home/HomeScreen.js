@@ -4,6 +4,8 @@ import { Filters } from "../../components/Filters.js";
 import { EventCard } from "../../components/EventCard.js";
 import { Toolbar } from "../../components/Toolbar";
 import { events } from "../../data/events.js";
+import {useUser} from "../../providers/UserProvider";
+import {HomeScreenOrganizer} from "./HomeScreenOrganizer";
 
 const TitlePageStyle = {
   fontSize: "25px",
@@ -12,7 +14,13 @@ const TitlePageStyle = {
 };
 
 export const HomeScreen = () => {
+  const {currentUser} = useUser()
   const [event, setEvent] = useState("");
+
+  if (currentUser?.is_organizer) {
+    return <HomeScreenOrganizer />
+  }
+
   return (
     <>
       <Toolbar />
