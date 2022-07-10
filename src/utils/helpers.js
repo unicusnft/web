@@ -5,7 +5,7 @@ export const sleep = (ms) => {
 }
 
 export const LocalStorageGetCurrentUser = () => {
-    return JSON.parse(localStorage.getItem(LOCAL_STORAGE_CURRENT_USER)) || undefined;
+    return JSON.parse(localStorage.getItem(LOCAL_STORAGE_CURRENT_USER));
 }
 
 export const LocalStorageSeCurrentUser = (user) => {

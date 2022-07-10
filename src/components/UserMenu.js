@@ -1,8 +1,6 @@
-import {useEffect, useState} from "react";
 import {Avatar, Button, CircularProgress, Flex, Menu, MenuButton, MenuItem, MenuList, Stack} from "@chakra-ui/react";
 import {colors} from "../core/theme";
-import {users} from "../data/users";
-import {LocalStorageGetCurrentUser, LocalStorageSeCurrentUser} from "../utils/helpers";
+import {useUser} from "../providers/UserProvider";
 
 const MenuListStyle = {
     backgroundColor: colors.backgroundComponentLighter,
@@ -29,23 +27,7 @@ const UserRoleStyle = {
 }
 
 export const UserMenu = () => {
-    const [currentUser, setCurrentUser] = useState(LocalStorageGetCurrentUser())
-
-    const SetCurrentUser = (user) => {
-        LocalStorageSeCurrentUser(user)
-        setCurrentUser(user)
-    }
-
-    useEffect(() => {
-        const fetchUsers = async () => {
-            return users
-        }
-        fetchUsers().then((users) => {
-            if (!currentUser) {
-                SetCurrentUser(users?.[0])
-            }
-        })
-    }, [])
+    const {currentUser, setCurrentUser, allUsers} = useUser()
 
     const getMenuItemColor = (user) => {
         return currentUser?.username === user?.username ? MenuItemSelected : MenuListStyle
@@ -68,7 +50,7 @@ export const UserMenu = () => {
                     <Avatar size={'sm'} src={currentUser?.avatar}/>
                 </MenuButton>
                 <MenuList sx={MenuListStyle}>
-                    {users.map((user) => (
+                    {allUsers.map((user) => (
                         <MenuItem
                             key={'user' + user?.username}
                             _active={getMenuItemColor(user)}
@@ -76,7 +58,7 @@ export const UserMenu = () => {
                             _expanded={getMenuItemColor(user)}
                             _focus={getMenuItemColor(user)}
                             sx={currentUser?.username === user?.username ? MenuItemSelected : {}}
-                            onClick={() => SetCurrentUser(user)}
+                            onClick={() => setCurrentUser(user)}
                         >
                             <Avatar size={'md'} src={user?.avatar}/>
                             <Stack gap={0}>
