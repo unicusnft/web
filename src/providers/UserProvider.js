@@ -24,6 +24,7 @@ export const UserProvider = ({children}) => {
                 setCurrentUser(users?.[0])
             }
         })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     let value = {currentUser: user, setCurrentUser, allUsers};
