@@ -3,6 +3,7 @@ import {
   Flex,
   HStack,
   Image,
+  Input,
   Spacer,
   Text,
   VStack,
@@ -41,10 +42,14 @@ export const Payment = () => {
   let params = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [event, setEvent] = useState(undefined);
+  const [isCreditCardSelected, setIsCreditCardSelected] = useState(true);
+  const [creditCardNumber, setCreditCardNumber] = useState("");
+  const [owner, setOwner] = useState("");
+  const [dueDate, setDueDate] = useState("");
+  const [code, setCode] = useState("");
 
   useEffect(() => {
     async function fetchData() {
-      console.log(params);
       setIsLoading(true);
       await sleep(1500);
       setEvent(
@@ -66,7 +71,7 @@ export const Payment = () => {
           <VStack py={5} spacing={5}>
             <Box
               w="350px"
-              rounded={40}
+              rounded={16}
               color="white"
               boxShadow="dark-xs"
               bg={colors.backgroundComponent}
@@ -111,6 +116,60 @@ export const Payment = () => {
                     {params.cant} Ticket{params.cant > 1 && "s"}: {params.spot}
                   </Text>
                 </VStack>
+              </VStack>
+            </Box>
+            <Box
+              w="350px"
+              rounded={16}
+              color="white"
+              boxShadow="dark-xs"
+              bg={colors.backgroundComponent}
+              bottom={100}
+            >
+              <VStack spacing={0} align="left" padding={5}>
+                <Text fontSize="sm">Elegí un método de pago</Text>
+                {isCreditCardSelected && (
+                  <VStack align="left">
+                    <VStack align="left" marginTop={5}>
+                      <Text fontSize="sm">Número de la tarjeta</Text>
+                      <Input
+                        textColor={colors.white}
+                        focusBorderColor={colors.mainColor}
+                        onChange={(text) =>
+                          setCreditCardNumber(text.target.value)
+                        }
+                        type="number"
+                      />
+                    </VStack>
+                    <VStack align="left" marginTop={5}>
+                      <Text fontSize="sm">Nombre del titular</Text>
+                      <Input
+                        textColor={colors.white}
+                        focusBorderColor={colors.mainColor}
+                        onChange={(text) => setOwner(text.target.value)}
+                      />
+                    </VStack>
+                    <HStack marginTop={5}>
+                      <VStack align="left">
+                        <Text fontSize="sm">Vencimiento</Text>
+                        <Input
+                          textColor={colors.white}
+                          focusBorderColor={colors.mainColor}
+                          onChange={(text) => setDueDate(text.target.value)}
+                        />
+                      </VStack>
+                      <VStack align="left">
+                        <Text fontSize="sm">Código</Text>
+                        <Input
+                          textColor={colors.white}
+                          focusBorderColor={colors.mainColor}
+                          onChange={(text) => setCode(text.target.value)}
+                          type="number"
+                        />
+                      </VStack>
+                    </HStack>
+                  </VStack>
+                )}
               </VStack>
             </Box>
           </VStack>
