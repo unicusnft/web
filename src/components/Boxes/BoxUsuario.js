@@ -1,13 +1,13 @@
 import React from "react";
 import { Avatar, Box, Text, Badge } from "@chakra-ui/react";
 
-const BoxUsuario = ({ nombre, username, avatar, esAmigo }) => {
+const BoxUsuario = ({ name, username, avatar, esAmigo }) => {
   return (
     <>
       <Avatar src={avatar} />
       <Box ml="3">
         <Text fontWeight="bold">
-          {nombre}
+          {name}
           {esAmigo && (
             <Badge ml="1" colorScheme="purple">
               Amigo
