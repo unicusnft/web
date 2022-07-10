@@ -1,6 +1,7 @@
 import { Box, Button, Flex, Stack } from "@chakra-ui/react";
 import { FaTicketAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import {UserMenu} from "./UserMenu";
 
 export const Toolbar = ({title}) => {
   return (
@@ -18,7 +19,7 @@ export const Toolbar = ({title}) => {
           </Box>
 
           <Flex alignItems={"center"}>
-            <Stack direction={"row"} spacing={7}>
+            <Stack direction={"row"} spacing={4}>
               <Button
                 leftIcon={<FaTicketAlt />}
                 colorScheme="main"
@@ -27,6 +28,7 @@ export const Toolbar = ({title}) => {
               >
                 <Link to="/my-tickets">Mis Tickets</Link>
               </Button>
+                <UserMenu />
             </Stack>
           </Flex>
         </Flex>
