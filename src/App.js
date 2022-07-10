@@ -9,17 +9,18 @@ import { Payment } from "./screens/payment/Payment";
 
 const App = () => {
     return (
-        <UserProvider>
-            <BrowserRouter>
+        <BrowserRouter>
+            <UserProvider>
                 <Routes>
                     <Route path="/" element={<HomeScreen/>}/>
                     <Route path="/buy/:eventId" element={<Buy/>}/>
                     <Route path="/buy/payment/:eventId" element={<Payment/>}/>
                     <Route path="/my-tickets" element={<MyTickets/>}/>
+                    <Route path="/my-events" element={<HomeScreen/>}/>
                     <Route path="/ticket/:ticketId" element={<Ticket/>}/>
                 </Routes>
-            </BrowserRouter>
-        </UserProvider>
+            </UserProvider>
+        </BrowserRouter>
     );
 };
 

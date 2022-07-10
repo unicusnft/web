@@ -1,7 +1,7 @@
 import React from "react";
 import { Avatar, Box, Text, Badge } from "@chakra-ui/react";
 
-const BoxUsuario = ({ name, username, avatar, esAmigo }) => {
+const BoxUsuario = ({ full_name: name, username, profile_image_url: avatar, esAmigo }) => {
   return (
     <>
       <Avatar src={avatar} />
