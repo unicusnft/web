@@ -35,7 +35,7 @@ const TicketTextStyle = {
   fontSize: "20px",
   fontWeight: "bold",
   margin: "20px",
-  width: "250px",
+  width: "100%",
 };
 
 export const Payment = () => {
@@ -112,7 +112,7 @@ export const Payment = () => {
                       </Text>
                     </HStack>
                   </HStack>
-                  <Text noOfLines={1} sx={TicketTextStyle}>
+                  <Text noOfLines={2} sx={TicketTextStyle}>
                     {params.cant} Ticket{params.cant > 1 && "s"}: {params.spot}
                   </Text>
                 </VStack>

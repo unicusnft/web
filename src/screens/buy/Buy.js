@@ -68,7 +68,9 @@ const TicketsNFT = ({ img1, img2 }) => {
 };
 
 const SelectTicketCard = ({ event }) => {
-  const [radio, setRadio] = React.useState(event?.ticketTypes?.[0]?.label);
+  const [radio, setRadio] = React.useState(
+    `$${event?.ticketTypes?.[0]?.price} - ${event?.ticketTypes?.[0]?.label}`
+  );
   const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } =
     useNumberInput({
       step: 1,
@@ -119,12 +121,16 @@ const SelectTicketCard = ({ event }) => {
         <RadioGroup
           onChange={setRadio}
           value={radio}
-          defaultValue={event?.ticketTypes?.[0].label}
+          defaultValue={`$${event?.ticketTypes?.[0]?.price} - ${event?.ticketTypes?.[0]?.label}`}
           my={2}
         >
           <Stack spacing={0.5}>
             {event?.ticketTypes?.map(({ label, price }) => (
-              <Radio key={label} colorScheme="main" value={label}>
+              <Radio
+                key={label}
+                colorScheme="main"
+                value={`$${price} - ${label}`}
+              >
                 <Text
                   noOfLines={2}
                   className={`${label === radio ? "purple-text" : ""}`}
