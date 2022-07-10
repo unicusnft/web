@@ -47,7 +47,7 @@ export const UserMenu = () => {
                     cursor={'pointer'}
                     minW={0}
                 >
-                    <Avatar size={'sm'} src={currentUser?.avatar}/>
+                    <Avatar size={'sm'} src={currentUser?.profile_image_url}/>
                 </MenuButton>
                 <MenuList sx={MenuListStyle}>
                     {allUsers.map((user) => (
@@ -60,10 +60,10 @@ export const UserMenu = () => {
                             sx={currentUser?.username === user?.username ? MenuItemSelected : {}}
                             onClick={() => setCurrentUser(user)}
                         >
-                            <Avatar size={'md'} src={user?.avatar}/>
+                            <Avatar size={'md'} src={user?.profile_image_url}/>
                             <Stack gap={0}>
-                                <div style={UserNameStyle}>{user?.name}</div>
-                                <div style={UserRoleStyle}>{user?.role}</div>
+                                <div style={UserNameStyle}>{user?.full_name}</div>
+                                <div style={UserRoleStyle}>{user?.is_organizer ? 'Organizador' : 'Usuario'}</div>
                             </Stack>
                         </MenuItem>
                     ))}

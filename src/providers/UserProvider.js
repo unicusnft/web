@@ -1,16 +1,21 @@
 import {createContext, useContext, useEffect, useState} from "react";
 import {LocalStorageGetCurrentUser, LocalStorageSeCurrentUser} from "../utils/helpers";
 import {users} from "../data/users";
+import {useNavigate} from "react-router";
 
 const UserContext = createContext(null);
 
 export const UserProvider = ({children}) => {
     let [allUsers, setAllUsers] = useState([]);
     let [user, setUser] = useState(LocalStorageGetCurrentUser());
+    let navigate = useNavigate();
 
     const setCurrentUser = (user) => {
         LocalStorageSeCurrentUser(user)
         setUser(user)
+
+        // redirect to homepage
+        navigate('/')
     }
 
     useEffect(() => {

@@ -8,16 +8,17 @@ import {UserProvider} from "./providers/UserProvider";
 
 const App = () => {
     return (
-        <UserProvider>
-            <BrowserRouter>
+        <BrowserRouter>
+            <UserProvider>
                 <Routes>
                     <Route path="/" element={<HomeScreen/>}/>
                     <Route path="/buy/:eventId" element={<Buy/>}/>
                     <Route path="/my-tickets" element={<MyTickets/>}/>
+                    <Route path="/my-events" element={<HomeScreen/>}/>
                     <Route path="/ticket/:ticketId" element={<Ticket/>}/>
                 </Routes>
-            </BrowserRouter>
-        </UserProvider>
+            </UserProvider>
+        </BrowserRouter>
     );
 };
 
