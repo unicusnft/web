@@ -24,7 +24,6 @@ import {useParams} from "react-router-dom";
 import {sleep} from "../../utils/helpers";
 import {events} from "../../data/events";
 import {Loading} from "../../components/Loading";
-import {useUser} from "../../providers/UserProvider";
 
 const TicketsNFT = ({img1, img2}) => {
     return (
