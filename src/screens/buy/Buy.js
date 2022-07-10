@@ -20,7 +20,7 @@ import {GoLocation} from "react-icons/go";
 import './Buy.css'
 import {DateCard} from "../../components/DateCard";
 import {colors} from "../../core/theme";
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import {sleep} from "../../utils/helpers";
 import {events} from "../../data/events";
 import {Loading} from "../../components/Loading";
@@ -132,9 +132,11 @@ const SelectTicketCard = ({event}) => {
                 <div style={{minWidth: 20, textAlign: 'center'}}>{input?.value}</div>
                 <Button {...inc} size='xs' variant='ghost' colorScheme='white'>{'>'}</Button>
             </HStack>
-            <Flex mt={8} direction={{base: 'column-reverse'}}>
-                <Button colorScheme='main' size='xl' py={3} px={10}>COMPRAR</Button>
-            </Flex>
+            <Link to={`/buy/payment/${event?.id}`}>
+                <Flex mt={8} direction={{base: 'column-reverse'}}>
+                    <Button colorScheme='main' size='xl' py={3} px={10}>COMPRAR</Button>
+                </Flex>
+            </Link>
         </Box>
     )
 }
