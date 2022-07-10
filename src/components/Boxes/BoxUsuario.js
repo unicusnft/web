@@ -13,7 +13,7 @@ const BoxUsuario = ({
     <>
       <Avatar src={avatar} />
       <Box ml="3" width="100%">
-        <Text fontWeight="bold">
+        <Text fontWeight="bold" align="start">
           {name}
           {esAmigo && (
             <Badge ml="1" colorScheme="purple">
