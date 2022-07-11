@@ -31,7 +31,7 @@ import ModalTransferir from "../../components/Modals/ModalTransferir";
 import ModalConfirmarTransferTicket from "../../components/Modals/ModalConfirmarTransferTicket";
 import ModalTicketTransferido from "../../components/Modals/ModalTicketTransferido";
 
-const SocialMediaButton = ({ img, alt }) => {
+export const SocialMediaButton = ({ img, alt }) => {
   return (
     <div onClick={() => console.log(alt)} style={{ cursor: "pointer" }}>
       <Image src={img} alt={alt} />

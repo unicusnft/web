@@ -19,6 +19,7 @@ import { Toolbar } from "../../components/Toolbar";
 import { colors } from "../../core/theme";
 import { events } from "../../data/events";
 import { sleep } from "../../utils/helpers";
+import ModalCompraRealizada from "../../components/Modals/ModalCompraRealizada";
 
 const TypeStyle = {
   fontSize: "14px",
@@ -48,6 +49,8 @@ export const Payment = () => {
   const [owner, setOwner] = useState("");
   const [dueDate, setDueDate] = useState("");
   const [code, setCode] = useState("");
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -188,10 +191,23 @@ export const Payment = () => {
                   Volver al evento
                 </Button>
               </Link>
-              <Button colorScheme="main" size="xl" py={3} px={10} w="170px">
+              <Button
+                colorScheme="main"
+                size="xl"
+                py={3}
+                px={10}
+                w="170px"
+                onClick={() => setIsModalOpen(true)}
+              >
                 Confirmar
               </Button>
             </HStack>
+            <ModalCompraRealizada
+              isOpen={isModalOpen}
+              event={event}
+              onClose={() => {}}
+              onConfirmOpen={() => {}}
+            />
           </VStack>
         )
       )}
