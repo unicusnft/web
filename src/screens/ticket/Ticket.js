@@ -28,6 +28,8 @@ import { events } from "../../data/events";
 import { sleep } from "../../utils/helpers";
 import { Loading } from "../../components/Loading";
 import ModalTransferir from "../../components/Modals/ModalTransferir";
+import ModalConfirmarTransferTicket from "../../components/Modals/ModalConfirmarTransferTicket";
+import ModalTicketTransferido from "../../components/Modals/ModalTicketTransferido";
 
 const SocialMediaButton = ({ img, alt }) => {
   return (
@@ -47,6 +49,20 @@ export const Ticket = () => {
     onOpen: onOpenModalTransferir,
     onClose: onCloseModalTransferir,
   } = useDisclosure();
+
+  const {
+    isOpen: isOpenModalConfirmTransfer,
+    onOpen: onOpenModalConfirmTransfer,
+    onClose: onCloseModalConfirmTransfer,
+  } = useDisclosure();
+
+  const {
+    isOpen: isOpenModalSuccessTransfer,
+    onOpen: onOpenModalSuccessTransfer,
+    onClose: onCloseModalSuccessTransfer,
+  } = useDisclosure();
+
+  const [transferUser, setTransferUser] = useState({});
 
   useEffect(() => {
     async function fetchData() {
@@ -71,6 +87,22 @@ export const Ticket = () => {
           <ModalTransferir
             isOpen={isOpenModalTransferir}
             onClose={onCloseModalTransferir}
+            onConfirmOpen={onOpenModalConfirmTransfer}
+            setTransferUser={setTransferUser}
+          />
+          <ModalConfirmarTransferTicket
+            isOpen={isOpenModalConfirmTransfer}
+            onClose={onCloseModalConfirmTransfer}
+            user={transferUser}
+            evento={ticket?.title}
+            onConfirmOpen={onOpenModalSuccessTransfer}
+            onCancelConfirm={onOpenModalTransferir}
+          />
+          <ModalTicketTransferido
+            isOpen={isOpenModalSuccessTransfer}
+            onClose={onCloseModalSuccessTransfer}
+            user={transferUser}
+            evento={ticket?.title}
           />
           <VStack py={5} spacing={5}>
             <div>
@@ -147,20 +179,22 @@ export const Ticket = () => {
                   Podés transferir este ticket <br />
                   las veces que quieras!
                 </Text>
-                <Button colorScheme="main" size="xl" py={3} px={10}>
-                  Revender
-                </Button>
-                <Button
-                  colorScheme="main"
-                  size="xl"
-                  py={3}
-                  px={10}
-                  variant="outline"
-                  color={colors.mainColor}
-                  onClick={onOpenModalTransferir}
-                >
-                  Transferir
-                </Button>
+                <HStack>
+                  <Button colorScheme="main" size="xl" py={3} px={8}>
+                    Revender
+                  </Button>
+                  <Button
+                    colorScheme="main"
+                    size="xl"
+                    py={3}
+                    px={8}
+                    variant="outline"
+                    color={colors.mainColor}
+                    onClick={onOpenModalTransferir}
+                  >
+                    Transferir
+                  </Button>
+                </HStack>
               </VStack>
               <Divider inset my={6} />
               <VStack spacing={1}>

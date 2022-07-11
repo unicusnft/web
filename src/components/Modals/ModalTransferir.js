@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { colors } from "../../core/theme";
 import { users } from "../../data/users";
 import {
@@ -18,20 +18,26 @@ import {
 } from "@chakra-ui/react";
 import TabPanelModalTransferir from "../Tabs/TabPanelModalTransferir";
 
-const ModalTransferir = ({ isOpen, onClose }) => {
+const ModalTransferir = ({
+  isOpen,
+  onClose,
+  onConfirmOpen,
+  setTransferUser,
+}) => {
+  const [isUserSelected, setIsUserSelected] = useState(false);
+
   return (
     <Modal
       closeOnOverlayClick={false}
       onClose={onClose}
       size="md"
       isOpen={isOpen}
+      scrollBehavior="inside"
     >
       <ModalOverlay />
-      <ModalContent color={colors.textSecondaryColor}>
-        <ModalHeader color={colors.backgroundComponent}>
-          Transferir A
-        </ModalHeader>
-        <ModalCloseButton colorScheme="gray" />
+      <ModalContent backgroundColor={colors.backgroundComponent}>
+        <ModalHeader color={colors.white}>Transferir ticket</ModalHeader>
+        <ModalCloseButton colorScheme="white" />
         <ModalBody pb={4}>
           <Tabs isLazy isFitted variant="soft-rounded">
             <TabList mb="1em">
@@ -57,28 +63,50 @@ const ModalTransferir = ({ isOpen, onClose }) => {
             <TabPanels>
               <TabPanel>
                 <TabPanelModalTransferir
-                  placeholderInput="Buscar un usuario"
+                  placeholderInput="Nombre del usuario"
                   initialUsers={[]}
                   users={users}
+                  setTransferUser={setTransferUser}
+                  setIsUserSelected={setIsUserSelected}
                 />
               </TabPanel>
               <TabPanel>
                 <TabPanelModalTransferir
-                  placeholderInput="Buscar un usuario"
+                  placeholderInput="Nombre del usuario"
                   users={users.filter((x) => x.esAmigo)}
                   initialUsers={users.filter((x) => x.esAmigo)}
                   initialSearch
+                  setTransferUser={setTransferUser}
+                  setIsUserSelected={setIsUserSelected}
                 />
               </TabPanel>
             </TabPanels>
           </Tabs>
         </ModalBody>
-        <ModalFooter>
-          <Button onClick={onClose} mr={3} colorScheme="purple">
-            Confirmar
+        <ModalFooter justifyContent="center">
+          <Button
+            onClick={onClose}
+            mr={3}
+            color={colors.mainColor}
+            colorScheme="main"
+            variant="outline"
+            py={3}
+            px={8}
+          >
+            Cancelar
           </Button>
-          <Button onClick={onClose} color={colors.backgroundComponent}>
-            Cerrar
+          <Button
+            onClick={(event) => {
+              event.preventDefault();
+              onClose();
+              onConfirmOpen();
+            }}
+            colorScheme="main"
+            disabled={!isUserSelected}
+            py={3}
+            px={8}
+          >
+            Transferir
           </Button>
         </ModalFooter>
       </ModalContent>
