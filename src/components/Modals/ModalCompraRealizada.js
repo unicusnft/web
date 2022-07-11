@@ -21,7 +21,7 @@ import instagram from "../../img/instagram.png";
 import tikTok from "../../img/tik_tok.png";
 import twitter from "../../img/twitter.png";
 import whatsapp from "../../img/whatsapp.png";
-import { NFTCardBought } from "../NFTCardBought";
+import { NFTCardBought } from "../Cards/NFTCardBought";
 
 const TitleStyle = {
   fontSize: "16px",

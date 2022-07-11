@@ -18,7 +18,7 @@ import whatsapp from "../../img/whatsapp.png";
 import React, { useEffect, useState } from "react";
 import { Toolbar } from "../../components/Toolbar";
 import { colors } from "../../core/theme";
-import { DateCard } from "../../components/DateCard";
+import { DateCard } from "../../components/Cards/DateCard";
 import { GoLocation } from "react-icons/go";
 import { AiOutlineClockCircle, AiOutlinePlus } from "react-icons/ai";
 import { TbArrowsDownUp } from "react-icons/tb";

@@ -8,7 +8,7 @@ import {
   Spacer,
   Image,
 } from "@chakra-ui/react";
-import { colors } from "../core/theme";
+import { colors } from "../../core/theme";
 import { BsClockFill } from "react-icons/bs";
 import { HiLocationMarker } from "react-icons/hi";
 import { DateCard } from "./DateCard";
@@ -90,5 +90,4 @@ export const EventCard = ({
       </VStack>
     </Link>
   );
-  // >>>>>>> main
 };

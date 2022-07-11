@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Stack, Wrap, WrapItem, Box, Text } from "@chakra-ui/react";
 import { Filters } from "../../components/Filters.js";
-import { EventCard } from "../../components/EventCard.js";
+import { EventCard } from "../../components/Cards/EventCard.js";
 import { Toolbar } from "../../components/Toolbar";
-import { events } from "../../data/events.js";
 import { useUser } from "../../providers/UserProvider";
 import { HomeScreenOrganizer } from "./HomeScreenOrganizer";
 import { traer_eventos } from "../../services/Eventos.js";

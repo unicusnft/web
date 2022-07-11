@@ -14,7 +14,7 @@ import React, { useEffect, useState } from "react";
 import { BsClockFill } from "react-icons/bs";
 import { HiLocationMarker } from "react-icons/hi";
 import { Link, useParams } from "react-router-dom";
-import { DateCard } from "../../components/DateCard";
+import { DateCard } from "../../components/Cards/DateCard";
 import { Loading } from "../../components/Loading";
 import { Toolbar } from "../../components/Toolbar";
 import { colors } from "../../core/theme";
