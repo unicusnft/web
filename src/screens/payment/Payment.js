@@ -66,6 +66,10 @@ export const Payment = () => {
     fetchData();
   }, [params?.eventId]);
 
+  const buyTicket = async () => {
+    console.log(creditCardNumber, owner, dueDate, code);
+  };
+
   return (
     <>
       <Toolbar />
@@ -215,7 +219,9 @@ export const Payment = () => {
                 py={3}
                 px={10}
                 w="170px"
-                onClick={() => setIsModalOpen(true)}
+                onClick={() => {
+                  buyTicket().then(() => setIsModalOpen(true));
+                }}
               >
                 Confirmar
               </Button>
