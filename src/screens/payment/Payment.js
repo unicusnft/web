@@ -64,7 +64,7 @@ export const Payment = () => {
     }
 
     fetchData();
-  }, []);
+  }, [params?.eventId]);
 
   return (
     <>

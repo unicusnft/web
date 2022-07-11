@@ -14,7 +14,6 @@ import {
   Center,
   HStack,
   chakra,
-  Stack,
 } from "@chakra-ui/react";
 import { SocialMediaButton } from "../../screens/ticket/Ticket";
 import facebook from "../../img/facebook.png";
