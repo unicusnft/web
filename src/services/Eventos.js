@@ -6,3 +6,9 @@ export const traer_eventos = async () => {
 
   return eventos;
 };
+
+export const traer_evento = async (id) => {
+  const evento = get(`event/${id}`, {});
+
+  return evento;
+};

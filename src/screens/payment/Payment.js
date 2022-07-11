@@ -18,9 +18,8 @@ import { DateCard } from "../../components/Cards/DateCard";
 import { Loading } from "../../components/Loading";
 import { Toolbar } from "../../components/Toolbar";
 import { colors } from "../../core/theme";
-import { events } from "../../data/events";
-import { sleep } from "../../utils/helpers";
 import ModalCompraRealizada from "../../components/Modals/ModalCompraRealizada";
+import { traer_evento } from "../../services/Eventos";
 
 const TypeStyle = {
   fontSize: "14px",
@@ -56,10 +55,9 @@ export const Payment = () => {
   useEffect(() => {
     async function fetchData() {
       setIsLoading(true);
-      await sleep(1500);
-      setEvent(
-        events.filter((t) => t?.id?.toString() === params?.eventId)?.[0]
-      );
+      await traer_evento(params?.eventId).then((res) => {
+        setEvent(res);
+      });
       setIsLoading(false);
     }
 
@@ -107,7 +105,10 @@ export const Payment = () => {
                       </Text>
                     </VStack>
                     <Spacer />
-                    <DateCard datetime={event.datetime} size="lg" />
+                    <DateCard
+                      datetime={new Date(event.event_datetime)}
+                      size="lg"
+                    />
                   </Flex>
                   <HStack spacing={5} align="left" justifyContent="flex-start">
                     <HStack>
@@ -117,8 +118,11 @@ export const Payment = () => {
                     <HStack>
                       <BsClockFill />
                       <Text fontSize="sm">
-                        {event.datetime.getHours()}:
-                        {String(event.datetime.getMinutes()).padStart(2, "0")}
+                        {new Date(event.datetime).getHours()}:
+                        {String(new Date(event.datetime).getMinutes()).padStart(
+                          2,
+                          "0"
+                        )}
                       </Text>
                     </HStack>
                   </HStack>

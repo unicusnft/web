@@ -21,9 +21,8 @@ import "./Buy.css";
 import { DateCard } from "../../components/Cards/DateCard";
 import { colors } from "../../core/theme";
 import { Link, useParams } from "react-router-dom";
-import { sleep } from "../../utils/helpers";
-import { events } from "../../data/events";
 import { Loading } from "../../components/Loading";
+import { traer_evento } from "../../services/Eventos";
 
 const TicketsNFT = ({ img1, img2 }) => {
   return (
@@ -172,10 +171,10 @@ export const Buy = () => {
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
-      await sleep(1500);
-      setEvent(
-        events.filter((t) => t?.id?.toString() === params?.eventId)?.[0]
-      );
+      await traer_evento(params?.eventId).then((res) => {
+        console.log(res);
+        setEvent(res);
+      });
       setLoading(false);
     }
 
