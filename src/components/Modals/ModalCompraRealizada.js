@@ -14,6 +14,7 @@ import {
   Center,
   HStack,
   chakra,
+  Stack,
 } from "@chakra-ui/react";
 import { SocialMediaButton } from "../../screens/ticket/Ticket";
 import facebook from "../../img/facebook.png";
@@ -21,6 +22,7 @@ import instagram from "../../img/instagram.png";
 import tikTok from "../../img/tik_tok.png";
 import twitter from "../../img/twitter.png";
 import whatsapp from "../../img/whatsapp.png";
+import { NFTCardBought } from "../NFTCardBought";
 
 const TitleStyle = {
   fontSize: "16px",
@@ -48,12 +50,20 @@ const ModalCompraRealizada = ({ isOpen, event, onClose, onConfirmOpen }) => {
         <Link href="/my-tickets/">
           <ModalCloseButton colorScheme="white" />
         </Link>
-        <ModalBody pb={4}>
+        <ModalBody>
           <Text fontSize="sm">
             <chakra.span>Felicitaciones, ya tenes tu ticket para </chakra.span>
             <chakra.span sx={TitleStyle}>{event.title}</chakra.span>
             <chakra.span> !</chakra.span>
           </Text>
+          <NFTCardBought
+            title={event.title}
+            type={event.type}
+            location={event.location}
+            datetime={event.datetime}
+            imgUrl={event.ticketImageUrl}
+            nftNumber={event.nftNumber}
+          />
         </ModalBody>
         <Text fontSize="sm" alignSelf="center" mb={3}>
           Compartilo en tus redes:
