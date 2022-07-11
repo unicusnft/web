@@ -12,39 +12,39 @@ export const makeRequest = async (request) => {
 };
 
 export const get = (url, config) => {
-  return this.makeRequest(() =>
-    fetch(`${BASE_URL}/${url}`, { ...this.headers(config), method: "GET" })
+  return makeRequest(() =>
+    fetch(`${BASE_URL}/${url}`, { ...headers(config), method: "GET" })
   );
 };
 
 export const del = (url, config) => {
-  return this.makeRequest(() =>
-    fetch(`${BASE_URL}/${url}`, { ...this.headers(config), method: "DELETE" })
+  return makeRequest(() =>
+    fetch(`${BASE_URL}/${url}`, { ...headers(config), method: "DELETE" })
   );
 };
 
 export const post = (url, data, config) =>
-  this.makeRequest(() =>
+  makeRequest(() =>
     fetch(`${BASE_URL}/${url}`, {
-      ...this.headers(config),
+      ...headers(config),
       method: "POST",
       body: JSON.stringify(data),
     })
   );
 
 export const put = (url, data, config) =>
-  this.makeRequest(() =>
+  makeRequest(() =>
     fetch(`${BASE_URL}/${url}`, {
-      ...this.headers(config),
+      ...headers(config),
       method: "PUT",
       body: JSON.stringify(data),
     })
   );
 
 export const patch = (url, data, config) => {
-  return this.makeRequest(() =>
+  return makeRequest(() =>
     fetch(`${BASE_URL}/${url}`, {
-      ...this.headers(config),
+      ...headers(config),
       method: "PATCH",
       body: JSON.stringify(data),
     })

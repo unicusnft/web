@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Stack, Wrap, WrapItem, Box, Text } from "@chakra-ui/react";
 import { Filters } from "../../components/Filters.js";
 import { EventCard } from "../../components/EventCard.js";
 import { Toolbar } from "../../components/Toolbar";
 import { events } from "../../data/events.js";
-import {useUser} from "../../providers/UserProvider";
-import {HomeScreenOrganizer} from "./HomeScreenOrganizer";
+import { useUser } from "../../providers/UserProvider";
+import { HomeScreenOrganizer } from "./HomeScreenOrganizer";
+import { traer_eventos } from "../../services/Eventos.js";
 
 const TitlePageStyle = {
   fontSize: "25px",
@@ -14,11 +15,17 @@ const TitlePageStyle = {
 };
 
 export const HomeScreen = () => {
-  const {currentUser} = useUser()
+  const { currentUser } = useUser();
   const [event, setEvent] = useState("");
 
+  const [eventos, setEventos] = useState([]);
+
+  useEffect(() => {
+    traer_eventos().then((res) => setEventos(res));
+  }, []);
+
   if (currentUser?.is_organizer) {
-    return <HomeScreenOrganizer />
+    return <HomeScreenOrganizer />;
   }
 
   return (
@@ -37,7 +44,7 @@ export const HomeScreen = () => {
         </Stack>
         <br />
         <Wrap spacing="25px" justify="center">
-          {events
+          {eventos
             .filter(
               (x) =>
                 event === "" ||
@@ -48,15 +55,7 @@ export const HomeScreen = () => {
             )
             .map((e) => (
               <WrapItem key={e.title}>
-                <EventCard
-                  id={e.id}
-                  title={e.title}
-                  type={e.type}
-                  location={e.location}
-                  datetime={e.datetime}
-                  imgUrl={e.eventImageUrl}
-                  nftNumber={e.nftNumber}
-                />
+                <EventCard {...e} />
               </WrapItem>
             ))}
         </Wrap>
