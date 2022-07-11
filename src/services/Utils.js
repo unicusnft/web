@@ -1,4 +1,4 @@
-export const BASE_URL = "https://unicus-server-prod.herokuapp.com/";
+export const BASE_URL = "https://unicus-server-prod.herokuapp.com/v1";
 
 // EVENTOS
 export const CREAR_EVENTO = "event";

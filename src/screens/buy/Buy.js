@@ -18,7 +18,7 @@ import React, { useEffect, useState } from "react";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { GoLocation } from "react-icons/go";
 import "./Buy.css";
-import { DateCard } from "../../components/DateCard";
+import { DateCard } from "../../components/Cards/DateCard";
 import { colors } from "../../core/theme";
 import { Link, useParams } from "react-router-dom";
 import { sleep } from "../../utils/helpers";

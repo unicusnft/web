@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Container, Stack, Wrap, WrapItem, Text } from "@chakra-ui/react";
 import { Toolbar } from "../../components/Toolbar";
 
-import { NFTCard } from "../../components/NFTCard";
+import { NFTCard } from "../../components/Cards/NFTCard";
 import { Filters } from "../../components/Filters";
 import { events } from "../../data/events";
 
