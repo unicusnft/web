@@ -5,6 +5,7 @@ import {
   HStack,
   Image,
   Input,
+  Select,
   Spacer,
   Text,
   VStack,
@@ -44,7 +45,7 @@ export const Payment = () => {
   let params = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [event, setEvent] = useState(undefined);
-  const [isCreditCardSelected, setIsCreditCardSelected] = useState(true);
+  const [isCreditCardSelected, setIsCreditCardSelected] = useState(false);
   const [creditCardNumber, setCreditCardNumber] = useState("");
   const [owner, setOwner] = useState("");
   const [dueDate, setDueDate] = useState("");
@@ -132,10 +133,27 @@ export const Payment = () => {
               bottom={100}
             >
               <VStack spacing={0} align="left" padding={5}>
-                <Text fontSize="sm">Elegí un método de pago</Text>
+                <Text fontSize="sm" mb={2}>
+                  Elegí un método de pago
+                </Text>
+                <Select
+                  variant="outline"
+                  placeholder="Seleccione una forma de pago"
+                  onChange={(e) => {
+                    if (e.target.value === "option1")
+                      setIsCreditCardSelected(true);
+                    else setIsCreditCardSelected(false);
+                  }}
+                  bgColor={colors.backgroundComponent}
+                  textColor="white"
+                >
+                  <option value="option1" style={{ color: "black" }}>
+                    Tarjeta de débito/crédito
+                  </option>
+                </Select>
                 {isCreditCardSelected && (
                   <VStack align="left">
-                    <VStack align="left" marginTop={5}>
+                    <VStack align="left" marginTop={2}>
                       <Text fontSize="sm">Número de la tarjeta</Text>
                       <Input
                         textColor={colors.white}
