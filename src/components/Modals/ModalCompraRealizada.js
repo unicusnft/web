@@ -29,7 +29,7 @@ const TitleStyle = {
   color: colors.mainColor,
 };
 
-const ModalCompraRealizada = ({ isOpen, event, NFT }) => {
+const ModalCompraRealizada = ({ isOpen, event, id }) => {
   return (
     <Modal
       closeOnOverlayClick={false}
@@ -55,12 +55,12 @@ const ModalCompraRealizada = ({ isOpen, event, NFT }) => {
             <chakra.span> !</chakra.span>
           </Text>
           <NFTCardBought
-            title={event.title}
-            type={event.event_type}
-            location={event.location}
-            datetime={new Date(event.event_datetime)}
-            imgUrl={event.event_image_url}
-            nftNumber={NFT.id}
+            title={event?.title}
+            type={event?.event_type}
+            location={event?.location}
+            datetime={new Date(event?.event_datetime)}
+            imgUrl={event?.event_image_url}
+            nftNumber={id}
           />
         </ModalBody>
         <Text fontSize="sm" alignSelf="center" mb={3}>

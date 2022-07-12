@@ -83,10 +83,6 @@ const SelectTicketCard = ({ event }) => {
   const dec = getDecrementButtonProps();
   const input = getInputProps();
 
-  useEffect(() => {
-    console.log(radio);
-  }, [radio]);
-
   return (
     <Box
       bg={colors.backgroundComponent}

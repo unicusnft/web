@@ -49,7 +49,7 @@ export const Payment = () => {
   let params = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [event, setEvent] = useState(undefined);
-  const [NFT, setNFT] = useState(undefined);
+  const [id, setId] = useState(undefined);
   const [isCreditCardSelected, setIsCreditCardSelected] = useState(false);
   const [creditCardNumber, setCreditCardNumber] = useState("");
   const [owner, setOwner] = useState("");
@@ -74,12 +74,12 @@ export const Payment = () => {
   const buyTicket = async () => {
     console.log(creditCardNumber, owner, dueDate, code);
     await comprar_ticket(
-      currentUser.username,
+      "1",
       event.tickets
         .filter((t) => params.spot.includes(t.description))[0]
         .id.toString()
     ).then((res) => {
-      setNFT(res);
+      setId(res.id);
     });
   };
 
@@ -258,11 +258,7 @@ export const Payment = () => {
                 Confirmar
               </Button>
             </HStack>
-            <ModalCompraRealizada
-              isOpen={isModalOpen}
-              event={event}
-              nft={NFT}
-            />
+            <ModalCompraRealizada isOpen={isModalOpen} event={event} id={id} />
           </VStack>
         )
       )}
