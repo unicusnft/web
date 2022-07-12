@@ -21,9 +21,8 @@ import "./Buy.css";
 import { DateCard } from "../../components/Cards/DateCard";
 import { colors } from "../../core/theme";
 import { Link, useParams } from "react-router-dom";
-import { sleep } from "../../utils/helpers";
-import { events } from "../../data/events";
 import { Loading } from "../../components/Loading";
+import { traer_evento } from "../../services/Calls";
 
 const TicketsNFT = ({ img1, img2 }) => {
   return (
@@ -68,9 +67,7 @@ const TicketsNFT = ({ img1, img2 }) => {
 };
 
 const SelectTicketCard = ({ event }) => {
-  const [radio, setRadio] = React.useState(
-    `$${event?.ticketTypes?.[0]?.price} - ${event?.ticketTypes?.[0]?.label}`
-  );
+  const [ticketId, setTicketId] = React.useState("");
   const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } =
     useNumberInput({
       step: 1,
@@ -92,13 +89,13 @@ const SelectTicketCard = ({ event }) => {
       color="white"
     >
       <Text fontSize="xs" color="gray">
-        {event?.type}
+        {event?.event_type}
       </Text>
       <Text fontSize="4xl" sx={{ fontWeight: 600 }} mb={3}>
         {event?.title}
       </Text>
       <HStack>
-        <DateCard datetime={event?.datetime} />
+        <DateCard datetime={new Date(event?.event_datetime)} />
         <VStack alignItems="left">
           <HStack>
             <GoLocation />
@@ -107,7 +104,7 @@ const SelectTicketCard = ({ event }) => {
           <HStack>
             <AiOutlineClockCircle />
             <Text fontSize="xs">
-              {event?.datetime?.toLocaleTimeString("en-GB", {
+              {new Date(event?.event_datetime).toLocaleTimeString("en-GB", {
                 hour: "2-digit",
                 minute: "2-digit",
               })}
@@ -118,25 +115,24 @@ const SelectTicketCard = ({ event }) => {
       <Divider my={6} />
       <div>
         <div>Seleccioná el tipo de ticket</div>
-        <RadioGroup
-          onChange={setRadio}
-          value={radio}
-          defaultValue={`$${event?.ticketTypes?.[0]?.price} - ${event?.ticketTypes?.[0]?.label}`}
-          my={2}
-        >
+        <RadioGroup value={ticketId} my={2}>
           <Stack spacing={0.5}>
-            {event?.ticketTypes?.map(({ label, price }) => (
+            {event?.tickets?.map(({ id, price, description }) => (
               <Radio
-                key={label}
+                key={id}
                 colorScheme="main"
-                value={`$${price} - ${label}`}
+                value={id.toString()}
+                onClick={() => setTicketId(id.toString())}
               >
                 <Text
                   noOfLines={2}
-                  className={`${label === radio ? "purple-text" : ""}`}
+                  className={`${
+                    id.toString() === ticketId ? "purple-text" : ""
+                  }`}
                   style={{ paddingLeft: "5px" }}
+                  onClick={() => setTicketId(id.toString())}
                 >
-                  ${price} - {label}
+                  ${price} - {description}
                 </Text>
               </Radio>
             ))}
@@ -153,9 +149,15 @@ const SelectTicketCard = ({ event }) => {
           {">"}
         </Button>
       </HStack>
-      <Link to={`/buy/${event?.id}/cant/${input?.value}/spot/${radio}`}>
+      <Link to={`/buy/${event?.id}/ticket/${ticketId}/cant/${input?.value}`}>
         <Flex mt={8} direction={{ base: "column-reverse" }}>
-          <Button colorScheme="main" size="xl" py={3} px={10}>
+          <Button
+            colorScheme="main"
+            size="xl"
+            py={3}
+            px={10}
+            disabled={!ticketId}
+          >
             COMPRAR
           </Button>
         </Flex>
@@ -172,10 +174,9 @@ export const Buy = () => {
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
-      await sleep(1500);
-      setEvent(
-        events.filter((t) => t?.id?.toString() === params?.eventId)?.[0]
-      );
+      await traer_evento(params?.eventId).then((res) => {
+        setEvent(res);
+      });
       setLoading(false);
     }
 
@@ -190,7 +191,10 @@ export const Buy = () => {
       ) : (
         <div style={{ marginTop: "20px", overflowX: "hidden" }}>
           <Center marginRight={["-72px", "-130px", "-182px"]}>
-            <TicketsNFT img1={event?.buyImage1} img2={event?.buyImage2} />
+            <TicketsNFT
+              img1={event?.buy_image_1_url}
+              img2={event?.buy_image_2_url}
+            />
           </Center>
           <Center mt={5}>
             <SelectTicketCard event={event} />
