@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Flex, HStack, Image, Text, VStack } from "@chakra-ui/react";
 import { colors } from "../../core/theme";
 import { BsClockFill } from "react-icons/bs";
@@ -73,16 +73,12 @@ const DateStyle = {
   left: "120px",
 };
 
-export const NFTCard = ({
-  title,
-  type,
-  location,
-  datetime,
-  imgUrl,
-  nftNumber,
-}) => {
+export const NFTCard = ({ event, nft_id }) => {
+  const { title, location, event_datetime, ticket_image_url } = event;
+  const [datetime] = useState(new Date(event_datetime));
+
   return (
-    <Link to={`/ticket/${nftNumber}`}>
+    <Link to={`/ticket/${nft_id}`}>
       <Flex align="top" fontFamily="Montserrat">
         <Box textAlign="center" sx={DateStyle}>
           <Text fontSize="28px" padding="2px" lineHeight="70%">
@@ -94,11 +90,11 @@ export const NFTCard = ({
               .toUpperCase()}
           </Text>
         </Box>
-        <Image src={imgUrl} sx={ImageStyle} />
+        <Image src={ticket_image_url} sx={ImageStyle} />
         <VStack spacing="0px">
           <Box textAlign="left" fontFamily="Montserrat" sx={EventInfoStyle}>
             <Text noOfLines={1} sx={NFTNumberStyle}>
-              NFT#{nftNumber}
+              NFT#{nft_id}
             </Text>
             <HStack>
               <HiLocationMarker />
@@ -131,7 +127,7 @@ export const NFTCard = ({
                 <Text noOfLines={1} as="b">
                   NFT ID
                 </Text>
-                <Text noOfLines={1}>{nftNumber}</Text>
+                <Text noOfLines={1}>{nft_id}</Text>
               </VStack>
               <VStack width="60px" align="left">
                 <Text noOfLines={1} as="b">

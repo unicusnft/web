@@ -29,13 +29,13 @@ const TitleStyle = {
   color: colors.mainColor,
 };
 
-const ModalCompraRealizada = ({ isOpen, event, onClose, onConfirmOpen }) => {
+const ModalCompraRealizada = ({ isOpen, event, id, onClose }) => {
   return (
     <Modal
       closeOnOverlayClick={false}
-      onClose={onClose}
       size="md"
       isOpen={isOpen}
+      onClose={onClose}
       scrollBehavior="inside"
     >
       <ModalOverlay />
@@ -46,7 +46,7 @@ const ModalCompraRealizada = ({ isOpen, event, onClose, onConfirmOpen }) => {
         minWidth={300}
       >
         <ModalHeader color={colors.white}>Ticket adquirido</ModalHeader>
-        <Link href="/my-tickets/">
+        <Link href={`/`}>
           <ModalCloseButton colorScheme="white" />
         </Link>
         <ModalBody>
@@ -56,12 +56,12 @@ const ModalCompraRealizada = ({ isOpen, event, onClose, onConfirmOpen }) => {
             <chakra.span> !</chakra.span>
           </Text>
           <NFTCardBought
-            title={event.title}
-            type={event.type}
-            location={event.location}
-            datetime={event.datetime}
-            imgUrl={event.ticketImageUrl}
-            nftNumber={event.nftNumber}
+            title={event?.title}
+            type={event?.event_type}
+            location={event?.location}
+            datetime={new Date(event?.event_datetime)}
+            imgUrl={event?.event_image_url}
+            nftNumber={id}
           />
         </ModalBody>
         <Text fontSize="sm" alignSelf="center" mb={3}>

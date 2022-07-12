@@ -117,8 +117,10 @@ export const NFTCardBought = ({
               <HStack>
                 <BsClockFill />
                 <Text fontSize="12px">
-                  {datetime.getHours()}:
-                  {String(datetime.getMinutes()).padStart(2, "0")}
+                  {datetime.toLocaleTimeString("en-GB", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
                 </Text>
               </HStack>
             </Box>

@@ -24,12 +24,11 @@ import { AiOutlineClockCircle, AiOutlinePlus } from "react-icons/ai";
 import { TbArrowsDownUp } from "react-icons/tb";
 import { BiTransfer } from "react-icons/bi";
 import { MdSell } from "react-icons/md";
-import { events } from "../../data/events";
-import { sleep } from "../../utils/helpers";
 import { Loading } from "../../components/Loading";
 import ModalTransferir from "../../components/Modals/ModalTransferir";
 import ModalConfirmarTransferTicket from "../../components/Modals/ModalConfirmarTransferTicket";
 import ModalTicketTransferido from "../../components/Modals/ModalTicketTransferido";
+import { traer_nft } from "../../services/Calls";
 
 export const SocialMediaButton = ({ img, alt }) => {
   return (
@@ -63,19 +62,19 @@ export const Ticket = () => {
   } = useDisclosure();
 
   const [transferUser, setTransferUser] = useState({});
+  const [datetime, setDatetime] = useState(null);
 
   useEffect(() => {
-    async function fetchData() {
-      setLoading(true);
-      await sleep(1500);
-      setTicket(
-        events.filter((t) => t?.nftNumber?.toString() === params?.ticketId)?.[0]
-      );
-      setLoading(false);
-    }
+    const fetchNft = async () => {
+      return traer_nft(params?.nftId);
+    };
 
-    fetchData();
-  }, [params?.ticketId]);
+    fetchNft().then((res) => {
+      setTicket(res);
+      setLoading(false);
+      setDatetime(new Date(res.event.event_datetime));
+    });
+  }, [params?.nftId]);
 
   return (
     <>
@@ -94,7 +93,7 @@ export const Ticket = () => {
             isOpen={isOpenModalConfirmTransfer}
             onClose={onCloseModalConfirmTransfer}
             user={transferUser}
-            evento={ticket?.title}
+            evento={ticket?.event?.title}
             onConfirmOpen={onOpenModalSuccessTransfer}
             onCancelConfirm={onOpenModalTransferir}
           />
@@ -102,7 +101,7 @@ export const Ticket = () => {
             isOpen={isOpenModalSuccessTransfer}
             onClose={onCloseModalSuccessTransfer}
             user={transferUser}
-            evento={ticket?.title}
+            evento={ticket?.event.title}
           />
           <VStack py={5} spacing={5}>
             <div>
@@ -115,7 +114,7 @@ export const Ticket = () => {
                   sx={{ fontWeight: 700 }}
                   color={colors.mainColor}
                 >
-                  {ticket?.title}
+                  {ticket?.event.title}
                 </Text>
               </Center>
             </div>
@@ -128,7 +127,7 @@ export const Ticket = () => {
               objectFit="cover"
             >
               <Image
-                src={ticket?.buyImage1}
+                src={ticket?.event.buy_image_1_url}
                 alt="Ticket photo"
                 w="350px"
                 h="400px"
@@ -155,19 +154,19 @@ export const Ticket = () => {
             >
               <VStack spacing={5}>
                 <Text fontSize="3xl" sx={{ fontWeight: 600 }}>
-                  NFT#{ticket?.nftNumber}
+                  NFT#{ticket?.id}
                 </Text>
                 <HStack>
-                  <DateCard datetime={ticket?.datetime} />
+                  <DateCard datetime={datetime} />
                   <VStack alignItems="left">
                     <HStack>
                       <GoLocation />
-                      <Text fontSize="xs">{ticket?.location}</Text>
+                      <Text fontSize="xs">{ticket?.event.location}</Text>
                     </HStack>
                     <HStack>
                       <AiOutlineClockCircle />
                       <Text fontSize="xs">
-                        {ticket?.datetime?.toLocaleTimeString("en-GB", {
+                        {datetime.toLocaleTimeString("en-GB", {
                           hour: "2-digit",
                           minute: "2-digit",
                         })}
@@ -206,29 +205,29 @@ export const Ticket = () => {
                     </Text>
                   </Center>
                 </Box>
-                {ticket?.history.map((h, index) => (
+                {ticket?.transactions.map((h, index) => (
                   <Box
                     bg="#121212"
                     w="300px"
                     rounded={2}
                     roundedBottom={
-                      index + 1 === ticket?.history?.length ? 20 : 2
+                      index + 1 === ticket?.transactions?.length ? 20 : 2
                     }
                     py={4}
                     key={h?.type + h?.date}
                   >
                     <HStack spacing={0} mx={8}>
-                      {h.type === "CREADO" && (
+                      {h.transaction_type === "VENDIDO" && (
                         <AiOutlinePlus color={colors.mainColor} />
                       )}
-                      {h.type === "REVENTA" && (
+                      {h.transaction_type === "REVENTA" && (
                         <MdSell color={colors.mainColor} />
                       )}
-                      {h.type === "TRANSFERENCIA" && (
+                      {h.transaction_type === "TRANSFERENCIA" && (
                         <BiTransfer color={colors.mainColor} />
                       )}
                       <Text p={1} fontSize="xs" color={colors.mainColor}>
-                        {h.type}
+                        {h.transaction_type}
                       </Text>
                     </HStack>
                     <HStack spacing={0} mx={8}>
@@ -236,7 +235,7 @@ export const Ticket = () => {
                         DESDE:
                       </Text>
                       <Text p={1} fontSize="xs">
-                        {h.from}
+                        {h.from_user.full_name}
                       </Text>
                     </HStack>
                     <HStack spacing={0} mx={8}>
@@ -244,7 +243,7 @@ export const Ticket = () => {
                         HACIA:
                       </Text>
                       <Text p={1} fontSize="xs">
-                        {h.to}
+                        {h.to_user.full_name}
                       </Text>
                     </HStack>
                     <HStack spacing={0} mx={8}>
@@ -252,7 +251,7 @@ export const Ticket = () => {
                         FECHA:
                       </Text>
                       <Text p={1} fontSize="xs">
-                        {h.date.toLocaleString()}
+                        {new Date(h.transaction_date).toLocaleString()}
                       </Text>
                     </HStack>
                   </Box>
