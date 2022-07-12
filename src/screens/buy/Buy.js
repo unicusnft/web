@@ -22,7 +22,7 @@ import { DateCard } from "../../components/Cards/DateCard";
 import { colors } from "../../core/theme";
 import { Link, useParams } from "react-router-dom";
 import { Loading } from "../../components/Loading";
-import { traer_evento } from "../../services/Eventos";
+import { traer_evento } from "../../services/Calls";
 
 const TicketsNFT = ({ img1, img2 }) => {
   return (
@@ -67,9 +67,6 @@ const TicketsNFT = ({ img1, img2 }) => {
 };
 
 const SelectTicketCard = ({ event }) => {
-  const [radio, setRadio] = React.useState(
-    `$${event?.ticketTypes?.[0]?.price} - ${event?.ticketTypes?.[0]?.description}`
-  );
   const [ticketId, setTicketId] = React.useState("");
   const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } =
     useNumberInput({
@@ -118,23 +115,22 @@ const SelectTicketCard = ({ event }) => {
       <Divider my={6} />
       <div>
         <div>Seleccioná el tipo de ticket</div>
-        <RadioGroup
-          onChange={setRadio}
-          value={radio}
-          defaultValue={`$${event?.tickets?.[0]?.price} - ${event?.tickets?.[0]?.description}`}
-          my={2}
-        >
+        <RadioGroup value={ticketId} my={2}>
           <Stack spacing={0.5}>
-            {event?.tickets?.map(({ description, price }, index) => (
+            {event?.tickets?.map(({ id, price, description }) => (
               <Radio
-                key={description + index}
+                key={id}
                 colorScheme="main"
-                value={`$${price} - ${description}`}
+                value={id.toString()}
+                onClick={() => setTicketId(id.toString())}
               >
                 <Text
                   noOfLines={2}
-                  className={`${description === radio ? "purple-text" : ""}`}
+                  className={`${
+                    id.toString() === ticketId ? "purple-text" : ""
+                  }`}
                   style={{ paddingLeft: "5px" }}
+                  onClick={() => setTicketId(id.toString())}
                 >
                   ${price} - {description}
                 </Text>
@@ -153,14 +149,14 @@ const SelectTicketCard = ({ event }) => {
           {">"}
         </Button>
       </HStack>
-      <Link to={`/buy/${event?.id}/cant/${input?.value}/spot/${radio}`}>
+      <Link to={`/buy/${event?.id}/ticket/${ticketId}/cant/${input?.value}`}>
         <Flex mt={8} direction={{ base: "column-reverse" }}>
           <Button
             colorScheme="main"
             size="xl"
             py={3}
             px={10}
-            disabled={radio.includes(undefined)}
+            disabled={!ticketId}
           >
             COMPRAR
           </Button>

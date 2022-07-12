@@ -19,12 +19,12 @@ import { Loading } from "../../components/Loading";
 import { Toolbar } from "../../components/Toolbar";
 import { colors } from "../../core/theme";
 import ModalCompraRealizada from "../../components/Modals/ModalCompraRealizada";
+import { useUser } from "../../providers/UserProvider";
 import {
   comprar_ticket,
   traer_evento,
-  traer_NFT,
-} from "../../services/Eventos";
-import { useUser } from "../../providers/UserProvider";
+  traer_ticket,
+} from "../../services/Calls";
 
 const TypeStyle = {
   fontSize: "14px",
@@ -49,6 +49,7 @@ export const Payment = () => {
   let params = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [event, setEvent] = useState(undefined);
+  const [ticket, setTicket] = useState(undefined);
   const [id, setId] = useState(undefined);
   const [isCreditCardSelected, setIsCreditCardSelected] = useState(false);
   const [creditCardNumber, setCreditCardNumber] = useState("");
@@ -65,6 +66,9 @@ export const Payment = () => {
       await traer_evento(params?.eventId).then((res) => {
         setEvent(res);
       });
+      await traer_ticket(params?.ticketId).then((res) => {
+        setTicket(res);
+      });
       setIsLoading(false);
     }
 
@@ -73,12 +77,7 @@ export const Payment = () => {
 
   const buyTicket = async () => {
     console.log(creditCardNumber, owner, dueDate, code);
-    await comprar_ticket(
-      "1",
-      event.tickets
-        .filter((t) => params.spot.includes(t.description))[0]
-        .id.toString()
-    ).then((res) => {
+    await comprar_ticket("1", ticket.id).then((res) => {
       setId(res.id);
     });
   };
@@ -144,7 +143,11 @@ export const Payment = () => {
                     </HStack>
                   </HStack>
                   <Text noOfLines={2} sx={TicketTextStyle}>
-                    {params.cant} Ticket{params.cant > 1 && "s"}: {params.spot}
+                    {params.cant} Ticket{params.cant > 1 && "s"}: $
+                    {ticket.price} - {ticket.description}
+                  </Text>
+                  <Text noOfLines={2} sx={TicketTextStyle}>
+                    Total: ${ticket.price * params.cant}
                   </Text>
                 </VStack>
               </VStack>
@@ -258,7 +261,12 @@ export const Payment = () => {
                 Confirmar
               </Button>
             </HStack>
-            <ModalCompraRealizada isOpen={isModalOpen} event={event} id={id} />
+            <ModalCompraRealizada
+              isOpen={isModalOpen}
+              event={event}
+              id={id}
+              onClose={() => setIsModalOpen(false)}
+            />
           </VStack>
         )
       )}

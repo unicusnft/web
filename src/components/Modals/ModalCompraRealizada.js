@@ -29,12 +29,13 @@ const TitleStyle = {
   color: colors.mainColor,
 };
 
-const ModalCompraRealizada = ({ isOpen, event, id }) => {
+const ModalCompraRealizada = ({ isOpen, event, id, onClose }) => {
   return (
     <Modal
       closeOnOverlayClick={false}
       size="md"
       isOpen={isOpen}
+      onClose={onClose}
       scrollBehavior="inside"
     >
       <ModalOverlay />
@@ -45,7 +46,7 @@ const ModalCompraRealizada = ({ isOpen, event, id }) => {
         minWidth={300}
       >
         <ModalHeader color={colors.white}>Ticket adquirido</ModalHeader>
-        <Link href="/my-tickets/">
+        <Link href={`/`}>
           <ModalCloseButton colorScheme="white" />
         </Link>
         <ModalBody>
