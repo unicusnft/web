@@ -5,7 +5,7 @@ import { EventCard } from "../../components/Cards/EventCard.js";
 import { Toolbar } from "../../components/Toolbar";
 import { useUser } from "../../providers/UserProvider";
 import { HomeScreenOrganizer } from "./HomeScreenOrganizer";
-import { traer_eventos } from "../../services/Eventos.js";
+import { traer_eventos } from "../../services/Calls.js";
 import { Loading } from "../../components/Loading";
 
 const TitlePageStyle = {
