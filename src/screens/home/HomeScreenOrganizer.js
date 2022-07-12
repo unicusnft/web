@@ -5,6 +5,7 @@ import {AiOutlinePlus} from "react-icons/ai";
 import {useNavigate} from "react-router";
 import {EventCardOrganizer} from "../../components/EventCardOrganizer";
 import {events as eventsMock} from "../../data/events";
+import {Link} from "react-router-dom";
 
 const TitlePageStyle = {
     fontSize: "25px",
@@ -35,15 +36,15 @@ export const HomeScreenOrganizer = () => {
                 </Stack>
                 <Wrap spacing="25px" justify="center">
                     {events.map((event) => (
-                        <EventCardOrganizer
-                            key={event?.id}
-                            id={event?.id}
-                            title={event?.title}
-                            type={event?.type}
-                            location={event?.location}
-                            datetime={event?.datetime}
-                            imgUrl={event?.eventImageUrl}
-                        />
+                        <Link to={`/event/${event?.id}`} key={event?.id}>
+                            <EventCardOrganizer
+                                title={event?.title}
+                                type={event?.type}
+                                location={event?.location}
+                                datetime={event?.datetime}
+                                imgUrl={event?.eventImageUrl}
+                            />
+                        </Link>
                     ))}
                 </Wrap>
                 <Box
