@@ -15,6 +15,12 @@ export const traer_eventos = async () => {
   return eventos;
 };
 
+export const traer_evento = async (event_id) => {
+  const evento = get(TRAER_EVENTO_BY_ID.replace("{event_id}", event_id), {});
+
+  return evento;
+};
+
 //users
 export const traer_usuarios = async () => {
   const users = get(TRAER_USERS, {});
