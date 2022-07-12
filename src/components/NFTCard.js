@@ -4,16 +4,17 @@ import {colors} from "../core/theme";
 import {BsClockFill} from "react-icons/bs";
 import {HiLocationMarker} from "react-icons/hi";
 import {Link} from "react-router-dom";
+import {DateCard} from "./DateCard";
 
 const EventInfoStyle = {
     backgroundColor: colors.backgroundComponent,
     padding: '5px',
-    paddingLeft: '38px',
+    paddingLeft: '15px',
     color: colors.white,
     fontSize: '10px',
     borderRadius: '0px 20px 0px 0px',
     height: '162px',
-    width: '235px',
+    width: '200px',
     margin: '0',
 }
 
@@ -21,12 +22,12 @@ const NFTInfoStyle = {
     backgroundColor: colors.mainColor,
     padding: '5px',
     paddingTop: '16px',
-    paddingLeft: '30px',
+    paddingLeft: '20px',
     color: colors.white,
     fontSize: '10px',
     borderRadius: '0px 0px 20px 0px',
     height: '66px',
-    width: '235px',
+    width: '200px',
     margin: '0px',
 }
 
@@ -51,7 +52,7 @@ const TicketForStyle = {
 }
 
 const TitleStyle = {
-    fontSize: '26px',
+    fontSize: '24px',
     fontWeight: 'bold',
     color: colors.mainColor
 }
@@ -69,7 +70,6 @@ const DateStyle = {
     width: '58px',
     margin: '0px',
     marginRight: '-58px',
-    zIndex: 1,
     position: 'relative',
     left: '120px'
 }
@@ -78,18 +78,13 @@ export const NFTCard = ({title, type, location, datetime, imgUrl, nftNumber}) =>
 
     return (
         <Link to={`/ticket/${nftNumber}`}>
-            <Flex align="top" fontFamily="Montserrat">
-                <Box textAlign="center" sx={DateStyle}>
-                    <Text fontSize="28px" padding="2px" lineHeight="70%">
-                        {datetime.getDate()}
-                    </Text>
-                    <Text paddingBottom="0px" fontSize='12px'>
-                        {datetime.toLocaleString('default', {month: 'short'}).toUpperCase()}
-                    </Text>
-                </Box>
-                <Image
-                    src={imgUrl}
-                    sx={ImageStyle}/>
+            <HStack spacing={0} fontFamily="Montserrat" width="360">
+                <div style={{position: 'relative', height: '228px', width: '160px'}}>
+                    <Image src={imgUrl} sx={ImageStyle}/>
+                    <div style={{position: 'absolute', top: '0', right: '0'}}>
+                        <DateCard datetime={datetime}></DateCard>
+                    </div>
+                </div>
                 <VStack spacing='0px'>
                     <Box
                         textAlign="left"
@@ -116,11 +111,11 @@ export const NFTCard = ({title, type, location, datetime, imgUrl, nftNumber}) =>
                         sx={NFTInfoStyle}
                     >
                         <HStack>
-                            <VStack width='60px' align='left'>
+                            <VStack width='45px' align='left'>
                                 <Text noOfLines={1} as="b">CHAIN</Text>
                                 <Text noOfLines={1}>Polygon</Text>
                             </VStack>
-                            <VStack width='60px' align='left'>
+                            <VStack width='45px' align='left'>
                                 <Text noOfLines={1} as="b">NFT ID</Text>
                                 <Text noOfLines={1}>{nftNumber}</Text>
                             </VStack>
@@ -131,7 +126,7 @@ export const NFTCard = ({title, type, location, datetime, imgUrl, nftNumber}) =>
                         </HStack>
                     </Box>
                 </VStack>
-            </Flex>
+            </HStack>
         </Link>
     );
 };

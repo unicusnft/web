@@ -28,7 +28,7 @@ export const MyTickets = () => {
         />
       </Stack>
       <br />
-      <Container maxW="8xl" padding="0px">
+      <Container maxW="8xl" padding="0px" mb={5}>
         <Wrap spacing="25px" justify="center">
           {events
             .filter(
