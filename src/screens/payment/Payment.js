@@ -73,7 +73,7 @@ export const Payment = () => {
     }
 
     fetchData();
-  }, [params?.eventId]);
+  }, [params?.eventId, params?.ticketId]);
 
   const buyTicket = async () => {
     console.log(creditCardNumber, owner, dueDate, code);
