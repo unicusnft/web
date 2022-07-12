@@ -5,6 +5,7 @@ import {
   TRAER_NFTS_DE_USER,
   TRAER_EVENTO_BY_ID,
   TRAER_TICKET_BY_ID,
+  TRAER_NFT_BY_ID,
 } from "./Utils";
 
 // eventos
@@ -12,12 +13,6 @@ export const traer_eventos = async () => {
   const eventos = get(TRAER_EVENTOS, {});
 
   return eventos;
-};
-
-export const traer_evento = async (event_id) => {
-  const evento = get(TRAER_EVENTO_BY_ID.replace("{event_id}", event_id), {});
-
-  return evento;
 };
 
 //users
@@ -44,4 +39,11 @@ export const traer_ticket = async (ticket_id) => {
   const ticket = get(TRAER_TICKET_BY_ID.replace("{ticket_id}", ticket_id), {});
 
   return ticket;
+};
+
+// nft
+export const traer_nft = async (nft_id) => {
+  const evento = get(TRAER_NFT_BY_ID.replace("{nft_id}", nft_id), {});
+
+  return evento;
 };

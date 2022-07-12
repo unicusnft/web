@@ -58,7 +58,7 @@ export const MyTickets = () => {
                 )
                 .map((t) => (
                   <WrapItem key={t.event.title}>
-                    <NFTCard event={t.event} ticket_id={t.ticket_id} />
+                    <NFTCard event={t.event} nft_id={t.id} />
                   </WrapItem>
                 ))}
             </Wrap>
