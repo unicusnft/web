@@ -19,7 +19,12 @@ import { Loading } from "../../components/Loading";
 import { Toolbar } from "../../components/Toolbar";
 import { colors } from "../../core/theme";
 import ModalCompraRealizada from "../../components/Modals/ModalCompraRealizada";
-import { traer_evento } from "../../services/Eventos";
+import {
+  comprar_ticket,
+  traer_evento,
+  traer_NFT,
+} from "../../services/Eventos";
+import { useUser } from "../../providers/UserProvider";
 
 const TypeStyle = {
   fontSize: "14px",
@@ -44,6 +49,7 @@ export const Payment = () => {
   let params = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [event, setEvent] = useState(undefined);
+  const [NFT, setNFT] = useState(undefined);
   const [isCreditCardSelected, setIsCreditCardSelected] = useState(false);
   const [creditCardNumber, setCreditCardNumber] = useState("");
   const [owner, setOwner] = useState("");
@@ -51,6 +57,7 @@ export const Payment = () => {
   const [code, setCode] = useState("");
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { currentUser } = useUser();
 
   useEffect(() => {
     async function fetchData() {
@@ -66,6 +73,14 @@ export const Payment = () => {
 
   const buyTicket = async () => {
     console.log(creditCardNumber, owner, dueDate, code);
+    await comprar_ticket(
+      currentUser.username,
+      event.tickets
+        .filter((t) => params.spot.includes(t.description))[0]
+        .id.toString()
+    ).then((res) => {
+      setNFT(res);
+    });
   };
 
   return (
@@ -87,7 +102,7 @@ export const Payment = () => {
             >
               <VStack spacing={0} align="left">
                 <Image
-                  src={event.eventImageUrl}
+                  src={event.event_image_url}
                   alt="Ticket photo"
                   w="350px"
                   h="400px"
@@ -98,7 +113,7 @@ export const Payment = () => {
                   <Flex>
                     <VStack align="left" spacing={0}>
                       <Text noOfLines={1} sx={TypeStyle}>
-                        {event.type}
+                        {event.event_type}
                       </Text>
                       <Text noOfLines={1} sx={TitleStyle}>
                         {event.title}
@@ -118,10 +133,12 @@ export const Payment = () => {
                     <HStack>
                       <BsClockFill />
                       <Text fontSize="sm">
-                        {new Date(event.datetime).getHours()}:
-                        {String(new Date(event.datetime).getMinutes()).padStart(
-                          2,
-                          "0"
+                        {new Date(event?.event_datetime).toLocaleTimeString(
+                          "en-GB",
+                          {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          }
                         )}
                       </Text>
                     </HStack>
@@ -170,6 +187,7 @@ export const Payment = () => {
                           setCreditCardNumber(text.target.value)
                         }
                         type="number"
+                        value={creditCardNumber}
                       />
                     </VStack>
                     <VStack align="left" marginTop={5}>
@@ -178,6 +196,7 @@ export const Payment = () => {
                         textColor={colors.white}
                         focusBorderColor={colors.mainColor}
                         onChange={(text) => setOwner(text.target.value)}
+                        value={owner}
                       />
                     </VStack>
                     <HStack marginTop={5}>
@@ -187,6 +206,7 @@ export const Payment = () => {
                           textColor={colors.white}
                           focusBorderColor={colors.mainColor}
                           onChange={(text) => setDueDate(text.target.value)}
+                          value={dueDate}
                         />
                       </VStack>
                       <VStack align="left">
@@ -196,6 +216,7 @@ export const Payment = () => {
                           focusBorderColor={colors.mainColor}
                           onChange={(text) => setCode(text.target.value)}
                           type="number"
+                          value={code}
                         />
                       </VStack>
                     </HStack>
@@ -226,6 +247,13 @@ export const Payment = () => {
                 onClick={() => {
                   buyTicket().then(() => setIsModalOpen(true));
                 }}
+                disabled={
+                  isCreditCardSelected === false ||
+                  creditCardNumber === "" ||
+                  owner === "" ||
+                  dueDate === "" ||
+                  code === ""
+                }
               >
                 Confirmar
               </Button>
@@ -233,8 +261,7 @@ export const Payment = () => {
             <ModalCompraRealizada
               isOpen={isModalOpen}
               event={event}
-              onClose={() => {}}
-              onConfirmOpen={() => {}}
+              nft={NFT}
             />
           </VStack>
         )

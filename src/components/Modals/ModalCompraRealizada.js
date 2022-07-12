@@ -29,11 +29,10 @@ const TitleStyle = {
   color: colors.mainColor,
 };
 
-const ModalCompraRealizada = ({ isOpen, event, onClose, onConfirmOpen }) => {
+const ModalCompraRealizada = ({ isOpen, event, NFT }) => {
   return (
     <Modal
       closeOnOverlayClick={false}
-      onClose={onClose}
       size="md"
       isOpen={isOpen}
       scrollBehavior="inside"
@@ -57,11 +56,11 @@ const ModalCompraRealizada = ({ isOpen, event, onClose, onConfirmOpen }) => {
           </Text>
           <NFTCardBought
             title={event.title}
-            type={event.type}
+            type={event.event_type}
             location={event.location}
-            datetime={event.datetime}
-            imgUrl={event.ticketImageUrl}
-            nftNumber={event.nftNumber}
+            datetime={new Date(event.event_datetime)}
+            imgUrl={event.event_image_url}
+            nftNumber={NFT.id}
           />
         </ModalBody>
         <Text fontSize="sm" alignSelf="center" mb={3}>

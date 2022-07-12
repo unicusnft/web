@@ -68,8 +68,9 @@ const TicketsNFT = ({ img1, img2 }) => {
 
 const SelectTicketCard = ({ event }) => {
   const [radio, setRadio] = React.useState(
-    `$${event?.ticketTypes?.[0]?.price} - ${event?.ticketTypes?.[0]?.label}`
+    `$${event?.ticketTypes?.[0]?.price} - ${event?.ticketTypes?.[0]?.description}`
   );
+  const [ticketId, setTicketId] = React.useState("");
   const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } =
     useNumberInput({
       step: 1,
@@ -82,6 +83,10 @@ const SelectTicketCard = ({ event }) => {
   const dec = getDecrementButtonProps();
   const input = getInputProps();
 
+  useEffect(() => {
+    console.log(radio);
+  }, [radio]);
+
   return (
     <Box
       bg={colors.backgroundComponent}
@@ -91,13 +96,13 @@ const SelectTicketCard = ({ event }) => {
       color="white"
     >
       <Text fontSize="xs" color="gray">
-        {event?.type}
+        {event?.event_type}
       </Text>
       <Text fontSize="4xl" sx={{ fontWeight: 600 }} mb={3}>
         {event?.title}
       </Text>
       <HStack>
-        <DateCard datetime={event?.datetime} />
+        <DateCard datetime={new Date(event?.event_datetime)} />
         <VStack alignItems="left">
           <HStack>
             <GoLocation />
@@ -106,7 +111,7 @@ const SelectTicketCard = ({ event }) => {
           <HStack>
             <AiOutlineClockCircle />
             <Text fontSize="xs">
-              {event?.datetime?.toLocaleTimeString("en-GB", {
+              {new Date(event?.event_datetime).toLocaleTimeString("en-GB", {
                 hour: "2-digit",
                 minute: "2-digit",
               })}
@@ -120,22 +125,22 @@ const SelectTicketCard = ({ event }) => {
         <RadioGroup
           onChange={setRadio}
           value={radio}
-          defaultValue={`$${event?.ticketTypes?.[0]?.price} - ${event?.ticketTypes?.[0]?.label}`}
+          defaultValue={`$${event?.tickets?.[0]?.price} - ${event?.tickets?.[0]?.description}`}
           my={2}
         >
           <Stack spacing={0.5}>
-            {event?.ticketTypes?.map(({ label, price }) => (
+            {event?.tickets?.map(({ description, price }, index) => (
               <Radio
-                key={label}
+                key={description + index}
                 colorScheme="main"
-                value={`$${price} - ${label}`}
+                value={`$${price} - ${description}`}
               >
                 <Text
                   noOfLines={2}
-                  className={`${label === radio ? "purple-text" : ""}`}
+                  className={`${description === radio ? "purple-text" : ""}`}
                   style={{ paddingLeft: "5px" }}
                 >
-                  ${price} - {label}
+                  ${price} - {description}
                 </Text>
               </Radio>
             ))}
@@ -154,7 +159,13 @@ const SelectTicketCard = ({ event }) => {
       </HStack>
       <Link to={`/buy/${event?.id}/cant/${input?.value}/spot/${radio}`}>
         <Flex mt={8} direction={{ base: "column-reverse" }}>
-          <Button colorScheme="main" size="xl" py={3} px={10}>
+          <Button
+            colorScheme="main"
+            size="xl"
+            py={3}
+            px={10}
+            disabled={radio.includes(undefined)}
+          >
             COMPRAR
           </Button>
         </Flex>
@@ -172,7 +183,6 @@ export const Buy = () => {
     async function fetchData() {
       setLoading(true);
       await traer_evento(params?.eventId).then((res) => {
-        console.log(res);
         setEvent(res);
       });
       setLoading(false);
@@ -189,7 +199,10 @@ export const Buy = () => {
       ) : (
         <div style={{ marginTop: "20px", overflowX: "hidden" }}>
           <Center marginRight={["-72px", "-130px", "-182px"]}>
-            <TicketsNFT img1={event?.buyImage1} img2={event?.buyImage2} />
+            <TicketsNFT
+              img1={event?.buy_image_1_url}
+              img2={event?.buy_image_2_url}
+            />
           </Center>
           <Center mt={5}>
             <SelectTicketCard event={event} />
