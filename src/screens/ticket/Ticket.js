@@ -30,6 +30,7 @@ import { Loading } from "../../components/Loading";
 import ModalTransferir from "../../components/Modals/ModalTransferir";
 import ModalConfirmarTransferTicket from "../../components/Modals/ModalConfirmarTransferTicket";
 import ModalTicketTransferido from "../../components/Modals/ModalTicketTransferido";
+/* import { traer_evento } from "../../services/Calls"; */
 
 export const SocialMediaButton = ({ img, alt }) => {
   return (
@@ -63,8 +64,19 @@ export const Ticket = () => {
   } = useDisclosure();
 
   const [transferUser, setTransferUser] = useState({});
+  //const [datetime, setDatetime] = useState(null);
 
   useEffect(() => {
+    /* const fetchTicket = async () => {
+      return traer_evento(params?.ticketId);
+    };
+
+    fetchTicket().then((res) => {
+      setTicket(res);
+      setLoading(false);
+      setDatetime(new Date(res.event.event_datetime));
+    }); */
+
     async function fetchData() {
       setLoading(true);
       await sleep(1500);
@@ -94,7 +106,7 @@ export const Ticket = () => {
             isOpen={isOpenModalConfirmTransfer}
             onClose={onCloseModalConfirmTransfer}
             user={transferUser}
-            evento={ticket?.title}
+            evento={ticket?.event?.title}
             onConfirmOpen={onOpenModalSuccessTransfer}
             onCancelConfirm={onOpenModalTransferir}
           />
@@ -102,7 +114,7 @@ export const Ticket = () => {
             isOpen={isOpenModalSuccessTransfer}
             onClose={onCloseModalSuccessTransfer}
             user={transferUser}
-            evento={ticket?.title}
+            evento={ticket?.event.title}
           />
           <VStack py={5} spacing={5}>
             <div>
@@ -128,7 +140,7 @@ export const Ticket = () => {
               objectFit="cover"
             >
               <Image
-                src={ticket?.buyImage1}
+                src={ticket?.buy_image_1_url}
                 alt="Ticket photo"
                 w="350px"
                 h="400px"
@@ -167,7 +179,7 @@ export const Ticket = () => {
                     <HStack>
                       <AiOutlineClockCircle />
                       <Text fontSize="xs">
-                        {ticket?.datetime?.toLocaleTimeString("en-GB", {
+                        {ticket?.datetime.toLocaleTimeString("en-GB", {
                           hour: "2-digit",
                           minute: "2-digit",
                         })}

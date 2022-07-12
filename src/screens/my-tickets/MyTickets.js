@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Stack, Wrap, WrapItem, Text } from "@chakra-ui/react";
 import { Toolbar } from "../../components/Toolbar";
-
+import { traer_tickets_user } from "../../services/Calls";
 import { NFTCard } from "../../components/Cards/NFTCard";
 import { Filters } from "../../components/Filters";
-import { events } from "../../data/events";
+import { useUser } from "../../providers/UserProvider";
+import { Loading } from "../../components/Loading";
 
 const TitlePageStyle = {
   fontSize: "25px",
@@ -13,47 +14,57 @@ const TitlePageStyle = {
 };
 
 export const MyTickets = () => {
+  const { currentUser } = useUser();
   const [event, setEvent] = useState("");
+
+  const [tickets, setTickets] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    traer_tickets_user(currentUser?.id).then((res) => {
+      setTickets(res);
+      setIsLoading(false);
+    });
+  }, [currentUser?.id]);
+
   return (
     <>
       <Toolbar title="Mis tickets" />
-      <Stack alignItems="center">
-        <Text sx={TitlePageStyle}>Mis tickets</Text>
-      </Stack>
-      <Stack alignItems="center" px={4}>
-        <Filters
-          event={event}
-          setEvent={setEvent}
-          description="Buscar en mis tickets"
-        />
-      </Stack>
-      <br />
-      <Container maxW="8xl" padding="0px">
-        <Wrap spacing="25px" justify="center">
-          {events
-            .filter(
-              (x) =>
-                x.owned &&
-                (event === "" ||
-                  (event !== "" &&
-                    x.title
-                      .toLocaleLowerCase()
-                      .includes(event.toLocaleLowerCase())))
-            )
-            .map((e) => (
-              <WrapItem key={e.title}>
-                <NFTCard
-                  title={e.title}
-                  type={e.type}
-                  location={e.location}
-                  datetime={e.datetime}
-                  imgUrl={e.ticketImageUrl}
-                  nftNumber={e.nftNumber}
-                />
-              </WrapItem>
-            ))}
-        </Wrap>
-      </Container>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <>
+          <Stack alignItems="center">
+            <Text sx={TitlePageStyle}>Mis tickets</Text>
+          </Stack>
+          <Stack alignItems="center" px={4}>
+            <Filters
+              event={event}
+              setEvent={setEvent}
+              description="Buscar en mis tickets"
+            />
+          </Stack>
+          <br />
+          <Container maxW="8xl" padding="0px">
+            <Wrap spacing="25px" justify="center">
+              {tickets
+                .filter(
+                  (x) =>
+                    event === "" ||
+                    (event !== "" &&
+                      x.event.title
+                        .toLocaleLowerCase()
+                        .includes(event.toLocaleLowerCase()))
+                )
+                .map((t) => (
+                  <WrapItem key={t.event.title}>
+                    <NFTCard event={t.event} ticket_id={t.ticket_id} />
+                  </WrapItem>
+                ))}
+            </Wrap>
+          </Container>
+        </>
+      )}
     </>
   );
 };
