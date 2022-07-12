@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Box, Button, HStack, IconButton, Image, Input, Select, Stack, Text, VStack} from "@chakra-ui/react";
+import {Box, Button, HStack, Image, Input, Select, Stack, Text, VStack} from "@chakra-ui/react";
 import {Toolbar} from "../../components/Toolbar";
 import {useNavigate, useParams} from "react-router";
 import {newEvent} from "../../data/new-event";
@@ -92,6 +92,7 @@ const TicketForm = ({ticket}) => {
                     id='ticket-name'
                     type='text'
                     placeholder='Nombre'
+                    defaultValue={ticket?.category}
                     _focus={InputFocusStyle}
                     style={InputStyle}
                 />
@@ -103,6 +104,7 @@ const TicketForm = ({ticket}) => {
                     id='location'
                     type='ticket-price'
                     placeholder='ARS'
+                    defaultValue={ticket?.price}
                     _focus={InputFocusStyle}
                     style={InputStyle}
                 />
@@ -114,12 +116,19 @@ const TicketForm = ({ticket}) => {
                     id='ticket-supply'
                     type='number'
                     placeholder='Cantidad'
+                    defaultValue={ticket?.total_supply}
                     _focus={InputFocusStyle}
                     style={InputStyle}
                 />
             </div>
         </HStack>
     )
+}
+
+const defaultTicket = {
+    category: "",
+    price: '',
+    total_supply: ''
 }
 
 export const EventForm = () => {
@@ -135,11 +144,7 @@ export const EventForm = () => {
         ticket_image_url: "",
         buy_image_1_url: "",
         buy_image_2_url: "",
-        tickets: [{
-            category: "",
-            price: '',
-            total_supply: ''
-        }]
+        tickets: [defaultTicket]
     })
 
     useEffect(() => {
@@ -177,6 +182,7 @@ export const EventForm = () => {
                             id='full-name'
                             type='text'
                             placeholder='Ingrese nombre del evento'
+                            defaultValue={event?.title}
                             _focus={InputFocusStyle}
                             style={InputStyle}
                         />
@@ -187,6 +193,7 @@ export const EventForm = () => {
                             id='location'
                             type='text'
                             placeholder='Ingrese lugar del evento'
+                            defaultValue={event?.location}
                             _focus={InputFocusStyle}
                             style={InputStyle}
                         />
@@ -197,6 +204,11 @@ export const EventForm = () => {
                             id='date'
                             type='datetime-local'
                             placeholder='Seleccione fecha y hora'
+                            defaultValue={
+                                event?.event_datetime
+                                    ? (new Date(event?.event_datetime)).toISOString().slice(0, -8)
+                                    : ''
+                            }
                             _focus={InputFocusStyle}
                             style={InputStyle}
                             color="#ffffff"
@@ -208,11 +220,12 @@ export const EventForm = () => {
                             placeholder='Seleccione una categoría'
                             colorMode='dark'
                             style={InputStyle}
-                            _focus={InputFocusStyle}
+                            value={event?.event_type}
+                            onChange={(e) => console.log(e)}
                         >
-                            <option value='option1'>Fiesta</option>
-                            <option value='option2'>Deporte</option>
-                            <option value='option3'>Música</option>
+                            <option value='Fiesta'>Fiesta</option>
+                            <option value='Deporte'>Deporte</option>
+                            <option value='Musica'>Música</option>
                         </Select>
                     </div>
                     <Box mb="18px" mt='30px'>
@@ -243,13 +256,25 @@ export const EventForm = () => {
                     <Box w='100%'>
                         <Text sx={TicketsTitleStyle} align='left'>Tipos de ticket</Text>
                         {event?.tickets.map((ticket, index) => (
-                            <TicketForm key={index} ticket={ticket} />
+                            <TicketForm key={index} ticket={ticket}/>
                         ))}
                         <HStack my={5}>
-                            <Button colorScheme="gray" color='black' w={'100%'} size='xs'>
+                            <Button
+                                colorScheme="gray"
+                                color='black'
+                                w={'100%'}
+                                size='xs'
+                                disabled={event?.tickets?.length <= 1}
+                                onClick={() => setEvent(e => ({...e, tickets: [...e.tickets.slice(0, -1)]}))}
+                            >
                                 Quitar
                             </Button>
-                            <Button colorScheme="main" w={'100%'} size='xs'>
+                            <Button
+                                colorScheme="main"
+                                w={'100%'}
+                                size='xs'
+                                onClick={() => setEvent(e => ({...e, tickets: [...e.tickets, defaultTicket]}))}
+                            >
                                 Agregar
                             </Button>
                         </HStack>
