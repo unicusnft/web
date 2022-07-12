@@ -5,6 +5,7 @@ import {MyTickets} from "./screens/my-tickets/MyTickets";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {Ticket} from "./screens/ticket/Ticket";
 import {UserProvider} from "./providers/UserProvider";
+import {EventForm} from "./screens/event-form/EventForm";
 
 const App = () => {
     return (
@@ -15,6 +16,8 @@ const App = () => {
                     <Route path="/buy/:eventId" element={<Buy/>}/>
                     <Route path="/my-tickets" element={<MyTickets/>}/>
                     <Route path="/my-events" element={<HomeScreen/>}/>
+                    <Route path="/event-form" element={<EventForm/>}/>
+                    <Route path="/event-form/:eventId" element={<EventForm/>}/>
                     <Route path="/ticket/:ticketId" element={<Ticket/>}/>
                 </Routes>
             </UserProvider>

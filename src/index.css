@@ -17,3 +17,7 @@ code {
 :root {
   background-color: #121212
 }
+
+input {
+  color-scheme: dark;
+}

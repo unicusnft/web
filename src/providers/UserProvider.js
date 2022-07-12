@@ -6,9 +6,9 @@ import {useNavigate} from "react-router";
 const UserContext = createContext(null);
 
 export const UserProvider = ({children}) => {
-    let [allUsers, setAllUsers] = useState([]);
-    let [user, setUser] = useState(LocalStorageGetCurrentUser());
-    let navigate = useNavigate();
+    const [allUsers, setAllUsers] = useState([]);
+    const [user, setUser] = useState(LocalStorageGetCurrentUser());
+    const navigate = useNavigate();
 
     const setCurrentUser = (user) => {
         LocalStorageSeCurrentUser(user)
@@ -32,7 +32,7 @@ export const UserProvider = ({children}) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    let value = {currentUser: user, setCurrentUser, allUsers};
+    const value = {currentUser: user, setCurrentUser, allUsers};
     return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 }
 
