@@ -73,12 +73,12 @@ const DateStyle = {
   left: "120px",
 };
 
-export const NFTCard = ({ event, ticket_id }) => {
+export const NFTCard = ({ event, nft_id }) => {
   const { title, location, event_datetime, ticket_image_url } = event;
   const [datetime] = useState(new Date(event_datetime));
 
   return (
-    <Link to={`/ticket/${ticket_id}`}>
+    <Link to={`/ticket/${nft_id}`}>
       <Flex align="top" fontFamily="Montserrat">
         <Box textAlign="center" sx={DateStyle}>
           <Text fontSize="28px" padding="2px" lineHeight="70%">
@@ -94,7 +94,7 @@ export const NFTCard = ({ event, ticket_id }) => {
         <VStack spacing="0px">
           <Box textAlign="left" fontFamily="Montserrat" sx={EventInfoStyle}>
             <Text noOfLines={1} sx={NFTNumberStyle}>
-              NFT#{ticket_id}
+              NFT#{nft_id}
             </Text>
             <HStack>
               <HiLocationMarker />
@@ -127,7 +127,7 @@ export const NFTCard = ({ event, ticket_id }) => {
                 <Text noOfLines={1} as="b">
                   NFT ID
                 </Text>
-                <Text noOfLines={1}>{ticket_id}</Text>
+                <Text noOfLines={1}>{nft_id}</Text>
               </VStack>
               <VStack width="60px" align="left">
                 <Text noOfLines={1} as="b">
