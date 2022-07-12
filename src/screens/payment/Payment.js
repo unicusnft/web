@@ -77,7 +77,7 @@ export const Payment = () => {
 
   const buyTicket = async () => {
     console.log(creditCardNumber, owner, dueDate, code);
-    await comprar_ticket("1", ticket.id).then((res) => {
+    await comprar_ticket(currentUser?.id, ticket.id).then((res) => {
       setId(res.id);
     });
   };
