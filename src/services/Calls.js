@@ -40,8 +40,11 @@ export const traer_tickets_user = async (id) => {
 
 // ticket
 
-export const comprar_ticket = async (user_id, ticket_id) => {
+export const comprar_ticket = async (user_id, ticket_id, cant = 1) => {
   const ticket = await post(`user/${user_id}/purchase/${ticket_id}`, {});
+  for (let i = 0; i < cant - 1; i++) {
+    await post(`user/${user_id}/purchase/${ticket_id}`, {});
+  }
 
   return ticket;
 };
