@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from "react";
 import {Box, Button, HStack, Image, Input, Select, Stack, Text, VStack} from "@chakra-ui/react";
 import {Toolbar} from "../../components/Toolbar";
-import {useParams} from "react-router";
-import {newEvent} from "../../data/new-event";
-import {AiOutlinePlus} from "react-icons/ai";
+import {useNavigate, useParams} from "react-router";
+import {newEvent as mockEvent} from "../../data/new-event";
 import {colors} from "../../core/theme";
+import FileUpload from "../../components/FileUpload";
+import {objectHasEmptyAttrs} from "../../utils/helpers";
+import {newEvent} from "../../services/Calls";
 
 const TitlePageStyle = {
   fontSize: "25px",
@@ -33,7 +35,7 @@ const InputStyle = {
   fontSize: '15px'
 };
 
-const ImageWithButton = ({width, height, img, buttonTitle, onClick}) => {
+const ImageWithButton = ({width, height, img, buttonTitle, onChange}) => {
   return (
     <Box
       position='relative'
@@ -67,22 +69,13 @@ const ImageWithButton = ({width, height, img, buttonTitle, onClick}) => {
         transform='translate(-50%, -50%)'
         zIndex={1}
       >
-        <Button
-          onClick={onClick}
-          colorScheme='main'
-          aria-label='Ver carrito'
-          size='xs'
-          shadow='md'
-          icon={<AiOutlinePlus color='black' size="22" mr={1}/>}
-        >
-          {buttonTitle}
-        </Button>
+        <FileUpload buttonTitle={buttonTitle} onChange={onChange}/>
       </Box>
     </Box>
   )
 }
 
-const TicketForm = ({ticket}) => {
+const TicketForm = ({ticket, index, onChangeEventTicket}) => {
   return (
     <HStack justifyContent='space-between'>
       <div>
@@ -93,6 +86,7 @@ const TicketForm = ({ticket}) => {
           type='text'
           placeholder='Nombre'
           defaultValue={ticket?.category}
+          onChange={(e) => onChangeEventTicket(index, "category", e.target.value)}
           _focus={InputFocusStyle}
           style={InputStyle}
         />
@@ -105,6 +99,7 @@ const TicketForm = ({ticket}) => {
           type='ticket-price'
           placeholder='ARS'
           defaultValue={ticket?.price}
+          onChange={(e) => onChangeEventTicket(index, "price", parseInt(e.target.value))}
           _focus={InputFocusStyle}
           style={InputStyle}
         />
@@ -117,6 +112,7 @@ const TicketForm = ({ticket}) => {
           type='number'
           placeholder='Cantidad'
           defaultValue={ticket?.total_supply}
+          onChange={(e) => onChangeEventTicket(index, "total_supply", parseInt(e.target.value))}
           _focus={InputFocusStyle}
           style={InputStyle}
         />
@@ -133,13 +129,12 @@ const defaultTicket = {
 
 export const EventForm = () => {
   const {eventId} = useParams()
-  // const navigate = useNavigate()
+  const navigate = useNavigate()
   const [event, setEvent] = useState({
     title: "",
     event_type: "",
     location: "",
     event_datetime: "",
-    description: "",
     event_image_url: "",
     ticket_image_url: "",
     buy_image_1_url: "",
@@ -149,7 +144,7 @@ export const EventForm = () => {
 
   useEffect(() => {
     const fetchEvent = async () => {
-      return newEvent
+      return mockEvent
     }
 
     if (eventId) {
@@ -158,6 +153,33 @@ export const EventForm = () => {
       })
     }
   }, [eventId])
+
+  const onChangeEvent = (key, value) => {
+    setEvent(event => ({...event, [key]: value}))
+  }
+
+  const onChangeEventTicket = (index, key, value) => {
+    setEvent(event => ({
+      ...event,
+      tickets: [
+        ...event?.tickets?.slice(0, index),
+        ({...event?.tickets?.[index], [key]: value}),
+        ...event?.tickets?.slice(index + 1, event?.tickets?.length)
+      ]
+    }))
+  }
+
+  const submitForm = async () => {
+    if (!eventId) {
+      await newEvent(event).then(res => navigate(`/event/${res?.id}`))
+    } else {
+      // path
+    }
+  }
+
+  const keys = ['title', 'event_type', 'location', 'event_datetime', 'event_image_url', 'ticket_image_url',
+    'buy_image_1_url', 'buy_image_2_url', 'tickets', 'category', 'price', 'total_supply']
+  const disableSubmitButton = objectHasEmptyAttrs(event, keys)
 
   return (
     <>
@@ -173,16 +195,17 @@ export const EventForm = () => {
               height={400}
               img={event?.ticket_image_url}
               buttonTitle={eventId ? 'Cambiar imagen del NFT' : 'Subir imagen del NFT'}
-              onClick={eventId ? () => console.log('edit') : () => console.log('edit')}
+              onChange={(value) => onChangeEvent('ticket_image_url', value)}
             />
           </Box>
           <div>
             <Text sx={FormTitleStyle}>Nombre del evento</Text>
             <Input
-              id='full-name'
+              id='title'
               type='text'
               placeholder='Ingrese nombre del evento'
               defaultValue={event?.title}
+              onChange={(e) => onChangeEvent("title", e.target.value)}
               _focus={InputFocusStyle}
               style={InputStyle}
             />
@@ -194,6 +217,7 @@ export const EventForm = () => {
               type='text'
               placeholder='Ingrese lugar del evento'
               defaultValue={event?.location}
+              onChange={(e) => onChangeEvent("location", e.target.value)}
               _focus={InputFocusStyle}
               style={InputStyle}
             />
@@ -209,6 +233,7 @@ export const EventForm = () => {
                   ? (new Date(event?.event_datetime)).toISOString().slice(0, -8)
                   : ''
               }
+              onChange={(e) => onChangeEvent("event_datetime", e.target.value)}
               _focus={InputFocusStyle}
               style={InputStyle}
               color="#ffffff"
@@ -221,7 +246,7 @@ export const EventForm = () => {
               colorMode='dark'
               style={InputStyle}
               value={event?.event_type}
-              onChange={(e) => console.log(e)}
+              onChange={(e) => onChangeEvent("event_type", e.target.value)}
             >
               <option value='Fiesta'>Fiesta</option>
               <option value='Deporte'>Deporte</option>
@@ -234,7 +259,7 @@ export const EventForm = () => {
               height={140}
               img={event?.event_image_url}
               buttonTitle={eventId ? 'Cambiar flyer' : 'Subir flyer'}
-              onClick={eventId ? () => console.log('edit') : () => console.log('edit')}
+              onChange={(value) => onChangeEvent('event_image_url', value)}
             />
           </Box>
           <HStack gap="15px" justifyContent='center'>
@@ -243,20 +268,20 @@ export const EventForm = () => {
               height={200}
               img={event?.buy_image_1_url}
               buttonTitle={eventId ? 'Cambiar foto 1' : 'Subir foto 1'}
-              onClick={eventId ? () => console.log('edit') : () => console.log('edit')}
+              onChange={(value) => onChangeEvent('buy_image_1_url', value)}
             />
             <ImageWithButton
               width={150}
               height={200}
               img={event?.buy_image_2_url}
               buttonTitle={eventId ? 'Cambiar foto 2' : 'Subir foto 2'}
-              onClick={eventId ? () => console.log('edit') : () => console.log('edit')}
+              onChange={(value) => onChangeEvent('buy_image_2_url', value)}
             />
           </HStack>
           <Box w='100%'>
             <Text sx={TicketsTitleStyle} align='left'>Tipos de ticket</Text>
             {event?.tickets.map((ticket, index) => (
-              <TicketForm key={index} ticket={ticket}/>
+              <TicketForm key={index} ticket={ticket} index={index} onChangeEventTicket={onChangeEventTicket}/>
             ))}
             <HStack my={5}>
               <Button
@@ -279,11 +304,11 @@ export const EventForm = () => {
               </Button>
             </HStack>
           </Box>
-          <Button colorScheme="main" w={'100%'} mt={5}>
+          <Button colorScheme="main" w={'100%'} mt={5} onClick={submitForm} disabled={disableSubmitButton}>
             Guardar cambios
           </Button>
         </Box>
       </VStack>
     </>
-  );
-};
+  )
+}

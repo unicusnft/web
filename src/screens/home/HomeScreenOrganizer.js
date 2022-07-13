@@ -34,7 +34,7 @@ export const HomeScreenOrganizer = () => {
         <Stack alignItems="center">
           <Text sx={TitlePageStyle}>Mis Eventos</Text>
         </Stack>
-        <Wrap spacing="25px" justify="center">
+        <Wrap spacing="15px" justify="center">
           {events.map((event) => (
             <Link to={`/event/${event?.id}`} key={event?.id}>
               <EventCardOrganizer
