@@ -22,9 +22,10 @@
   .flip-card-back {
     font-size: 1.25rem;
     text-align: center;
-    display: grid;
-    place-items: center;
-    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
     transform: rotateY(180deg);
   }
   .flip-card:active .flip-card-inner {
