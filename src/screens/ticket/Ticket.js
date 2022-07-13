@@ -32,6 +32,7 @@ import ModalTicketTransferido from "../../components/Modals/ModalTicketTransferi
 import ModalTicketResale from "../../components/Modals/ModalTicketResale";
 import { traer_nft, traer_usuarios, resaleTicket } from "../../services/Calls";
 import { useUser } from "../../providers/UserProvider";
+import TicketValidate from "../../components/Cards/TicketValidate";
 
 export const SocialMediaButton = ({ img, alt }) => {
   return (
@@ -154,14 +155,18 @@ export const Ticket = () => {
               boxShadow="dark-xs"
               objectFit="cover"
             >
-              <Image
+              <TicketValidate
+                nftId={ticket?.id}
+                urlImage={ticket?.event.buy_image_1_url}
+              />
+              {/* <Image
                 src={ticket?.event.buy_image_1_url}
                 alt="Ticket photo"
                 w="350px"
                 h="400px"
                 objectFit="cover"
                 rounded={40}
-              />
+              /> */}
               <Center mb={5}>
                 <HStack spacing={0}>
                   <SocialMediaButton img={facebook} alt="facebook" />
