@@ -2,11 +2,10 @@ import React, {useEffect, useState} from "react";
 import {Box, Button, HStack, Image, Input, Select, Stack, Text, VStack} from "@chakra-ui/react";
 import {Toolbar} from "../../components/Toolbar";
 import {useNavigate, useParams} from "react-router";
-import {newEvent as mockEvent} from "../../data/new-event";
 import {colors} from "../../core/theme";
 import FileUpload from "../../components/FileUpload";
 import {objectHasEmptyAttrs} from "../../utils/helpers";
-import {newEvent} from "../../services/Calls";
+import {editEvent, newEvent, traer_evento} from "../../services/Calls";
 
 const TitlePageStyle = {
   fontSize: "25px",
@@ -85,8 +84,8 @@ const TicketForm = ({ticket, index, onChangeEventTicket}) => {
           id='ticket-name'
           type='text'
           placeholder='Nombre'
-          defaultValue={ticket?.category}
-          onChange={(e) => onChangeEventTicket(index, "category", e.target.value)}
+          defaultValue={ticket?.description}
+          onChange={(e) => onChangeEventTicket(index, "description", e.target.value)}
           _focus={InputFocusStyle}
           style={InputStyle}
         />
@@ -122,7 +121,7 @@ const TicketForm = ({ticket, index, onChangeEventTicket}) => {
 }
 
 const defaultTicket = {
-  category: "",
+  description: "",
   price: '',
   total_supply: ''
 }
@@ -144,13 +143,13 @@ export const EventForm = () => {
 
   useEffect(() => {
     const fetchEvent = async () => {
-      return mockEvent
+      return await traer_evento(eventId).then((res) => {
+        setEvent(res);
+      });
     }
 
     if (eventId) {
-      fetchEvent().then((e) => {
-        setEvent(e)
-      })
+      fetchEvent()
     }
   }, [eventId])
 
@@ -173,12 +172,17 @@ export const EventForm = () => {
     if (!eventId) {
       await newEvent(event).then(res => navigate(`/event/${res?.id}`))
     } else {
-      // path
+      await editEvent(eventId, {
+        ...event, tickets: event?.tickets?.map(t => {
+          delete t.id
+          return t
+        })
+      }).then(res => navigate(`/event/${res?.id}`))
     }
   }
 
   const keys = ['title', 'event_type', 'location', 'event_datetime', 'event_image_url', 'ticket_image_url',
-    'buy_image_1_url', 'buy_image_2_url', 'tickets', 'category', 'price', 'total_supply']
+    'buy_image_1_url', 'buy_image_2_url', 'tickets', 'price', 'total_supply']
   const disableSubmitButton = objectHasEmptyAttrs(event, keys)
 
   return (

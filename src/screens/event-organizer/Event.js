@@ -3,10 +3,10 @@ import {Toolbar} from "../../components/Toolbar";
 import React, {useEffect, useState} from "react";
 import {EventCardOrganizer} from "../../components/EventCardOrganizer";
 import {Box, Button, Center, Grid, GridItem, Text, VStack} from "@chakra-ui/react";
-import {newEvent} from "../../data/new-event";
 import {Link} from "react-router-dom";
 import {TicketsNFT} from "../../components/TicketsNFT";
 import {BarChartTicketSupply} from "../../components/BarChartTicketSupply";
+import {traer_evento} from "../../services/Calls";
 
 const TicketsTitleStyle = {
   fontSize: "22px",
@@ -34,13 +34,13 @@ export const Event = () => {
   const [event, setEvent] = useState({})
 
   useEffect(() => {
-    const fetchEvent = async (id) => {
-      return newEvent
+    const fetchEvent = async () => {
+      return await traer_evento(eventId).then((res) => {
+        setEvent(res);
+      });
     }
 
-    fetchEvent(eventId).then((data) => {
-      setEvent(data)
-    })
+    fetchEvent()
   }, [eventId])
 
   const getTotalCollected = () => {
@@ -90,7 +90,7 @@ export const Event = () => {
                     maxWidth='60px'
                     noOfLines={1}
                   >
-                    {ticket?.category}
+                    {ticket?.description}
                   </Text>
                 </GridItem>
                 <GridItem colSpan={4} key={ticket?.id + 'chart'}>

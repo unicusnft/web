@@ -71,6 +71,6 @@ export const objectHasEmptyAttrs = (obj, keys) => {
   return !Object?.entries(obj)?.every(([k, v], _i) => {
     return (!keys?.includes(k))
       || (!Array.isArray(v) && v?.length !== 0)
-      || (Array.isArray(v) && v.every(e => !objectHasEmptyAttrs(e, keys)))
+      || (Array.isArray(v) && v.every(e => !objectHasEmptyAttrs(e, [...keys, 'description'])))
   })
 }

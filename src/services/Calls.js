@@ -1,4 +1,4 @@
-import {get, post} from "./Api";
+import {get, patch, post} from "./Api";
 import {
   TRAER_EVENTO_BY_ID,
   TRAER_EVENTOS,
@@ -19,6 +19,10 @@ export const traer_evento = async (event_id) => {
 
 export const newEvent = async (payload) =>  {
   return post('event', payload)
+}
+
+export const editEvent = async (id, payload) =>  {
+  return patch(`event/${id}`, payload)
 }
 
 //users
