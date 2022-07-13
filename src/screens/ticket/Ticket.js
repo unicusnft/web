@@ -1,4 +1,4 @@
-import {useParams} from "react-router-dom";
+import { useParams } from "react-router-dom";
 import {
   Box,
   Button,
@@ -15,33 +15,40 @@ import instagram from "../../img/instagram.png";
 import tikTok from "../../img/tik_tok.png";
 import twitter from "../../img/twitter.png";
 import whatsapp from "../../img/whatsapp.png";
-import React, {useEffect, useState} from "react";
-import {Toolbar} from "../../components/Toolbar";
-import {colors} from "../../core/theme";
-import {DateCard} from "../../components/Cards/DateCard";
-import {GoLocation} from "react-icons/go";
-import {AiOutlineClockCircle, AiOutlinePlus} from "react-icons/ai";
-import {TbArrowsDownUp} from "react-icons/tb";
-import {BiTransfer} from "react-icons/bi";
-import {MdSell} from "react-icons/md";
-import {Loading} from "../../components/Loading";
+import React, { useEffect, useState } from "react";
+import { Toolbar } from "../../components/Toolbar";
+import { colors } from "../../core/theme";
+import { DateCard } from "../../components/Cards/DateCard";
+import { GoLocation } from "react-icons/go";
+import { AiOutlineClockCircle, AiOutlinePlus } from "react-icons/ai";
+import { TbArrowsDownUp } from "react-icons/tb";
+import { BiTransfer } from "react-icons/bi";
+import { MdSell } from "react-icons/md";
+import { Loading } from "../../components/Loading";
 import ModalTransferir from "../../components/Modals/ModalTransferir";
 import ModalConfirmarTransferTicket from "../../components/Modals/ModalConfirmarTransferTicket";
 import ModalTicketTransferido from "../../components/Modals/ModalTicketTransferido";
-import {traer_nft} from "../../services/Calls";
+import { traer_nft, traer_usuarios } from "../../services/Calls";
+import { useUser } from "../../providers/UserProvider";
 
-export const SocialMediaButton = ({img, alt}) => {
+export const SocialMediaButton = ({ img, alt }) => {
   return (
-    <div onClick={() => console.log(alt)} style={{cursor: "pointer"}}>
-      <Image src={img} alt={alt}/>
+    <div onClick={() => console.log(alt)} style={{ cursor: "pointer" }}>
+      <Image src={img} alt={alt} />
     </div>
   );
 };
 
 export const Ticket = () => {
   let params = useParams();
+  const { currentUser } = useUser();
   const [loading, setLoading] = useState(true);
   const [ticket, setTicket] = useState(null);
+
+  const [users, setUsers] = useState([]);
+  const [transferUser, setTransferUser] = useState({});
+
+  const [datetime, setDatetime] = useState(null);
 
   const {
     isOpen: isOpenModalTransferir,
@@ -61,9 +68,6 @@ export const Ticket = () => {
     onClose: onCloseModalSuccessTransfer,
   } = useDisclosure();
 
-  const [transferUser, setTransferUser] = useState({});
-  const [datetime, setDatetime] = useState(null);
-
   useEffect(() => {
     const fetchNft = async () => {
       return traer_nft(params?.nftId);
@@ -76,11 +80,17 @@ export const Ticket = () => {
     });
   }, [params?.nftId]);
 
+  useEffect(() => {
+    traer_usuarios().then((res) => {
+      setUsers(res.filter((x) => x.id !== currentUser.id));
+    });
+  });
+
   return (
     <>
-      <Toolbar/>
+      <Toolbar />
       {loading ? (
-        <Loading/>
+        <Loading />
       ) : (
         <>
           <ModalTransferir
@@ -88,6 +98,7 @@ export const Ticket = () => {
             onClose={onCloseModalTransferir}
             onConfirmOpen={onOpenModalConfirmTransfer}
             setTransferUser={setTransferUser}
+            users={users}
           />
           <ModalConfirmarTransferTicket
             isOpen={isOpenModalConfirmTransfer}
@@ -105,13 +116,13 @@ export const Ticket = () => {
           />
           <VStack py={5} spacing={5}>
             <div>
-              <Text fontSize="xl" sx={{fontWeight: 600}}>
+              <Text fontSize="xl" sx={{ fontWeight: 600 }}>
                 Ticket para
               </Text>
               <Center>
                 <Text
                   fontSize="4xl"
-                  sx={{fontWeight: 700}}
+                  sx={{ fontWeight: 700 }}
                   color={colors.mainColor}
                 >
                   {ticket?.event.title}
@@ -136,11 +147,11 @@ export const Ticket = () => {
               />
               <Center mb={5}>
                 <HStack spacing={0}>
-                  <SocialMediaButton img={facebook} alt="facebook"/>
-                  <SocialMediaButton img={instagram} alt="instagram"/>
-                  <SocialMediaButton img={tikTok} alt="tik tok"/>
-                  <SocialMediaButton img={twitter} alt="twitter"/>
-                  <SocialMediaButton img={whatsapp} alt="whatsapp"/>
+                  <SocialMediaButton img={facebook} alt="facebook" />
+                  <SocialMediaButton img={instagram} alt="instagram" />
+                  <SocialMediaButton img={tikTok} alt="tik tok" />
+                  <SocialMediaButton img={twitter} alt="twitter" />
+                  <SocialMediaButton img={whatsapp} alt="whatsapp" />
                 </HStack>
               </Center>
             </Box>
@@ -153,18 +164,18 @@ export const Ticket = () => {
               py={6}
             >
               <VStack spacing={5}>
-                <Text fontSize="3xl" sx={{fontWeight: 600}}>
+                <Text fontSize="3xl" sx={{ fontWeight: 600 }}>
                   NFT#{ticket?.id}
                 </Text>
                 <HStack>
-                  <DateCard datetime={datetime}/>
+                  <DateCard datetime={datetime} />
                   <VStack alignItems="left">
                     <HStack>
-                      <GoLocation/>
+                      <GoLocation />
                       <Text fontSize="xs">{ticket?.event.location}</Text>
                     </HStack>
                     <HStack>
-                      <AiOutlineClockCircle/>
+                      <AiOutlineClockCircle />
                       <Text fontSize="xs">
                         {datetime.toLocaleTimeString("en-GB", {
                           hour: "2-digit",
@@ -175,7 +186,7 @@ export const Ticket = () => {
                   </VStack>
                 </HStack>
                 <Text px={4} fontSize="sm" textAlign="center">
-                  Podés transferir este ticket <br/>
+                  Podés transferir este ticket <br />
                   las veces que quieras!
                 </Text>
                 <HStack>
@@ -195,11 +206,11 @@ export const Ticket = () => {
                   </Button>
                 </HStack>
               </VStack>
-              <Divider inset my={6}/>
+              <Divider inset my={6} />
               <VStack spacing={1}>
                 <Box bg="black" w="300px" roundedTop={20}>
                   <Center>
-                    <TbArrowsDownUp color="white"/>
+                    <TbArrowsDownUp color="white" />
                     <Text p={2} fontSize="sm">
                       Historial del ticket
                     </Text>
@@ -218,13 +229,13 @@ export const Ticket = () => {
                   >
                     <HStack spacing={0} mx={8}>
                       {h.transaction_type === "VENDIDO" && (
-                        <AiOutlinePlus color={colors.mainColor}/>
+                        <AiOutlinePlus color={colors.mainColor} />
                       )}
                       {h.transaction_type === "REVENTA" && (
-                        <MdSell color={colors.mainColor}/>
+                        <MdSell color={colors.mainColor} />
                       )}
                       {h.transaction_type === "TRANSFERENCIA" && (
-                        <BiTransfer color={colors.mainColor}/>
+                        <BiTransfer color={colors.mainColor} />
                       )}
                       <Text p={1} fontSize="xs" color={colors.mainColor}>
                         {h.transaction_type}

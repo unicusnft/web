@@ -12,17 +12,17 @@ import {
   Text,
   Flex,
 } from "@chakra-ui/react";
-import {colors} from "../../core/theme";
+import { colors } from "../../core/theme";
 import BoxUsuario from "../Boxes/BoxUsuario";
 
 const ModalConfirmarTransferTicket = ({
-                                        isOpen,
-                                        onClose,
-                                        user,
-                                        evento,
-                                        onConfirmOpen,
-                                        onCancelConfirm,
-                                      }) => {
+  isOpen,
+  onClose,
+  user,
+  evento,
+  onConfirmOpen,
+  onCancelConfirm,
+}) => {
   return (
     <Modal
       closeOnOverlayClick={false}
@@ -31,10 +31,10 @@ const ModalConfirmarTransferTicket = ({
       isOpen={isOpen}
       scrollBehavior="inside"
     >
-      <ModalOverlay/>
+      <ModalOverlay />
       <ModalContent backgroundColor={colors.backgroundComponent}>
         <ModalHeader color={colors.white}>Confirmar Transferencia</ModalHeader>
-        <ModalCloseButton colorScheme="white"/>
+        <ModalCloseButton colorScheme="white" />
         <ModalBody pb={4}>
           <VStack spacing={5}>
             <Text fontSize="lg" width="90%">
