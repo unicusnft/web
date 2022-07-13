@@ -129,6 +129,7 @@ export const Ticket = () => {
             isOpen={isOpenModalTicketRevendido}
             onClose={onCloseModalTicketRevendido}
             evento={ticket?.event.title}
+            nftId={ticket?.id}
           />
           <VStack py={5} spacing={5}>
             <div>
@@ -266,7 +267,7 @@ export const Ticket = () => {
                       index + 1 === ticket?.transactions?.length ? 20 : 2
                     }
                     py={4}
-                    key={index + h?.transaction_type + h?.transaction_date}
+                    key={h?.id + h?.transaction_type + h?.transaction_date}
                   >
                     <HStack spacing={0} mx={8}>
                       {h.transaction_type === "VENDIDO" && (
