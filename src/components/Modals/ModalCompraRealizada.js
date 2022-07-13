@@ -1,5 +1,5 @@
 import React from "react";
-import {colors} from "../../core/theme";
+import { colors } from "../../core/theme";
 import {
   Modal,
   ModalOverlay,
@@ -15,13 +15,13 @@ import {
   HStack,
   chakra,
 } from "@chakra-ui/react";
-import {SocialMediaButton} from "../../screens/ticket/Ticket";
+import { SocialMediaButton } from "../../screens/ticket/Ticket";
 import facebook from "../../img/facebook.png";
 import instagram from "../../img/instagram.png";
 import tikTok from "../../img/tik_tok.png";
 import twitter from "../../img/twitter.png";
 import whatsapp from "../../img/whatsapp.png";
-import {NFTCardBought} from "../Cards/NFTCardBought";
+import { NFTCardBought } from "../Cards/NFTCardBought";
 
 const TitleStyle = {
   fontSize: "16px",
@@ -29,7 +29,7 @@ const TitleStyle = {
   color: colors.mainColor,
 };
 
-const ModalCompraRealizada = ({isOpen, event, id, onClose}) => {
+const ModalCompraRealizada = ({ isOpen, event, id, onClose }) => {
   return (
     <Modal
       closeOnOverlayClick={false}
@@ -38,7 +38,7 @@ const ModalCompraRealizada = ({isOpen, event, id, onClose}) => {
       onClose={onClose}
       scrollBehavior="inside"
     >
-      <ModalOverlay/>
+      <ModalOverlay />
       <ModalContent
         backgroundColor={colors.backgroundComponent}
         ml={5}
@@ -47,7 +47,7 @@ const ModalCompraRealizada = ({isOpen, event, id, onClose}) => {
       >
         <ModalHeader color={colors.white}>Ticket adquirido</ModalHeader>
         <Link href={`/`}>
-          <ModalCloseButton colorScheme="white"/>
+          <ModalCloseButton colorScheme="white" />
         </Link>
         <ModalBody>
           <Text fontSize="sm">
@@ -69,11 +69,11 @@ const ModalCompraRealizada = ({isOpen, event, id, onClose}) => {
         </Text>
         <Center mb={3}>
           <HStack spacing={0}>
-            <SocialMediaButton img={facebook} alt="facebook"/>
-            <SocialMediaButton img={instagram} alt="instagram"/>
-            <SocialMediaButton img={tikTok} alt="tik tok"/>
-            <SocialMediaButton img={twitter} alt="twitter"/>
-            <SocialMediaButton img={whatsapp} alt="whatsapp"/>
+            <SocialMediaButton img={facebook} alt="facebook" />
+            <SocialMediaButton img={instagram} alt="instagram" />
+            <SocialMediaButton img={tikTok} alt="tik tok" />
+            <SocialMediaButton img={twitter} alt="twitter" />
+            <SocialMediaButton img={whatsapp} alt="whatsapp" />
           </HStack>
         </Center>
         <ModalFooter justifyContent="center">

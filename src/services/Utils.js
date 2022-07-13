@@ -21,4 +21,5 @@ export const TRAER_TICKET_BY_ID = "ticket/{ticket_id}";
 
 // NFT
 export const TRAER_NFT_BY_ID = "nft/{nft_id}";
-export const TRANSFER_NFT = "nft/{nft_id}/{user_id}";
+export const RESALE_NFT = "nft/{nft_id}/toggle-resale";
+export const TRANSFER_NFT = "nft/{nft_id}/transfer/{user_id}";

@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from "react";
-import {Container, Stack, Wrap, WrapItem, Text} from "@chakra-ui/react";
-import {Toolbar} from "../../components/Toolbar";
-import {traer_tickets_user} from "../../services/Calls";
-import {NFTCard} from "../../components/Cards/NFTCard";
-import {Filters} from "../../components/Filters";
-import {useUser} from "../../providers/UserProvider";
-import {Loading} from "../../components/Loading";
+import React, { useEffect, useState } from "react";
+import { Container, Stack, Wrap, WrapItem, Text } from "@chakra-ui/react";
+import { Toolbar } from "../../components/Toolbar";
+import { traer_tickets_user } from "../../services/Calls";
+import { NFTCard } from "../../components/Cards/NFTCard";
+import { Filters } from "../../components/Filters";
+import { useUser } from "../../providers/UserProvider";
+import { Loading } from "../../components/Loading";
 
 const TitlePageStyle = {
   fontSize: "25px",
@@ -14,24 +14,26 @@ const TitlePageStyle = {
 };
 
 export const MyTickets = () => {
-  const {currentUser} = useUser();
+  const { currentUser } = useUser();
   const [event, setEvent] = useState("");
 
   const [tickets, setTickets] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const [user] = useState(currentUser);
+
   useEffect(() => {
-    traer_tickets_user(currentUser?.id).then((res) => {
+    traer_tickets_user(user.id).then((res) => {
       setTickets(res);
       setIsLoading(false);
     });
-  }, [currentUser?.id]);
+  }, [user.id]);
 
   return (
     <>
-      <Toolbar title="Mis tickets"/>
+      <Toolbar title="Mis tickets" />
       {isLoading ? (
-        <Loading/>
+        <Loading />
       ) : (
         <>
           <Stack alignItems="center">
@@ -44,7 +46,7 @@ export const MyTickets = () => {
               description="Buscar en mis tickets"
             />
           </Stack>
-          <br/>
+          <br />
           <Container maxW="8xl" padding="0px" mb={5}>
             <Wrap spacing="25px" justify="center">
               {tickets
@@ -58,7 +60,7 @@ export const MyTickets = () => {
                 )
                 .map((t, i) => (
                   <WrapItem key={`${t.event.title} ${i}`}>
-                    <NFTCard event={t.event} nft_id={t.id}/>
+                    <NFTCard event={t.event} nft_id={t.id} />
                   </WrapItem>
                 ))}
             </Wrap>
