@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { colors } from "../../core/theme";
+import React, {useState} from "react";
+import {colors} from "../../core/theme";
+import {Fragment} from "react";
 import {
   Button,
   InputGroup,
@@ -7,23 +8,26 @@ import {
   InputRightElement,
   VStack,
   Flex,
+  Divider,
 } from "@chakra-ui/react";
-import { SearchIcon } from "@chakra-ui/icons";
+import {SearchIcon} from "@chakra-ui/icons";
 import BoxUsuario from "../Boxes/BoxUsuario";
 
 const TabPanelModalTransferir = ({
-  placeholderInput,
-  users,
-  initialUsers,
-  initialSearch,
-}) => {
+                                   placeholderInput,
+                                   users,
+                                   initialUsers,
+                                   initialSearch,
+                                   setTransferUser,
+                                   setIsUserSelected,
+                                 }) => {
   const [userSearch, setUserSearch] = useState(placeholderInput);
   const [search, setSearch] = useState(initialSearch);
   const [usersSearched, setUsersSearched] = useState(initialUsers);
   const [userSelected, setUserSelected] = useState(null);
 
   const handleSearch = () => {
-    const usersFiltered = users.filter(({ username }) =>
+    const usersFiltered = users.filter(({username}) =>
       username.toLowerCase().includes(userSearch.toLowerCase())
     );
     setUsersSearched(usersFiltered);
@@ -31,9 +35,12 @@ const TabPanelModalTransferir = ({
   };
 
   const handleUserSelected = (user) => {
+    setIsUserSelected(false);
     if (user !== null) {
       setSearch(false);
       setUserSelected(user);
+      setIsUserSelected(true);
+      setTransferUser(user);
     }
   };
   return (
@@ -42,9 +49,9 @@ const TabPanelModalTransferir = ({
         <InputRightElement width="30%">
           <Button
             size="sm"
-            mr={2}
             onClick={handleSearch}
-            leftIcon={<SearchIcon />}
+            leftIcon={<SearchIcon/>}
+            color={colors.mainColor}
           >
             Buscar
           </Button>
@@ -61,34 +68,31 @@ const TabPanelModalTransferir = ({
           pt={2}
           mt={4}
           border="1px solid #E2E8F0"
-          borderRadius={5}
+          borderRadius={4}
+          color={colors.white}
         >
-          {usersSearched.map((user) => {
+          {usersSearched.map((user, idx) => {
             return (
-              <Flex
-                key={user.username}
-                width="90%"
-                margin={2}
-                as="button"
-                onClick={() => handleUserSelected(user)}
-                color={colors.backgroundComponent}
-                borderRadius={4}
-              >
-                <BoxUsuario {...user} />
-              </Flex>
+              <Fragment key={user.username}>
+                {idx > 0 && <Divider/>}
+                <Flex
+                  width="90%"
+                  margin={1}
+                  as="button"
+                  onClick={() => handleUserSelected(user)}
+                  color={colors.white}
+                  borderRadius={4}
+                >
+                  <BoxUsuario {...user} />
+                </Flex>
+              </Fragment>
             );
           })}
         </VStack>
       )}
       {userSelected != null && (
-        <Flex
-          mt={5}
-          padding={2}
-          borderRadius={4}
-          backgroundColor="#E2E8F0"
-          color={colors.backgroundComponent}
-        >
-          {<BoxUsuario {...userSelected} />}
+        <Flex mt={5} padding={2} borderRadius={4} border="1px solid #E2E8F0">
+          <BoxUsuario {...userSelected} />
         </Flex>
       )}
     </>
