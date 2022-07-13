@@ -14,6 +14,7 @@ import {
 } from "@chakra-ui/react";
 import { colors } from "../../core/theme";
 import BoxUsuario from "../Boxes/BoxUsuario";
+import { transferir_nft } from "../../services/Calls";
 
 const ModalConfirmarTransferTicket = ({
   isOpen,
@@ -22,6 +23,7 @@ const ModalConfirmarTransferTicket = ({
   evento,
   onConfirmOpen,
   onCancelConfirm,
+  nftId,
 }) => {
   return (
     <Modal
@@ -29,7 +31,6 @@ const ModalConfirmarTransferTicket = ({
       onClose={onClose}
       size="md"
       isOpen={isOpen}
-      scrollBehavior="inside"
     >
       <ModalOverlay />
       <ModalContent backgroundColor={colors.backgroundComponent}>
@@ -76,6 +77,7 @@ const ModalConfirmarTransferTicket = ({
             onClick={(event) => {
               event.preventDefault();
               onClose();
+              transferir_nft(nftId, user.id);
               onConfirmOpen();
             }}
             colorScheme="main"

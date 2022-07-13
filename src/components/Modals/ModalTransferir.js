@@ -30,7 +30,6 @@ const ModalTransferir = ({
       onClose={onClose}
       size="md"
       isOpen={isOpen}
-      scrollBehavior="inside"
     >
       <ModalOverlay />
       <ModalContent backgroundColor={colors.backgroundComponent}>

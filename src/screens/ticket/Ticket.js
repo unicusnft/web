@@ -9,6 +9,7 @@ import {
   Text,
   VStack,
   useDisclosure,
+  Badge,
 } from "@chakra-ui/react";
 import facebook from "../../img/facebook.png";
 import instagram from "../../img/instagram.png";
@@ -28,7 +29,8 @@ import { Loading } from "../../components/Loading";
 import ModalTransferir from "../../components/Modals/ModalTransferir";
 import ModalConfirmarTransferTicket from "../../components/Modals/ModalConfirmarTransferTicket";
 import ModalTicketTransferido from "../../components/Modals/ModalTicketTransferido";
-import { traer_nft, traer_usuarios } from "../../services/Calls";
+import ModalTicketResale from "../../components/Modals/ModalTicketResale";
+import { traer_nft, traer_usuarios, resaleTicket } from "../../services/Calls";
 import { useUser } from "../../providers/UserProvider";
 
 export const SocialMediaButton = ({ img, alt }) => {
@@ -50,6 +52,8 @@ export const Ticket = () => {
 
   const [datetime, setDatetime] = useState(null);
 
+  const [user] = useState(currentUser);
+
   const {
     isOpen: isOpenModalTransferir,
     onOpen: onOpenModalTransferir,
@@ -68,6 +72,12 @@ export const Ticket = () => {
     onClose: onCloseModalSuccessTransfer,
   } = useDisclosure();
 
+  const {
+    isOpen: isOpenModalTicketRevendido,
+    onOpen: onOpenModalTicketRevendido,
+    onClose: onCloseModalTicketRevendido,
+  } = useDisclosure();
+
   useEffect(() => {
     const fetchNft = async () => {
       return traer_nft(params?.nftId);
@@ -82,9 +92,9 @@ export const Ticket = () => {
 
   useEffect(() => {
     traer_usuarios().then((res) => {
-      setUsers(res.filter((x) => x.id !== currentUser.id));
+      setUsers(res.filter((x) => x.id !== user.id));
     });
-  });
+  }, [user.id]);
 
   return (
     <>
@@ -107,11 +117,17 @@ export const Ticket = () => {
             evento={ticket?.event?.title}
             onConfirmOpen={onOpenModalSuccessTransfer}
             onCancelConfirm={onOpenModalTransferir}
+            nftId={ticket?.id}
           />
           <ModalTicketTransferido
             isOpen={isOpenModalSuccessTransfer}
             onClose={onCloseModalSuccessTransfer}
             user={transferUser}
+            evento={ticket?.event.title}
+          />
+          <ModalTicketResale
+            isOpen={isOpenModalTicketRevendido}
+            onClose={onCloseModalTicketRevendido}
             evento={ticket?.event.title}
           />
           <VStack py={5} spacing={5}>
@@ -190,20 +206,45 @@ export const Ticket = () => {
                   las veces que quieras!
                 </Text>
                 <HStack>
-                  <Button colorScheme="main" size="xl" py={3} px={8}>
-                    Revender
-                  </Button>
-                  <Button
-                    colorScheme="main"
-                    size="xl"
-                    py={3}
-                    px={8}
-                    variant="outline"
-                    color={colors.mainColor}
-                    onClick={onOpenModalTransferir}
-                  >
-                    Transferir
-                  </Button>
+                  {ticket?.for_resale ? (
+                    <Badge
+                      variant="subtle"
+                      colorScheme="purple"
+                      fontSize="1.4em"
+                      borderRadius="6px"
+                      px={5}
+                      py={1}
+                    >
+                      En venta
+                    </Badge>
+                  ) : (
+                    <>
+                      <Button
+                        colorScheme="main"
+                        size="xl"
+                        py={3}
+                        px={8}
+                        onClick={(event) => {
+                          event.preventDefault();
+                          resaleTicket(ticket?.id);
+                          onOpenModalTicketRevendido();
+                        }}
+                      >
+                        Revender
+                      </Button>
+                      <Button
+                        colorScheme="main"
+                        size="xl"
+                        py={3}
+                        px={8}
+                        variant="outline"
+                        color={colors.mainColor}
+                        onClick={onOpenModalTransferir}
+                      >
+                        Transferir
+                      </Button>
+                    </>
+                  )}
                 </HStack>
               </VStack>
               <Divider inset my={6} />
@@ -225,7 +266,7 @@ export const Ticket = () => {
                       index + 1 === ticket?.transactions?.length ? 20 : 2
                     }
                     py={4}
-                    key={h?.type + h?.date}
+                    key={index + h?.transaction_type + h?.transaction_date}
                   >
                     <HStack spacing={0} mx={8}>
                       {h.transaction_type === "VENDIDO" && (

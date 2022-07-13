@@ -8,12 +8,11 @@ import {
   ModalBody,
   VStack,
   Text,
-  Flex,
 } from "@chakra-ui/react";
 import { colors } from "../../core/theme";
-import BoxUsuario from "../Boxes/BoxUsuario";
+import { CheckCircleIcon } from "@chakra-ui/icons";
 
-const ModalTicketTransferido = ({ isOpen, evento, user }) => {
+const ModalTicketResale = ({ isOpen, evento }) => {
   return (
     <Modal
       closeOnOverlayClick={false}
@@ -27,22 +26,14 @@ const ModalTicketTransferido = ({ isOpen, evento, user }) => {
         <ModalCloseButton colorScheme="white" />
         <ModalBody pb={4}>
           <VStack spacing={5}>
+            <CheckCircleIcon color="green" />
             <Text fontSize="lg" width="90%">
               Tu ticket para
               <Text color={colors.mainColor} as="span">
                 {` ${evento} `}
               </Text>
-              fue transferido con éxito al siguiente usuario:
+              fue puesto en venta:
             </Text>
-            <Flex
-              width="90%"
-              mt={5}
-              padding={3}
-              borderRadius={4}
-              border="1px solid #00FF5F"
-            >
-              <BoxUsuario {...user} isSuccess />
-            </Flex>
           </VStack>
         </ModalBody>
       </ModalContent>
@@ -50,4 +41,4 @@ const ModalTicketTransferido = ({ isOpen, evento, user }) => {
   );
 };
 
-export default ModalTicketTransferido;
+export default ModalTicketResale;
