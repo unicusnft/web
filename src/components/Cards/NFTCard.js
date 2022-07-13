@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Box, Flex, HStack, Image, Text, VStack} from "@chakra-ui/react";
+import {Box, HStack, Image, Text, VStack} from "@chakra-ui/react";
 import {colors} from "../../core/theme";
 import {BsClockFill} from "react-icons/bs";
 import {HiLocationMarker} from "react-icons/hi";

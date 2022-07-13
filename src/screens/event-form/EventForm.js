@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Box, Button, HStack, Image, Input, Select, Stack, Text, VStack} from "@chakra-ui/react";
 import {Toolbar} from "../../components/Toolbar";
-import {useNavigate, useParams} from "react-router";
+import {useParams} from "react-router";
 import {newEvent} from "../../data/new-event";
 import {AiOutlinePlus} from "react-icons/ai";
 import {colors} from "../../core/theme";
@@ -133,7 +133,7 @@ const defaultTicket = {
 
 export const EventForm = () => {
   const {eventId} = useParams()
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
   const [event, setEvent] = useState({
     title: "",
     event_type: "",

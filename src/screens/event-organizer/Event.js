@@ -41,7 +41,7 @@ export const Event = () => {
     fetchEvent(eventId).then((data) => {
       setEvent(data)
     })
-  }, [])
+  }, [eventId])
 
   const getTotalCollected = () => {
     const formatter = new Intl.NumberFormat('es-AR', {
