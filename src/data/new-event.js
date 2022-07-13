@@ -11,19 +11,21 @@ export const newEvent = {
     "buy_image_2_url": "https://s3-alpha-sig.figma.com/img/9b65/1a04/57685e75d1f251ad7570262361d082f6?Expires=1658102400&Signature=QUImTawIfNy0n5L8LRDl0bJoBBvWHrcrtbfe2OCawPxTRpKuQBJN9Q06gruil1RmIYBz8HTUX8r~j3M91pk4FzBqOq9jZd7q1iZ5x3iagPVZfow~f3b~QbEuqhYxmusAaLpps4kt05sUPy7csEhrAwQjy8dis9Jz8ZD9yqUIOv6fig3AZ04nIX8EWfpvMc7ejraapOCqnHn4X0kaIGh1eKrOgDQO7gDVguBSrxtxiPcqsUgdOI0uL8PNUNsLxwHCG22aq5RXTKfZfpX4FaYX7tDsVeM0kZLUqolSeIR1W9egpWdgYneUYt6IHa9JB-g5qHUdqdqZeddlSF3RjQbhgw__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA",
     "tickets": [
         {
-            "id": 0,
+            "id": 1,
             "category": "General",
             "price": 1500,
             "description": "string",
             "total_supply": 750,
+            "remaining_supply": 325,
             "event_id": 0
         },
         {
-            "id": 0,
+            "id": 2,
             "category": "VIP",
             "price": 2990,
             "description": "string",
             "total_supply": 250,
+            "remaining_supply": 166,
             "event_id": 0
         }
     ]

@@ -35,7 +35,7 @@ export const TicketsNFT = ({img1, img2}) => {
                     alt="Ticket photo"
                     rounded={40}
                     marginLeft={['-72px', '-100px', '-132px']}
-                    marginTop={['22px', '38px', '50px']}
+                    marginTop={['25px', '38px', '50px']}
                     objectFit='cover'
                 />
             </Box>
