@@ -56,8 +56,8 @@ export const MyTickets = () => {
                         .toLocaleLowerCase()
                         .includes(event.toLocaleLowerCase()))
                 )
-                .map((t) => (
-                  <WrapItem key={t.event.title}>
+                .map((t, i) => (
+                  <WrapItem key={`${t.event.title} ${i}`}>
                     <NFTCard event={t.event} nft_id={t.id}/>
                   </WrapItem>
                 ))}

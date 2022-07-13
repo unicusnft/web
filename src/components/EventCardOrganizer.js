@@ -1,5 +1,5 @@
 import {Box, Flex, HStack, Image, Spacer, Text, VStack} from "@chakra-ui/react";
-import {DateCard} from "./DateCard";
+import {DateCard} from "./Cards/DateCard";
 import {HiLocationMarker} from "react-icons/hi";
 import {BsClockFill} from "react-icons/bs";
 import React from "react";

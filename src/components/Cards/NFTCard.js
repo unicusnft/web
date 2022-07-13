@@ -31,7 +31,6 @@ const NFTInfoStyle = {
   margin: '0px',
 }
 
-
 const ImageStyle = {
   borderRadius: '10px',
   objectFit: 'cover',
@@ -57,34 +56,17 @@ const TitleStyle = {
   color: colors.mainColor
 }
 
-const DateStyle = {
-  backgroundColor: colors.mainColor,
-  color: colors.white,
-  paddingLeft: '10px',
-  paddingRight: '10px',
-  paddingTop: '10px',
-  paddingBottom: '2px',
-  fontWeight: 'bold',
-  borderRadius: '12px',
-  height: '58px',
-  width: '58px',
-  margin: '0px',
-  marginRight: '-58px',
-  position: 'relative',
-  left: '120px'
-}
-
 export const NFTCard = ({event, nft_id}) => {
   const {title, location, event_datetime, ticket_image_url} = event;
   const [datetime] = useState(new Date(event_datetime));
 
   return (
     <Link to={`/ticket/${nft_id}`}>
-      <HStack align="top" fontFamily="Montserrat" width="360">
+      <HStack spacing={0} fontFamily="Montserrat" width="360">
         <div style={{position: 'relative', height: '228px', width: '160px'}}>
-          <Image src={imgUrl} sx={ImageStyle}/>
+          <Image src={ticket_image_url} sx={ImageStyle}/>
           <div style={{position: 'absolute', top: '0', right: '0'}}>
-            <DateCard datetime={datetime}></DateCard>
+            <DateCard datetime={datetime} />
           </div>
         </div>
         <VStack spacing="0px">
