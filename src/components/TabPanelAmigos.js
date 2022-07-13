@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 
-const TabPanelAmigos = ({ placeholderInput, users }) => {
+const TabPanelAmigos = ({placeholderInput, users}) => {
   const [userSearch, setUserSearch] = useState(placeholderInput);
   const [search, setSearch] = useState(false);
   const [usersSearched, setUsersSearched] = useState(users);
   const [userSelected, setUserSelected] = useState(null);
 
   const handleSearch = () => {
-    const usersFiltered = users.filter(({ username }) =>
+    const usersFiltered = users.filter(({username}) =>
       username.toLowerCase().includes(userSearch.toLowerCase())
     );
     setUsersSearched(usersFiltered);

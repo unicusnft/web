@@ -57,7 +57,7 @@ export const events = [
         label: "Pack 3 días",
         price: "28000"
       },
-      {  
+      {
         label: "Día 1",
         price: "13000"
       },
@@ -209,7 +209,7 @@ export const events = [
         label: "Campo delantero",
         price: "19500"
       },
-      {  
+      {
         label: "Platea preferida",
         price: "19000"
       },
@@ -293,7 +293,7 @@ export const events = [
         label: "Campo delantero",
         price: "9500"
       },
-      {  
+      {
         label: "Platea preferida",
         price: "9000"
       },

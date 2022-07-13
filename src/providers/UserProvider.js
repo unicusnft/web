@@ -1,14 +1,11 @@
-import { createContext, useContext, useEffect, useState } from "react";
-import {
-  LocalStorageGetCurrentUser,
-  LocalStorageSeCurrentUser,
-} from "../utils/helpers";
-import { useNavigate } from "react-router";
-import { traer_usuarios } from "../services/Calls";
+import {createContext, useContext, useEffect, useState} from "react";
+import {LocalStorageGetCurrentUser, LocalStorageSeCurrentUser,} from "../utils/helpers";
+import {useNavigate} from "react-router";
+import {traer_usuarios} from "../services/Calls";
 
 const UserContext = createContext(null);
 
-export const UserProvider = ({ children }) => {
+export const UserProvider = ({children}) => {
   let [allUsers, setAllUsers] = useState([]);
   let [user, setUser] = useState(LocalStorageGetCurrentUser());
   let navigate = useNavigate();
@@ -22,11 +19,7 @@ export const UserProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      return traer_usuarios();
-    };
-
-    fetchUsers().then((users) => {
+    traer_usuarios().then((users) => {
       setAllUsers(users);
       if (!user) {
         setCurrentUser(users?.[0]);
@@ -35,7 +28,7 @@ export const UserProvider = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  let value = { currentUser: user, setCurrentUser, allUsers };
+  let value = {currentUser: user, setCurrentUser, allUsers};
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
 

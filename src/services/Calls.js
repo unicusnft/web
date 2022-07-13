@@ -1,4 +1,4 @@
-import { get, post } from "./Api";
+import {get, post} from "./Api";
 import {
   TRAER_EVENTOS,
   TRAER_USERS,

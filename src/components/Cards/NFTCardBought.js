@@ -8,10 +8,10 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { colors } from "../../core/theme";
-import { BsClockFill } from "react-icons/bs";
-import { HiLocationMarker } from "react-icons/hi";
-import { Link } from "react-router-dom";
+import {colors} from "../../core/theme";
+import {BsClockFill} from "react-icons/bs";
+import {HiLocationMarker} from "react-icons/hi";
+import {Link} from "react-router-dom";
 
 const EventInfoStyle = {
   backgroundColor: colors.backgroundComponent,
@@ -31,7 +31,7 @@ const NFTInfoStyle = {
   backgroundColor: colors.mainColor,
   padding: "5px",
   paddingTop: "16px",
-  paddingLeft: "30px",
+  paddingLeft: "40px",
   color: colors.white,
   fontSize: "10px",
   borderRadius: "0px 0px 20px 0px",
@@ -74,13 +74,13 @@ const DateStyle = {
 };
 
 export const NFTCardBought = ({
-  title,
-  type,
-  location,
-  datetime,
-  imgUrl,
-  nftNumber,
-}) => {
+                                title,
+                                type,
+                                location,
+                                datetime,
+                                imgUrl,
+                                nftNumber,
+                              }) => {
   return (
     <Stack alignItems="center">
       <Link to={`/ticket/${nftNumber}`}>
@@ -98,24 +98,24 @@ export const NFTCardBought = ({
             </Text>
             <Text paddingBottom="0px" fontSize="12px">
               {datetime
-                .toLocaleString("default", { month: "short" })
+                .toLocaleString("default", {month: "short"})
                 .toUpperCase()}
             </Text>
           </Box>
-          <Image src={imgUrl} sx={ImageStyle} />
+          <Image src={imgUrl} sx={ImageStyle}/>
           <VStack spacing="0px">
             <Box textAlign="left" fontFamily="Montserrat" sx={EventInfoStyle}>
               <Text noOfLines={1} sx={NFTNumberStyle}>
                 NFT#{nftNumber}
               </Text>
               <HStack>
-                <HiLocationMarker />
+                <HiLocationMarker/>
                 <Text fontSize="12px" noOfLines={1}>
                   {location}
                 </Text>
               </HStack>
               <HStack>
-                <BsClockFill />
+                <BsClockFill/>
                 <Text fontSize="12px">
                   {datetime.toLocaleTimeString("en-GB", {
                     hour: "2-digit",
@@ -126,13 +126,13 @@ export const NFTCardBought = ({
             </Box>
             <Box textAlign="left" fontFamily="Montserrat" sx={NFTInfoStyle}>
               <HStack>
-                <VStack width="60px" align="left">
+                <VStack width="45px" align="left">
                   <Text noOfLines={1} as="b">
                     CHAIN
                   </Text>
                   <Text noOfLines={1}>Polygon</Text>
                 </VStack>
-                <VStack width="60px" align="left">
+                <VStack width="45px" align="left">
                   <Text noOfLines={1} as="b">
                     NFT ID
                   </Text>

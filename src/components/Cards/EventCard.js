@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import {
   Box,
   Text,
@@ -8,11 +8,11 @@ import {
   Spacer,
   Image,
 } from "@chakra-ui/react";
-import { colors } from "../../core/theme";
-import { BsClockFill } from "react-icons/bs";
-import { HiLocationMarker } from "react-icons/hi";
-import { DateCard } from "./DateCard";
-import { Link } from "react-router-dom";
+import {colors} from "../../core/theme";
+import {BsClockFill} from "react-icons/bs";
+import {HiLocationMarker} from "react-icons/hi";
+import {DateCard} from "./DateCard";
+import {Link} from "react-router-dom";
 
 const BoxStyle = {
   backgroundColor: colors.backgroundComponent,
@@ -47,20 +47,20 @@ const TitleStyle = {
 };
 
 export const EventCard = ({
-  id,
-  title,
-  event_type,
-  location,
-  event_datetime,
-  event_image_url,
-}) => {
+                            id,
+                            title,
+                            event_type,
+                            location,
+                            event_datetime,
+                            event_image_url,
+                          }) => {
   const [datetime] = useState(new Date(event_datetime));
 
   return (
     <Link to={`/buy/${id}`}>
-      <VStack paddingTop="30px" width="350px" style={{ cursor: "pointer" }}>
+      <VStack paddingTop="30px" width="350px" style={{cursor: "pointer"}}>
         <Box textAlign="left" fontFamily="Montserrat" sx={BoxStyle}>
-          <Image src={event_image_url} sx={ImageStyle} />
+          <Image src={event_image_url} sx={ImageStyle}/>
           <Flex pt={2}>
             <VStack align="left" spacing={0}>
               <Text noOfLines={1} sx={TypeStyle}>
@@ -70,16 +70,16 @@ export const EventCard = ({
                 {title}
               </Text>
             </VStack>
-            <Spacer />
-            <DateCard datetime={datetime} size="lg" />
+            <Spacer/>
+            <DateCard datetime={datetime} size="lg"/>
           </Flex>
           <HStack spacing={5}>
             <HStack>
-              <HiLocationMarker />
+              <HiLocationMarker/>
               <Text fontSize="sm">{location}</Text>
             </HStack>
             <HStack>
-              <BsClockFill />
+              <BsClockFill/>
               <Text fontSize="sm">
                 {datetime.getHours()}:
                 {String(datetime.getMinutes()).padStart(2, "0")}

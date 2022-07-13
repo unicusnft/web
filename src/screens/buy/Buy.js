@@ -1,4 +1,4 @@
-import { Toolbar } from "../../components/Toolbar";
+import {Toolbar} from "../../components/Toolbar";
 import {
   Box,
   Button,
@@ -6,69 +6,27 @@ import {
   Divider,
   Flex,
   HStack,
-  Image,
   Radio,
   RadioGroup,
   Stack,
   Text,
   useNumberInput,
-  VStack,
+  VStack
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
-import { AiOutlineClockCircle } from "react-icons/ai";
-import { GoLocation } from "react-icons/go";
-import "./Buy.css";
-import { DateCard } from "../../components/Cards/DateCard";
-import { colors } from "../../core/theme";
-import { Link, useParams } from "react-router-dom";
-import { Loading } from "../../components/Loading";
-import { traer_evento } from "../../services/Calls";
+import React, {useEffect, useState} from "react";
+import {AiOutlineClockCircle} from "react-icons/ai";
+import {GoLocation} from "react-icons/go";
+import './Buy.css'
+import {DateCard} from "../../components/Cards/DateCard";
+import {colors} from "../../core/theme";
+import {Link, useParams} from "react-router-dom";
+import {Loading} from "../../components/Loading";
+import {TicketsNFT} from "../../components/TicketsNFT";
+import {traer_evento} from "../../services/Calls";
 
-const TicketsNFT = ({ img1, img2 }) => {
-  return (
-    <HStack my={4}>
-      <Box
-        w={["200px", "250px", "350px"]}
-        h={["250px", "350px", "450px"]}
-        rounded={40}
-        color="white"
-        boxShadow="dark-xs"
-      >
-        <Image
-          src={img1}
-          w={["200px", "250px", "350px"]}
-          h={["250px", "350px", "450px"]}
-          alt="Ticket photo"
-          rounded={40}
-          objectFit="cover"
-        />
-      </Box>
-      <Box
-        w={["200px", "250px", "350px"]}
-        h={["250px", "350px", "450px"]}
-        rounded={40}
-        color="white"
-        boxShadow="dark-xs"
-        style={{ transform: "rotate(15deg)" }}
-      >
-        <Image
-          src={img2}
-          w={["200px", "250px", "350px"]}
-          h={["250px", "350px", "450px"]}
-          alt="Ticket photo"
-          rounded={40}
-          marginLeft={["-72px", "-100px", "-132px"]}
-          marginTop={["22px", "38px", "50px"]}
-          objectFit="cover"
-        />
-      </Box>
-    </HStack>
-  );
-};
-
-const SelectTicketCard = ({ event }) => {
+const SelectTicketCard = ({event}) => {
   const [ticketId, setTicketId] = React.useState("");
-  const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } =
+  const {getInputProps, getIncrementButtonProps, getDecrementButtonProps} =
     useNumberInput({
       step: 1,
       defaultValue: 1,
@@ -91,18 +49,18 @@ const SelectTicketCard = ({ event }) => {
       <Text fontSize="xs" color="gray">
         {event?.event_type}
       </Text>
-      <Text fontSize="4xl" sx={{ fontWeight: 600 }} mb={3}>
+      <Text fontSize="4xl" sx={{fontWeight: 600}} mb={3}>
         {event?.title}
       </Text>
       <HStack>
-        <DateCard datetime={new Date(event?.event_datetime)} />
+        <DateCard datetime={new Date(event?.event_datetime)}/>
         <VStack alignItems="left">
           <HStack>
-            <GoLocation />
+            <GoLocation/>
             <Text fontSize="xs">{event?.location}</Text>
           </HStack>
           <HStack>
-            <AiOutlineClockCircle />
+            <AiOutlineClockCircle/>
             <Text fontSize="xs">
               {new Date(event?.event_datetime).toLocaleTimeString("en-GB", {
                 hour: "2-digit",
@@ -112,12 +70,12 @@ const SelectTicketCard = ({ event }) => {
           </HStack>
         </VStack>
       </HStack>
-      <Divider my={6} />
+      <Divider my={6}/>
       <div>
         <div>Seleccioná el tipo de ticket</div>
         <RadioGroup value={ticketId} my={2}>
           <Stack spacing={0.5}>
-            {event?.tickets?.map(({ id, price, description }) => (
+            {event?.tickets?.map(({id, price, description}) => (
               <Radio
                 key={id}
                 colorScheme="main"
@@ -129,7 +87,7 @@ const SelectTicketCard = ({ event }) => {
                   className={`${
                     id.toString() === ticketId ? "purple-text" : ""
                   }`}
-                  style={{ paddingLeft: "5px" }}
+                  style={{paddingLeft: "5px"}}
                   onClick={() => setTicketId(id.toString())}
                 >
                   ${price} - {description}
@@ -144,13 +102,13 @@ const SelectTicketCard = ({ event }) => {
         <Button {...dec} size="xs" variant="ghost" colorScheme="white">
           {"<"}
         </Button>
-        <div style={{ minWidth: 20, textAlign: "center" }}>{input?.value}</div>
+        <div style={{minWidth: 20, textAlign: "center"}}>{input?.value}</div>
         <Button {...inc} size="xs" variant="ghost" colorScheme="white">
           {">"}
         </Button>
       </HStack>
       <Link to={`/buy/${event?.id}/ticket/${ticketId}/cant/${input?.value}`}>
-        <Flex mt={8} direction={{ base: "column-reverse" }}>
+        <Flex mt={8} direction={{base: "column-reverse"}}>
           <Button
             colorScheme="main"
             size="xl"
@@ -185,11 +143,11 @@ export const Buy = () => {
 
   return (
     <>
-      <Toolbar />
+      <Toolbar/>
       {loading ? (
-        <Loading />
+        <Loading/>
       ) : (
-        <div style={{ marginTop: "20px", overflowX: "hidden" }}>
+        <div style={{marginTop: "20px", overflowX: "hidden"}}>
           <Center marginRight={["-72px", "-130px", "-182px"]}>
             <TicketsNFT
               img1={event?.buy_image_1_url}
@@ -197,7 +155,7 @@ export const Buy = () => {
             />
           </Center>
           <Center mt={5}>
-            <SelectTicketCard event={event} />
+            <SelectTicketCard event={event}/>
           </Center>
         </div>
       )}

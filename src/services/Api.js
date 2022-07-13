@@ -1,4 +1,4 @@
-import { BASE_URL } from "./Utils";
+import {BASE_URL} from "./Utils";
 
 export const makeRequest = async (request) => {
   let jsonResponse;
@@ -13,13 +13,13 @@ export const makeRequest = async (request) => {
 
 export const get = (url, config) => {
   return makeRequest(() =>
-    fetch(`${BASE_URL}/${url}`, { ...headers(config), method: "GET" })
+    fetch(`${BASE_URL}/${url}`, {...headers(config), method: "GET"})
   );
 };
 
 export const del = (url, config) => {
   return makeRequest(() =>
-    fetch(`${BASE_URL}/${url}`, { ...headers(config), method: "DELETE" })
+    fetch(`${BASE_URL}/${url}`, {...headers(config), method: "DELETE"})
   );
 };
 

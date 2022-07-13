@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { colors } from "../../core/theme";
-import { users } from "../../data/users";
+import React, {useState} from "react";
+import {colors} from "../../core/theme";
+import {users} from "../../data/users";
 import {
   Modal,
   ModalOverlay,
@@ -19,11 +19,11 @@ import {
 import TabPanelModalTransferir from "../Tabs/TabPanelModalTransferir";
 
 const ModalTransferir = ({
-  isOpen,
-  onClose,
-  onConfirmOpen,
-  setTransferUser,
-}) => {
+                           isOpen,
+                           onClose,
+                           onConfirmOpen,
+                           setTransferUser,
+                         }) => {
   const [isUserSelected, setIsUserSelected] = useState(false);
 
   return (
@@ -34,10 +34,10 @@ const ModalTransferir = ({
       isOpen={isOpen}
       scrollBehavior="inside"
     >
-      <ModalOverlay />
+      <ModalOverlay/>
       <ModalContent backgroundColor={colors.backgroundComponent}>
         <ModalHeader color={colors.white}>Transferir ticket</ModalHeader>
-        <ModalCloseButton colorScheme="white" />
+        <ModalCloseButton colorScheme="white"/>
         <ModalBody pb={4}>
           <Tabs isLazy isFitted variant="soft-rounded">
             <TabList mb="1em">

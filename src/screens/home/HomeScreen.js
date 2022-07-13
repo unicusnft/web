@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { Stack, Wrap, WrapItem, Box, Text } from "@chakra-ui/react";
-import { Filters } from "../../components/Filters.js";
-import { EventCard } from "../../components/Cards/EventCard.js";
-import { Toolbar } from "../../components/Toolbar";
-import { useUser } from "../../providers/UserProvider";
-import { HomeScreenOrganizer } from "./HomeScreenOrganizer";
-import { traer_eventos } from "../../services/Calls.js";
-import { Loading } from "../../components/Loading";
+import React, {useEffect, useState} from "react";
+import {Stack, Wrap, WrapItem, Box, Text} from "@chakra-ui/react";
+import {Filters} from "../../components/Filters.js";
+import {EventCard} from "../../components/Cards/EventCard.js";
+import {Toolbar} from "../../components/Toolbar";
+import {useUser} from "../../providers/UserProvider";
+import {HomeScreenOrganizer} from "./HomeScreenOrganizer";
+import {traer_eventos} from "../../services/Calls.js";
+import {Loading} from "../../components/Loading";
 
 const TitlePageStyle = {
   fontSize: "25px",
@@ -15,7 +15,7 @@ const TitlePageStyle = {
 };
 
 export const HomeScreen = () => {
-  const { currentUser } = useUser();
+  const {currentUser} = useUser();
   const [event, setEvent] = useState("");
 
   const [eventos, setEventos] = useState([]);
@@ -29,14 +29,14 @@ export const HomeScreen = () => {
   }, []);
 
   if (currentUser?.is_organizer) {
-    return <HomeScreenOrganizer />;
+    return <HomeScreenOrganizer/>;
   }
 
   return (
     <>
-      <Toolbar />
+      <Toolbar/>
       {isLoading ? (
-        <Loading />
+        <Loading/>
       ) : (
         <Box backgroundColor="#121212">
           <Stack alignItems="center">
@@ -49,7 +49,7 @@ export const HomeScreen = () => {
               description="Buscar un evento"
             />
           </Stack>
-          <br />
+          <br/>
           <Wrap spacing="25px" justify="center">
             {eventos
               .filter(

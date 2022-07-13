@@ -12,10 +12,10 @@ import {
   Text,
   Flex,
 } from "@chakra-ui/react";
-import { colors } from "../../core/theme";
+import {colors} from "../../core/theme";
 import BoxUsuario from "../Boxes/BoxUsuario";
 
-const ModalTicketTransferido = ({ isOpen, onClose, evento, user }) => {
+const ModalTicketTransferido = ({isOpen, onClose, evento, user}) => {
   return (
     <Modal
       closeOnOverlayClick={false}
@@ -24,10 +24,10 @@ const ModalTicketTransferido = ({ isOpen, onClose, evento, user }) => {
       isOpen={isOpen}
       scrollBehavior="inside"
     >
-      <ModalOverlay />
+      <ModalOverlay/>
       <ModalContent backgroundColor={colors.backgroundComponent}>
         <ModalHeader color={colors.white}>Ticket Transferido</ModalHeader>
-        <ModalCloseButton colorScheme="white" />
+        <ModalCloseButton colorScheme="white"/>
         <ModalBody pb={4}>
           <VStack spacing={5}>
             <Text fontSize="lg" width="90%">
@@ -44,7 +44,7 @@ const ModalTicketTransferido = ({ isOpen, onClose, evento, user }) => {
               borderRadius={4}
               border="1px solid #00FF5F"
             >
-              <BoxUsuario {...user} isSuccess />
+              <BoxUsuario {...user} isSuccess/>
             </Flex>
             <Text width="90%">
               ¿Querés agregar este usuario a tu lista de contactos frecuentes?

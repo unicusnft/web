@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { colors } from "../../core/theme";
-import { Fragment } from "react";
+import React, {useState} from "react";
+import {colors} from "../../core/theme";
+import {Fragment} from "react";
 import {
   Button,
   InputGroup,
@@ -10,24 +10,24 @@ import {
   Flex,
   Divider,
 } from "@chakra-ui/react";
-import { SearchIcon } from "@chakra-ui/icons";
+import {SearchIcon} from "@chakra-ui/icons";
 import BoxUsuario from "../Boxes/BoxUsuario";
 
 const TabPanelModalTransferir = ({
-  placeholderInput,
-  users,
-  initialUsers,
-  initialSearch,
-  setTransferUser,
-  setIsUserSelected,
-}) => {
+                                   placeholderInput,
+                                   users,
+                                   initialUsers,
+                                   initialSearch,
+                                   setTransferUser,
+                                   setIsUserSelected,
+                                 }) => {
   const [userSearch, setUserSearch] = useState(placeholderInput);
   const [search, setSearch] = useState(initialSearch);
   const [usersSearched, setUsersSearched] = useState(initialUsers);
   const [userSelected, setUserSelected] = useState(null);
 
   const handleSearch = () => {
-    const usersFiltered = users.filter(({ username }) =>
+    const usersFiltered = users.filter(({username}) =>
       username.toLowerCase().includes(userSearch.toLowerCase())
     );
     setUsersSearched(usersFiltered);
@@ -50,7 +50,7 @@ const TabPanelModalTransferir = ({
           <Button
             size="sm"
             onClick={handleSearch}
-            leftIcon={<SearchIcon />}
+            leftIcon={<SearchIcon/>}
             color={colors.mainColor}
           >
             Buscar
@@ -74,7 +74,7 @@ const TabPanelModalTransferir = ({
           {usersSearched.map((user, idx) => {
             return (
               <Fragment key={user.username}>
-                {idx > 0 && <Divider />}
+                {idx > 0 && <Divider/>}
                 <Flex
                   width="90%"
                   margin={1}
