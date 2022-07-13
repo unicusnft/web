@@ -31,7 +31,7 @@ const NFTInfoStyle = {
   backgroundColor: colors.mainColor,
   padding: "5px",
   paddingTop: "16px",
-  paddingLeft: "30px",
+  paddingLeft: "40px",
   color: colors.white,
   fontSize: "10px",
   borderRadius: "0px 0px 20px 0px",
@@ -126,13 +126,13 @@ export const NFTCardBought = ({
             </Box>
             <Box textAlign="left" fontFamily="Montserrat" sx={NFTInfoStyle}>
               <HStack>
-                <VStack width="60px" align="left">
+                <VStack width="45px" align="left">
                   <Text noOfLines={1} as="b">
                     CHAIN
                   </Text>
                   <Text noOfLines={1}>Polygon</Text>
                 </VStack>
-                <VStack width="60px" align="left">
+                <VStack width="45px" align="left">
                   <Text noOfLines={1} as="b">
                     NFT ID
                   </Text>

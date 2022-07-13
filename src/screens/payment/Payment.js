@@ -89,7 +89,7 @@ export const Payment = () => {
         <Loading/>
       ) : (
         event && (
-          <VStack py={5} spacing={5}>
+          <VStack py={5} spacing={5} style={{overflowX: "hidden"}}>
             <Box
               w="350px"
               rounded={16}
@@ -101,7 +101,7 @@ export const Payment = () => {
             >
               <VStack spacing={0} align="left">
                 <Image
-                  src={event.event_image_url}
+                  src={event.ticket_image_url}
                   alt="Ticket photo"
                   w="350px"
                   h="400px"

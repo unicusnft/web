@@ -51,7 +51,7 @@ const ModalCompraRealizada = ({isOpen, event, id, onClose}) => {
         </Link>
         <ModalBody>
           <Text fontSize="sm">
-            <chakra.span>Felicitaciones, ya tenes tu ticket para</chakra.span>
+            <chakra.span>Felicitaciones, ya tenes tu ticket para </chakra.span>
             <chakra.span sx={TitleStyle}>{event.title}</chakra.span>
             <chakra.span> !</chakra.span>
           </Text>
@@ -60,7 +60,7 @@ const ModalCompraRealizada = ({isOpen, event, id, onClose}) => {
             type={event?.event_type}
             location={event?.location}
             datetime={new Date(event?.event_datetime)}
-            imgUrl={event?.event_image_url}
+            imgUrl={event?.ticket_image_url}
             nftNumber={id}
           />
         </ModalBody>
