@@ -210,7 +210,7 @@ export const Ticket = () => {
                     <Badge
                       variant="subtle"
                       colorScheme="purple"
-                      fontSize="1.4em"
+                      fontSize="0.9em"
                       borderRadius="6px"
                       px={5}
                       py={1}
