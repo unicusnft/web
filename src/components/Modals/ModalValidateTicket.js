@@ -30,6 +30,7 @@ export const ModalValidateTicket = ({
       isOpen={isOpen}
       onClose={onClose}
       scrollBehavior="inside"
+      isCentered
     >
       <ModalOverlay />
       <ModalContent

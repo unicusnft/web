@@ -37,6 +37,7 @@ const ModalCompraRealizada = ({ isOpen, event, id, onClose }) => {
       isOpen={isOpen}
       onClose={onClose}
       scrollBehavior="inside"
+      isCentered
     >
       <ModalOverlay />
       <ModalContent

@@ -20,6 +20,7 @@ const ModalTicketTransferido = ({ isOpen, evento, user }) => {
       onClose={() => (window.location.href = "/my-tickets")}
       size="md"
       isOpen={isOpen}
+      isCentered
     >
       <ModalOverlay />
       <ModalContent backgroundColor={colors.backgroundComponent}>

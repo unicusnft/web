@@ -19,6 +19,7 @@ const ModalTicketResale = ({ isOpen, evento, nftId }) => {
       onClose={() => (window.location.href = "/ticket/" + nftId)}
       size="md"
       isOpen={isOpen}
+      isCentered
     >
       <ModalOverlay />
       <ModalContent backgroundColor={colors.backgroundComponent}>
