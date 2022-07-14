@@ -16,3 +16,5 @@ jobs:
           heroku_app_name: "unicus-nft"
           heroku_email: "juampi.rombola@gmail.com"
           procfile: "web: npm install --force -g serve && serve -s build"
+        env:
+          NODE_MODULES_CACHE: false
