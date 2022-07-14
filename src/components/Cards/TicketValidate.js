@@ -20,45 +20,49 @@ const TicketValidate = ({ nftId, urlImage }) => {
 
   return (
     <div className="flip-card">
-      <div className="flip-card-inner">
-        <div className="flip-card-front">
-          <Image
-            src={urlImage}
-            alt="Ticket photo"
-            w="350px"
-            h="400px"
-            objectFit="cover"
-            rounded={40}
-          />
+      <input type="checkbox" id="flipper" />
+      <label htmlFor="flipper" className="flip-label-card">
+        <div className="flip-card-inner">
+          <div className="flip-card-front">
+            <Image
+              src={urlImage}
+              alt="Ticket photo"
+              w="350px"
+              h="400px"
+              objectFit="cover"
+              rounded={40}
+            />
+          </div>
+          <div className="flip-card-back">
+            <Image
+              src={urlImage}
+              alt="Ticket photo"
+              w="350px"
+              h="400px"
+              objectFit="cover"
+              rounded={40}
+              filter="blur(8px)"
+              tabIndex="0"
+            />
+            <Image
+              src={qr}
+              alt="Ticket QR"
+              objectFit="cover"
+              rounded={40}
+              style={{ position: "absolute" }}
+              mb="125px"
+            />
+            <Text
+              fontSize="2xl"
+              mb="25px"
+              style={{ position: "absolute" }}
+              as="strong"
+            >
+              Escaneá el código para ingresar al evento!
+            </Text>
+          </div>
         </div>
-        <div className="flip-card-back">
-          <Image
-            src={urlImage}
-            alt="Ticket photo"
-            w="350px"
-            h="400px"
-            objectFit="cover"
-            rounded={40}
-            filter="blur(8px)"
-          />
-          <Image
-            src={qr}
-            alt="Ticket QR"
-            objectFit="cover"
-            rounded={40}
-            style={{ position: "absolute" }}
-            mb="125px"
-          />
-          <Text
-            fontSize="2xl"
-            mb="25px"
-            style={{ position: "absolute" }}
-            as="strong"
-          >
-            Escaneá el código para ingresar al evento!
-          </Text>
-        </div>
-      </div>
+      </label>
     </div>
   );
 };
