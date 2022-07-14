@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { VStack, Button } from "@chakra-ui/react";
+import { VStack, Button, Stack } from "@chakra-ui/react";
 import { Link, useParams } from "react-router-dom";
 import { Toolbar } from "../../components/Toolbar";
 import { QrReader } from "react-qr-reader";
@@ -54,10 +54,20 @@ export const ValidateTicket = () => {
             setData(result?.text);
           }
         }}
-        style={{ width: "100%", height: "100%" }}
+        style={{
+          width: "100%",
+          height: "100%",
+        }}
+        containerStyle={{
+          borderColor: colors.mainColor,
+          borderWidth: 1,
+          marginTop: 30,
+          marginLeft: 20,
+          marginRight: 20,
+        }}
         constraints={{ facingMode: "environment" }}
       />
-      <VStack w="100%" marginTop={5}>
+      <VStack w="100%" marginTop={10}>
         <Link to={`/event/${eventId}`}>
           <Button
             colorScheme="main"
