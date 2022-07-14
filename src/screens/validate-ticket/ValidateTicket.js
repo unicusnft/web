@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { VStack, Button, Stack } from "@chakra-ui/react";
+import { VStack, Button } from "@chakra-ui/react";
 import { Link, useParams } from "react-router-dom";
 import { Toolbar } from "../../components/Toolbar";
 import { QrReader } from "react-qr-reader";
