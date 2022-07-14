@@ -9,7 +9,6 @@ import {
   ModalFooter,
   Button,
   Text,
-  chakra,
 } from "@chakra-ui/react";
 import { colors } from "../../core/theme";
 
