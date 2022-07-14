@@ -57,15 +57,16 @@ export const ModalValidateTicket = ({
               </Text>
             )
           )}
-        </ModalBody>
-        <ModalFooter justifyContent="center">
           {isLoading ? (
             <Loading mt={10} size="40px" />
           ) : isValidated ? (
             <Validated />
-          ) : validationError ? (
-            <ValidationError />
           ) : (
+            validationError && <ValidationError />
+          )}
+        </ModalBody>
+        <ModalFooter justifyContent="center">
+          {!isLoading && !isValidated && !validationError && (
             <>
               <Button
                 colorScheme="main"

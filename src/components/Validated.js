@@ -7,7 +7,7 @@ export const Validated = () => {
   return (
     <>
       <Center mt={10}>
-        <Icon as={CheckIcon} color={colors.success} />
+        <Icon as={CheckIcon} color={colors.success} boxSize={35} />
         <Text marginLeft={5}>Entrada validada !</Text>
       </Center>
     </>

@@ -40,6 +40,15 @@ export const ValidateTicket = () => {
   };
 
   useEffect(() => {
+    if (!askforValidation) {
+      setData(NO_RESULT);
+      setIsLoading(false);
+      setIsValidated(false);
+      setValidationError(false);
+    }
+  }, [askforValidation]);
+
+  useEffect(() => {
     if (data !== NO_RESULT && data.includes("unicus")) {
       setAskForValidation(true);
     }
