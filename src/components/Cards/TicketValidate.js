@@ -3,6 +3,7 @@ import QRCode from "qrcode";
 import { Image, Text } from "@chakra-ui/react";
 import { BASE_URL, VALIDATE_NFT } from "../../services/Utils";
 import "../../styles/card.css";
+import { colors } from "../../core/theme";
 
 const TicketValidate = ({ nftId, urlImage }) => {
   const [qr, setQr] = useState("");
@@ -34,16 +35,21 @@ const TicketValidate = ({ nftId, urlImage }) => {
             />
           </div>
           <div className="flip-card-back">
-            <Image
-              src={urlImage}
-              alt="Ticket photo"
-              w="350px"
-              h="400px"
-              objectFit="cover"
-              rounded={40}
-              filter="blur(8px)"
-              tabIndex="0"
-            />
+            <div
+              className="img-container-back"
+              style={{ border: "3px solid " + colors.mainColor }}
+            >
+              <Image
+                src={urlImage}
+                alt="Ticket photo"
+                w="350px"
+                h="400px"
+                objectFit="cover"
+                rounded={40}
+                filter="blur(3px)"
+              />
+            </div>
+
             <Image
               src={qr}
               alt="Ticket QR"
