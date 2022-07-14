@@ -140,6 +140,7 @@ export const Event = () => {
                 variant="outline"
                 color={colors.mainColor}
                 w="100%"
+                mb={5}
               >
                 Validar entrada
               </Button>

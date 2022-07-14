@@ -1,7 +1,10 @@
 import {
   Box,
   Button,
+  Divider,
   Flex,
+  Grid,
+  GridItem,
   HStack,
   Image,
   Input,
@@ -10,21 +13,17 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
-import { BsClockFill } from "react-icons/bs";
-import { HiLocationMarker } from "react-icons/hi";
-import { Link, useParams } from "react-router-dom";
-import { DateCard } from "../../components/Cards/DateCard";
-import { Loading } from "../../components/Loading";
-import { Toolbar } from "../../components/Toolbar";
-import { colors } from "../../core/theme";
+import React, {useEffect, useState} from "react";
+import {BsClockFill} from "react-icons/bs";
+import {HiLocationMarker} from "react-icons/hi";
+import {Link, useParams} from "react-router-dom";
+import {DateCard} from "../../components/Cards/DateCard";
+import {Loading} from "../../components/Loading";
+import {Toolbar} from "../../components/Toolbar";
+import {colors} from "../../core/theme";
 import ModalCompraRealizada from "../../components/Modals/ModalCompraRealizada";
-import { useUser } from "../../providers/UserProvider";
-import {
-  comprar_ticket,
-  traer_evento,
-  traer_ticket,
-} from "../../services/Calls";
+import {useUser} from "../../providers/UserProvider";
+import {comprar_ticket, traer_evento, traer_ticket,} from "../../services/Calls";
 
 const TypeStyle = {
   fontSize: "14px",
@@ -39,9 +38,16 @@ const TitleStyle = {
 };
 
 const TicketTextStyle = {
-  fontSize: "20px",
+  fontSize: "14px",
   fontWeight: "bold",
-  margin: "20px",
+  margin: "10px 2px",
+  width: "100%",
+};
+
+const TicketTotalTextStyle = {
+  fontSize: "24px",
+  fontWeight: "bold",
+  margin: "10px 2px",
   width: "100%",
 };
 
@@ -59,7 +65,7 @@ export const Payment = () => {
   const [code, setCode] = useState("");
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { currentUser } = useUser();
+  const {currentUser} = useUser();
 
   useEffect(() => {
     async function fetchData() {
@@ -86,12 +92,12 @@ export const Payment = () => {
 
   return (
     <>
-      <Toolbar />
+      <Toolbar/>
       {isLoading ? (
-        <Loading />
+        <Loading/>
       ) : (
         event && (
-          <VStack py={5} spacing={5} style={{ overflowX: "hidden" }}>
+          <VStack py={5} spacing={5} style={{overflowX: "hidden"}}>
             <Box
               w="350px"
               rounded={16}
@@ -120,7 +126,7 @@ export const Payment = () => {
                         {event.title}
                       </Text>
                     </VStack>
-                    <Spacer />
+                    <Spacer/>
                     <DateCard
                       datetime={new Date(event.event_datetime)}
                       size="lg"
@@ -128,11 +134,11 @@ export const Payment = () => {
                   </Flex>
                   <HStack spacing={5} align="left" justifyContent="flex-start">
                     <HStack>
-                      <HiLocationMarker />
+                      <HiLocationMarker/>
                       <Text fontSize="sm">{event.location}</Text>
                     </HStack>
                     <HStack>
-                      <BsClockFill />
+                      <BsClockFill/>
                       <Text fontSize="sm">
                         {new Date(event?.event_datetime).toLocaleTimeString(
                           "en-GB",
@@ -144,13 +150,39 @@ export const Payment = () => {
                       </Text>
                     </HStack>
                   </HStack>
-                  <Text noOfLines={2} sx={TicketTextStyle}>
-                    {params.cant} Ticket{params.cant > 1 && "s"}: $
-                    {ticket.price} - {ticket.description}
-                  </Text>
-                  <Text noOfLines={2} sx={TicketTextStyle}>
-                    Total: ${ticket.price * params.cant}
-                  </Text>
+                  <Divider inset py={2}/>
+                  <Grid
+                    templateRows="repeat(1, 1fr)"
+                    templateColumns="repeat(5, 1fr)"
+                    key={ticket?.id + "grid"}
+                    justifyContent="center"
+                    my={2}
+                  >
+                    <GridItem colSpan={4}>
+                      <Text noOfLines={2} sx={TicketTextStyle}>
+                        {params.cant} x Ticket{params.cant > 1 && "s"} {ticket.description}
+                      </Text>
+                    </GridItem>
+                    <GridItem colSpan={1} my='auto'>
+                      <Text noOfLines={2} sx={TicketTextStyle} align="right">${ticket.price * params.cant}</Text>
+                    </GridItem>
+                    <GridItem colSpan={4}>
+                      <Text noOfLines={2} sx={TicketTextStyle}>Costo de servicio</Text>
+                    </GridItem>
+                    <GridItem colSpan={1} my='auto'>
+                      <Text noOfLines={2} sx={TicketTextStyle} align="right">
+                        ${(ticket.price * params.cant) * 0.1}
+                      </Text>
+                    </GridItem>
+                    <GridItem colSpan={4}>
+                      <Text noOfLines={2} sx={TicketTotalTextStyle}>Total</Text>
+                    </GridItem>
+                    <GridItem colSpan={1} my='auto'>
+                      <Text noOfLines={2} sx={TicketTotalTextStyle} align="right">
+                        ${(ticket.price * params.cant) + ((ticket.price * params.cant) * 0.1)}
+                      </Text>
+                    </GridItem>
+                  </Grid>
                 </VStack>
               </VStack>
             </Box>
@@ -177,7 +209,7 @@ export const Payment = () => {
                   bgColor={colors.backgroundComponent}
                   textColor="white"
                 >
-                  <option value="option1" style={{ color: "black" }}>
+                  <option value="option1" style={{color: "black"}}>
                     Tarjeta de débito/crédito
                   </option>
                 </Select>
