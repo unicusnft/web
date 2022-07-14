@@ -40,7 +40,7 @@ export const ValidateTicket = () => {
   };
 
   useEffect(() => {
-    if (data !== NO_RESULT) {
+    if (data !== NO_RESULT && data.includes("unicus")) {
       setAskForValidation(true);
     }
   }, [data]);
