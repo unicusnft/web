@@ -57,7 +57,7 @@ export const ValidateTicket = () => {
         style={{ width: "100%", height: "100%" }}
         constraints={{ facingMode: "environment" }}
       />
-      <VStack w="100%">
+      <VStack w="100%" marginTop={5}>
         <Link to={`/event/${eventId}`}>
           <Button
             colorScheme="main"
