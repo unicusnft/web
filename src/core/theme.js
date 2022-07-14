@@ -4,5 +4,7 @@ export const colors = {
   backgroundComponentSelected: "#656464",
   mainColor: "#8886FC",
   white: "#FFFFFF",
-  textSecondaryColor: "#A4A4A4"
+  textSecondaryColor: "#A4A4A4",
+  error: "red",
+  success: "#4ff753",
 };

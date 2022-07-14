@@ -1,4 +1,4 @@
-import {get, patch, post} from "./Api";
+import { get, makeRequest, post, patch } from "./Api";
 import {
   RESALE_NFT,
   TRAER_EVENTO_BY_ID,
@@ -16,23 +16,20 @@ export const traer_eventos = async () => {
 };
 
 export const traer_evento = async (event_id) => {
-  return await get(
-    TRAER_EVENTO_BY_ID.replace("{event_id}", event_id),
-    {}
-  );
+  return await get(TRAER_EVENTO_BY_ID.replace("{event_id}", event_id), {});
 };
 
 export const fetchEventsFromUser = async (ownerId) => {
-  return get(`event/owner/${ownerId}`)
-}
+  return get(`event/owner/${ownerId}`);
+};
 
 export const newEvent = async (payload) => {
-  return post('event', payload)
-}
+  return post("event", payload);
+};
 
 export const editEvent = async (id, payload) => {
-  return patch(`event/${id}`, payload)
-}
+  return patch(`event/${id}`, payload);
+};
 
 //users
 export const traer_usuarios = async () => {
@@ -55,10 +52,7 @@ export const comprar_ticket = async (user_id, ticket_id, cant = 1) => {
 };
 
 export const traer_ticket = async (ticket_id) => {
-  return await get(
-    TRAER_TICKET_BY_ID.replace("{ticket_id}", ticket_id),
-    {}
-  );
+  return await get(TRAER_TICKET_BY_ID.replace("{ticket_id}", ticket_id), {});
 };
 
 // nft
@@ -75,4 +69,8 @@ export const transferir_nft = async (nft_id, user_id) => {
 
 export const resaleTicket = async (nft_id) => {
   await post(RESALE_NFT.replace("{nft_id}", nft_id), {});
+};
+
+export const validateTicket = async (call) => {
+  return await makeRequest(() => fetch(call, { method: "POST" }));
 };

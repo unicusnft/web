@@ -1,12 +1,16 @@
-import {Center, CircularProgress} from "@chakra-ui/react";
-import {colors} from "../core/theme";
+import { Center, CircularProgress } from "@chakra-ui/react";
+import { colors } from "../core/theme";
 
-export const Loading = () => {
+export const Loading = ({ mt = 100, size = "100px" }) => {
   return (
     <>
-      <Center mt={100}>
-        <CircularProgress size='100px' isIndeterminate color={colors.mainColor}/>
+      <Center mt={mt}>
+        <CircularProgress
+          size={size}
+          isIndeterminate
+          color={colors.mainColor}
+        />
       </Center>
     </>
-  )
-}
+  );
+};
