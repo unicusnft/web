@@ -34,7 +34,7 @@ const ModalTicketResale = ({ isOpen, evento, nftId }) => {
               </Text>
               fue puesto en venta
             </Text>
-            <CheckIcon color="#50ff86" boxSize="4em" />
+            <CheckIcon color={colors.success} boxSize="4em" />
           </VStack>
         </ModalBody>
       </ModalContent>
