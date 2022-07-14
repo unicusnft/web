@@ -83,7 +83,7 @@ export const EventCardOrganizer = ({title, type, location, datetime, imgUrl, edi
           <HStack>
             <BsClockFill/>
             <Text
-              fontSize='sm'>{datetime.getHours()}:{String(datetime.getMinutes()).padStart(2, '0')}</Text>
+              fontSize='sm'>{datetime?.getHours()}:{String(datetime?.getMinutes())?.padStart(2, '0')}</Text>
           </HStack>
         </HStack>
       </Box>
