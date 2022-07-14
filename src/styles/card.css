@@ -31,6 +31,12 @@
     transform: rotateY(180deg);
 }
 
+.img-container-back {
+    border-radius: 40px;
+    width: 350px;
+    height: 400px;
+}
+
 #flipper{
     display: block;
     visibility: hidden;
