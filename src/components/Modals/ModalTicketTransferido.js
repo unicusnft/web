@@ -39,7 +39,7 @@ const ModalTicketTransferido = ({ isOpen, evento, user }) => {
               mt={5}
               padding={3}
               borderRadius={4}
-              border="1px solid #00FF5F"
+              border={`1px solid ` + colors.success}
             >
               <BoxUsuario {...user} isSuccess />
             </Flex>

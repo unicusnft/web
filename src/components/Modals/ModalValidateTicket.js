@@ -73,7 +73,7 @@ export const ModalValidateTicket = ({
                 variant="outline"
                 color={colors.mainColor}
                 onClick={onClose}
-                marginRight={2}
+                mr={2}
               >
                 Cancelar
               </Button>
@@ -83,7 +83,7 @@ export const ModalValidateTicket = ({
                 py={3}
                 px={8}
                 onClick={onValidation}
-                marginLeft={2}
+                ml={2}
               >
                 Validar entrada
               </Button>
