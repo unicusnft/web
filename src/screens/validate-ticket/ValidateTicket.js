@@ -40,6 +40,15 @@ export const ValidateTicket = () => {
   };
 
   useEffect(() => {
+    if (!askforValidation) {
+      setData(NO_RESULT);
+      setIsLoading(false);
+      setIsValidated(false);
+      setValidationError(false);
+    }
+  }, [askforValidation]);
+
+  useEffect(() => {
     if (data !== NO_RESULT && data.includes("unicus")) {
       setAskForValidation(true);
     }
@@ -54,10 +63,20 @@ export const ValidateTicket = () => {
             setData(result?.text);
           }
         }}
-        style={{ width: "100%", height: "100%" }}
+        style={{
+          width: "100%",
+          height: "100%",
+        }}
+        containerStyle={{
+          borderColor: colors.mainColor,
+          borderWidth: 1,
+          marginTop: 30,
+          marginLeft: 20,
+          marginRight: 20,
+        }}
         constraints={{ facingMode: "environment" }}
       />
-      <VStack w="100%" marginTop={5}>
+      <VStack w="100%" marginTop={10}>
         <Link to={`/event/${eventId}`}>
           <Button
             colorScheme="main"

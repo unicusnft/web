@@ -7,7 +7,7 @@ export const ValidationError = () => {
   return (
     <>
       <Center mt={10}>
-        <Icon as={WarningTwoIcon} color={colors.error} />
+        <Icon as={WarningTwoIcon} color={colors.error} boxSize={35} />
         <Text marginLeft={5}>No pudimos validar la entrada</Text>
       </Center>
     </>
