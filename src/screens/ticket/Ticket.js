@@ -1,15 +1,5 @@
 import {useParams} from "react-router-dom";
-import {
-  Box,
-  Button,
-  Center,
-  Divider,
-  HStack,
-  Image,
-  Text,
-  VStack,
-  useDisclosure,
-} from "@chakra-ui/react";
+import {Badge, Box, Button, Center, Divider, HStack, Image, Text, useDisclosure, VStack,} from "@chakra-ui/react";
 import facebook from "../../img/facebook.png";
 import instagram from "../../img/instagram.png";
 import tikTok from "../../img/tik_tok.png";
@@ -28,7 +18,10 @@ import {Loading} from "../../components/Loading";
 import ModalTransferir from "../../components/Modals/ModalTransferir";
 import ModalConfirmarTransferTicket from "../../components/Modals/ModalConfirmarTransferTicket";
 import ModalTicketTransferido from "../../components/Modals/ModalTicketTransferido";
-import {traer_nft} from "../../services/Calls";
+import ModalTicketResale from "../../components/Modals/ModalTicketResale";
+import {resaleTicket, traer_nft, traer_usuarios} from "../../services/Calls";
+import {useUser} from "../../providers/UserProvider";
+import TicketValidate from "../../components/Cards/TicketValidate";
 
 export const SocialMediaButton = ({img, alt}) => {
   return (
@@ -40,8 +33,16 @@ export const SocialMediaButton = ({img, alt}) => {
 
 export const Ticket = () => {
   let params = useParams();
+  const {currentUser} = useUser();
   const [loading, setLoading] = useState(true);
   const [ticket, setTicket] = useState(null);
+
+  const [users, setUsers] = useState([]);
+  const [transferUser, setTransferUser] = useState({});
+
+  const [datetime, setDatetime] = useState(null);
+
+  const [user] = useState(currentUser);
 
   const {
     isOpen: isOpenModalTransferir,
@@ -61,8 +62,11 @@ export const Ticket = () => {
     onClose: onCloseModalSuccessTransfer,
   } = useDisclosure();
 
-  const [transferUser, setTransferUser] = useState({});
-  const [datetime, setDatetime] = useState(null);
+  const {
+    isOpen: isOpenModalTicketRevendido,
+    onOpen: onOpenModalTicketRevendido,
+    onClose: onCloseModalTicketRevendido,
+  } = useDisclosure();
 
   useEffect(() => {
     const fetchNft = async () => {
@@ -76,6 +80,12 @@ export const Ticket = () => {
     });
   }, [params?.nftId]);
 
+  useEffect(() => {
+    traer_usuarios().then((res) => {
+      setUsers(res.filter((x) => x.id !== user.id));
+    });
+  }, [user.id]);
+
   return (
     <>
       <Toolbar/>
@@ -88,6 +98,7 @@ export const Ticket = () => {
             onClose={onCloseModalTransferir}
             onConfirmOpen={onOpenModalConfirmTransfer}
             setTransferUser={setTransferUser}
+            users={users}
           />
           <ModalConfirmarTransferTicket
             isOpen={isOpenModalConfirmTransfer}
@@ -96,12 +107,19 @@ export const Ticket = () => {
             evento={ticket?.event?.title}
             onConfirmOpen={onOpenModalSuccessTransfer}
             onCancelConfirm={onOpenModalTransferir}
+            nftId={ticket?.id}
           />
           <ModalTicketTransferido
             isOpen={isOpenModalSuccessTransfer}
             onClose={onCloseModalSuccessTransfer}
             user={transferUser}
             evento={ticket?.event.title}
+          />
+          <ModalTicketResale
+            isOpen={isOpenModalTicketRevendido}
+            onClose={onCloseModalTicketRevendido}
+            evento={ticket?.event.title}
+            nftId={ticket?.id}
           />
           <VStack py={5} spacing={5}>
             <div>
@@ -129,14 +147,18 @@ export const Ticket = () => {
               boxShadow="dark-xs"
               objectFit="cover"
             >
-              <Image
+              <TicketValidate
+                nftId={ticket?.id}
+                urlImage={ticket?.event.buy_image_1_url}
+              />
+              {/* <Image
                 src={ticket?.event.buy_image_1_url}
                 alt="Ticket photo"
                 w="350px"
                 h="400px"
                 objectFit="cover"
                 rounded={40}
-              />
+              /> */}
               <Center mb={5}>
                 <HStack spacing={0}>
                   <SocialMediaButton img={facebook} alt="facebook"/>
@@ -182,20 +204,45 @@ export const Ticket = () => {
                   las veces que quieras!
                 </Text>
                 <HStack>
-                  <Button colorScheme="main" size="xl" py={3} px={8}>
-                    Revender
-                  </Button>
-                  <Button
-                    colorScheme="main"
-                    size="xl"
-                    py={3}
-                    px={8}
-                    variant="outline"
-                    color={colors.mainColor}
-                    onClick={onOpenModalTransferir}
-                  >
-                    Transferir
-                  </Button>
+                  {ticket?.for_resale ? (
+                    <Badge
+                      variant="subtle"
+                      colorScheme="purple"
+                      fontSize="0.9em"
+                      borderRadius="6px"
+                      px={5}
+                      py={1}
+                    >
+                      En venta
+                    </Badge>
+                  ) : (
+                    <>
+                      <Button
+                        colorScheme="main"
+                        size="xl"
+                        py={3}
+                        px={8}
+                        onClick={(event) => {
+                          event.preventDefault();
+                          resaleTicket(ticket?.id);
+                          onOpenModalTicketRevendido();
+                        }}
+                      >
+                        Revender
+                      </Button>
+                      <Button
+                        colorScheme="main"
+                        size="xl"
+                        py={3}
+                        px={8}
+                        variant="outline"
+                        color={colors.mainColor}
+                        onClick={onOpenModalTransferir}
+                      >
+                        Transferir
+                      </Button>
+                    </>
+                  )}
                 </HStack>
               </VStack>
               <Divider inset my={6}/>
