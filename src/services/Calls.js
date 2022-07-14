@@ -17,6 +17,10 @@ export const traer_evento = async (event_id) => {
   return get(TRAER_EVENTO_BY_ID.replace("{event_id}", event_id), {});
 };
 
+export const fetchEventsFromUser = async (ownerId) =>  {
+  return get(`event/owner/${ownerId}`)
+}
+
 export const newEvent = async (payload) =>  {
   return post('event', payload)
 }

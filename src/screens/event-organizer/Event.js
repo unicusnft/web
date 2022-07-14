@@ -7,6 +7,7 @@ import {Link} from "react-router-dom";
 import {TicketsNFT} from "../../components/TicketsNFT";
 import {BarChartTicketSupply} from "../../components/BarChartTicketSupply";
 import {traer_evento} from "../../services/Calls";
+import {Loading} from "../../components/Loading";
 
 const TicketsTitleStyle = {
   fontSize: "22px",
@@ -32,15 +33,14 @@ const TicketCategoryStyle = {
 export const Event = () => {
   const {eventId} = useParams()
   const [event, setEvent] = useState({})
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const fetchEvent = async () => {
-      return await traer_evento(eventId).then((res) => {
-        setEvent(res);
-      });
+      return await traer_evento(eventId).then((res) => setEvent(res))
     }
 
-    fetchEvent()
+    fetchEvent().then(() => setLoading(false))
   }, [eventId])
 
   const getTotalCollected = () => {
@@ -58,62 +58,66 @@ export const Event = () => {
   return (
     <>
       <Toolbar/>
-      <VStack justifyContent="center" mt={4} px={3} style={{overflowX: 'hidden'}}>
-        <Center marginRight={['-52px', '-130px', '-182px']}>
-          <TicketsNFT img1={event?.buy_image_1_url} img2={event?.buy_image_2_url}/>
-        </Center>
-        <Link to={`/event-form/${event?.id}`}>
-          <EventCardOrganizer
-            id={event?.id}
-            title={event?.title}
-            type={event?.event_type}
-            location={event?.location}
-            datetime={new Date(event?.event_datetime)}
-            imgUrl={event?.event_image_url}
-            edit
-          />
-        </Link>
-        <Box className="text-left" w='358px'>
-          <div style={TicketsTitleStyle}>Tickets vendidos</div>
-          <Box>
-            {event?.tickets?.map((ticket) => (
-              <Grid
-                templateRows='repeat(1, 1fr)'
-                templateColumns='repeat(5, 1fr)'
-                key={ticket?.id + 'grid'}
-                justifyContent="center"
-                my={3}
-              >
-                <GridItem colSpan={1} key={ticket?.id + 'name'}>
-                  <Text
-                    style={TicketCategoryStyle}
-                    maxWidth='60px'
-                    noOfLines={1}
-                  >
-                    {ticket?.description}
-                  </Text>
-                </GridItem>
-                <GridItem colSpan={4} key={ticket?.id + 'chart'}>
-                  <BarChartTicketSupply
-                    height={35}
-                    maxWidth={280}
-                    current={ticket?.total_supply - ticket?.remaining_supply}
-                    total={ticket?.total_supply}
-                  />
-                </GridItem>
-              </Grid>
-            ))}
-          </Box>
-          <div style={TotalStyle}>
-            Total Recaudado: {getTotalCollected()}
-          </div>
+      {loading ? (
+        <Loading/>
+      ) : (
+        <VStack justifyContent="center" mt={4} px={3} style={{overflowX: 'hidden'}}>
+          <Center marginRight={['-52px', '-130px', '-182px']}>
+            <TicketsNFT img1={event?.buy_image_1_url} img2={event?.buy_image_2_url}/>
+          </Center>
           <Link to={`/event-form/${event?.id}`}>
-            <Button colorScheme="main" w='100%' my={5}>
-              Editar evento
-            </Button>
+            <EventCardOrganizer
+              id={event?.id}
+              title={event?.title}
+              type={event?.event_type}
+              location={event?.location}
+              datetime={new Date(event?.event_datetime)}
+              imgUrl={event?.event_image_url}
+              edit
+            />
           </Link>
-        </Box>
-      </VStack>
+          <Box className="text-left" w='358px'>
+            <div style={TicketsTitleStyle}>Tickets vendidos</div>
+            <Box>
+              {event?.tickets?.map((ticket) => (
+                <Grid
+                  templateRows='repeat(1, 1fr)'
+                  templateColumns='repeat(5, 1fr)'
+                  key={ticket?.id + 'grid'}
+                  justifyContent="center"
+                  my={3}
+                >
+                  <GridItem colSpan={1} key={ticket?.id + 'name'}>
+                    <Text
+                      style={TicketCategoryStyle}
+                      maxWidth='60px'
+                      noOfLines={1}
+                    >
+                      {ticket?.description}
+                    </Text>
+                  </GridItem>
+                  <GridItem colSpan={4} key={ticket?.id + 'chart'}>
+                    <BarChartTicketSupply
+                      height={35}
+                      maxWidth={280}
+                      current={ticket?.total_supply - ticket?.remaining_supply}
+                      total={ticket?.total_supply}
+                    />
+                  </GridItem>
+                </Grid>
+              ))}
+            </Box>
+            <div style={TotalStyle}>
+              Total Recaudado: {getTotalCollected()}
+            </div>
+            <Link to={`/event-form/${event?.id}`}>
+              <Button colorScheme="main" w='100%' my={5}>
+                Editar evento
+              </Button>
+            </Link>
+          </Box>
+        </VStack>
+      )}
     </>
   )
 }

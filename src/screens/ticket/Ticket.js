@@ -105,14 +105,17 @@ export const Ticket = () => {
           />
           <VStack py={5} spacing={5}>
             <div>
-              <Text fontSize="xl" sx={{fontWeight: 600}}>
-                Ticket para
-              </Text>
+              <Center>
+                <Text fontSize="xl" sx={{fontWeight: 600}}>
+                  Ticket para
+                </Text>
+              </Center>
               <Center>
                 <Text
                   fontSize="4xl"
-                  sx={{fontWeight: 700}}
+                  sx={{fontWeight: 700, textAlign: 'center'}}
                   color={colors.mainColor}
+                  maxW={'300px'}
                 >
                   {ticket?.event.title}
                 </Text>
@@ -214,7 +217,7 @@ export const Ticket = () => {
                       index + 1 === ticket?.transactions?.length ? 20 : 2
                     }
                     py={4}
-                    key={h?.type + h?.date}
+                    key={`${h?.type} ${index}`}
                   >
                     <HStack spacing={0} mx={8}>
                       {h.transaction_type === "VENDIDO" && (
