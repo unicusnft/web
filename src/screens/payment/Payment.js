@@ -10,16 +10,16 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import React, {useEffect, useState} from "react";
-import {BsClockFill} from "react-icons/bs";
-import {HiLocationMarker} from "react-icons/hi";
-import {Link, useParams} from "react-router-dom";
-import {DateCard} from "../../components/Cards/DateCard";
-import {Loading} from "../../components/Loading";
-import {Toolbar} from "../../components/Toolbar";
-import {colors} from "../../core/theme";
+import React, { useEffect, useState } from "react";
+import { BsClockFill } from "react-icons/bs";
+import { HiLocationMarker } from "react-icons/hi";
+import { Link, useParams } from "react-router-dom";
+import { DateCard } from "../../components/Cards/DateCard";
+import { Loading } from "../../components/Loading";
+import { Toolbar } from "../../components/Toolbar";
+import { colors } from "../../core/theme";
 import ModalCompraRealizada from "../../components/Modals/ModalCompraRealizada";
-import {useUser} from "../../providers/UserProvider";
+import { useUser } from "../../providers/UserProvider";
 import {
   comprar_ticket,
   traer_evento,
@@ -50,6 +50,7 @@ export const Payment = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [event, setEvent] = useState(undefined);
   const [ticket, setTicket] = useState(undefined);
+  const [cant, setCant] = useState(1);
   const [id, setId] = useState(undefined);
   const [isCreditCardSelected, setIsCreditCardSelected] = useState(false);
   const [creditCardNumber, setCreditCardNumber] = useState("");
@@ -58,11 +59,12 @@ export const Payment = () => {
   const [code, setCode] = useState("");
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const {currentUser} = useUser();
+  const { currentUser } = useUser();
 
   useEffect(() => {
     async function fetchData() {
       setIsLoading(true);
+      setCant(params?.cant);
       await traer_evento(params?.eventId).then((res) => {
         setEvent(res);
       });
@@ -73,23 +75,23 @@ export const Payment = () => {
     }
 
     fetchData();
-  }, [params?.eventId, params?.ticketId]);
+  }, [params?.eventId, params?.ticketId, params?.cant]);
 
   const buyTicket = async () => {
     console.log(creditCardNumber, owner, dueDate, code);
-    await comprar_ticket(currentUser?.id, ticket.id).then((res) => {
+    await comprar_ticket(currentUser?.id, ticket.id, cant).then((res) => {
       setId(res.id);
     });
   };
 
   return (
     <>
-      <Toolbar/>
+      <Toolbar />
       {isLoading ? (
-        <Loading/>
+        <Loading />
       ) : (
         event && (
-          <VStack py={5} spacing={5} style={{overflowX: "hidden"}}>
+          <VStack py={5} spacing={5} style={{ overflowX: "hidden" }}>
             <Box
               w="350px"
               rounded={16}
@@ -118,7 +120,7 @@ export const Payment = () => {
                         {event.title}
                       </Text>
                     </VStack>
-                    <Spacer/>
+                    <Spacer />
                     <DateCard
                       datetime={new Date(event.event_datetime)}
                       size="lg"
@@ -126,11 +128,11 @@ export const Payment = () => {
                   </Flex>
                   <HStack spacing={5} align="left" justifyContent="flex-start">
                     <HStack>
-                      <HiLocationMarker/>
+                      <HiLocationMarker />
                       <Text fontSize="sm">{event.location}</Text>
                     </HStack>
                     <HStack>
-                      <BsClockFill/>
+                      <BsClockFill />
                       <Text fontSize="sm">
                         {new Date(event?.event_datetime).toLocaleTimeString(
                           "en-GB",
@@ -175,7 +177,7 @@ export const Payment = () => {
                   bgColor={colors.backgroundComponent}
                   textColor="white"
                 >
-                  <option value="option1" style={{color: "black"}}>
+                  <option value="option1" style={{ color: "black" }}>
                     Tarjeta de débito/crédito
                   </option>
                 </Select>

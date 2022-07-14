@@ -1,10 +1,13 @@
 import React, {useEffect, useState} from "react";
 import {Box, Button, HStack, Image, Input, Select, Stack, Text, VStack} from "@chakra-ui/react";
 import {Toolbar} from "../../components/Toolbar";
-import {useParams} from "react-router";
-import {newEvent} from "../../data/new-event";
-import {AiOutlinePlus} from "react-icons/ai";
+import {useNavigate, useParams} from "react-router";
 import {colors} from "../../core/theme";
+import FileUpload from "../../components/FileUpload";
+import {objectHasEmptyAttrs} from "../../utils/helpers";
+import {editEvent, newEvent, traer_evento} from "../../services/Calls";
+import {useUser} from "../../providers/UserProvider";
+import {Loading} from "../../components/Loading";
 
 const TitlePageStyle = {
   fontSize: "25px",
@@ -33,7 +36,7 @@ const InputStyle = {
   fontSize: '15px'
 };
 
-const ImageWithButton = ({width, height, img, buttonTitle, onClick}) => {
+const ImageWithButton = ({width, height, img, buttonTitle, onChange}) => {
   return (
     <Box
       position='relative'
@@ -67,22 +70,13 @@ const ImageWithButton = ({width, height, img, buttonTitle, onClick}) => {
         transform='translate(-50%, -50%)'
         zIndex={1}
       >
-        <Button
-          onClick={onClick}
-          colorScheme='main'
-          aria-label='Ver carrito'
-          size='xs'
-          shadow='md'
-          icon={<AiOutlinePlus color='black' size="22" mr={1}/>}
-        >
-          {buttonTitle}
-        </Button>
+        <FileUpload buttonTitle={buttonTitle} onChange={onChange}/>
       </Box>
     </Box>
   )
 }
 
-const TicketForm = ({ticket}) => {
+const TicketForm = ({ticket, index, onChangeEventTicket}) => {
   return (
     <HStack justifyContent='space-between'>
       <div>
@@ -92,7 +86,8 @@ const TicketForm = ({ticket}) => {
           id='ticket-name'
           type='text'
           placeholder='Nombre'
-          defaultValue={ticket?.category}
+          defaultValue={ticket?.description}
+          onChange={(e) => onChangeEventTicket(index, "description", e.target.value)}
           _focus={InputFocusStyle}
           style={InputStyle}
         />
@@ -105,6 +100,7 @@ const TicketForm = ({ticket}) => {
           type='ticket-price'
           placeholder='ARS'
           defaultValue={ticket?.price}
+          onChange={(e) => onChangeEventTicket(index, "price", parseInt(e.target.value))}
           _focus={InputFocusStyle}
           style={InputStyle}
         />
@@ -117,6 +113,7 @@ const TicketForm = ({ticket}) => {
           type='number'
           placeholder='Cantidad'
           defaultValue={ticket?.total_supply}
+          onChange={(e) => onChangeEventTicket(index, "total_supply", parseInt(e.target.value))}
           _focus={InputFocusStyle}
           style={InputStyle}
         />
@@ -126,20 +123,21 @@ const TicketForm = ({ticket}) => {
 }
 
 const defaultTicket = {
-  category: "",
+  description: "",
   price: '',
   total_supply: ''
 }
 
 export const EventForm = () => {
   const {eventId} = useParams()
-  // const navigate = useNavigate()
+  const navigate = useNavigate()
+  const {currentUser} = useUser()
+  const [loading, setLoading] = useState(false)
   const [event, setEvent] = useState({
     title: "",
     event_type: "",
     location: "",
     event_datetime: "",
-    description: "",
     event_image_url: "",
     ticket_image_url: "",
     buy_image_1_url: "",
@@ -149,141 +147,179 @@ export const EventForm = () => {
 
   useEffect(() => {
     const fetchEvent = async () => {
-      return newEvent
+      return await traer_evento(eventId).then((res) => setEvent(res))
     }
 
     if (eventId) {
-      fetchEvent().then((e) => {
-        setEvent(e)
-      })
+      setLoading(true)
+      fetchEvent().then(() => setLoading(false))
     }
   }, [eventId])
+
+  const onChangeEvent = (key, value) => {
+    setEvent(event => ({...event, [key]: value}))
+  }
+
+  const onChangeEventTicket = (index, key, value) => {
+    setEvent(event => ({
+      ...event,
+      tickets: [
+        ...event?.tickets?.slice(0, index),
+        ({...event?.tickets?.[index], [key]: value}),
+        ...event?.tickets?.slice(index + 1, event?.tickets?.length)
+      ]
+    }))
+  }
+
+  const submitForm = async () => {
+    if (!eventId) {
+      await newEvent({...event, owner_id: currentUser?.id}).then(res => navigate(`/event/${res?.id}`))
+    } else {
+      await editEvent(eventId, {
+        ...event, tickets: event?.tickets?.map(t => {
+          delete t.id
+          return t
+        })
+      }).then(res => navigate(`/event/${res?.id}`))
+    }
+  }
+
+  const keys = ['title', 'event_type', 'location', 'event_datetime', 'event_image_url', 'ticket_image_url',
+    'buy_image_1_url', 'buy_image_2_url', 'tickets', 'price', 'total_supply']
+  const disableSubmitButton = objectHasEmptyAttrs(event, keys)
 
   return (
     <>
       <Toolbar/>
-      <VStack pb={5} spacing={5}>
-        <Box backgroundColor="#121212">
-          <Stack alignItems="center">
-            <Text sx={TitlePageStyle}>{eventId ? 'Editar ' + event?.title : 'Crear un evento'}</Text>
-          </Stack>
-          <Box mb={8}>
-            <ImageWithButton
-              width={330}
-              height={400}
-              img={event?.ticket_image_url}
-              buttonTitle={eventId ? 'Cambiar imagen del NFT' : 'Subir imagen del NFT'}
-              onClick={eventId ? () => console.log('edit') : () => console.log('edit')}
-            />
-          </Box>
-          <div>
-            <Text sx={FormTitleStyle}>Nombre del evento</Text>
-            <Input
-              id='full-name'
-              type='text'
-              placeholder='Ingrese nombre del evento'
-              defaultValue={event?.title}
-              _focus={InputFocusStyle}
-              style={InputStyle}
-            />
-          </div>
-          <div>
-            <Text sx={FormTitleStyle}>Lugar</Text>
-            <Input
-              id='location'
-              type='text'
-              placeholder='Ingrese lugar del evento'
-              defaultValue={event?.location}
-              _focus={InputFocusStyle}
-              style={InputStyle}
-            />
-          </div>
-          <div>
-            <Text sx={FormTitleStyle}>Fecha y hora</Text>
-            <Input
-              id='date'
-              type='datetime-local'
-              placeholder='Seleccione fecha y hora'
-              defaultValue={
-                event?.event_datetime
-                  ? (new Date(event?.event_datetime)).toISOString().slice(0, -8)
-                  : ''
-              }
-              _focus={InputFocusStyle}
-              style={InputStyle}
-              color="#ffffff"
-            />
-          </div>
-          <div>
-            <Text sx={FormTitleStyle}>Categoría</Text>
-            <Select
-              placeholder='Seleccione una categoría'
-              colorMode='dark'
-              style={InputStyle}
-              value={event?.event_type}
-              onChange={(e) => console.log(e)}
-            >
-              <option value='Fiesta'>Fiesta</option>
-              <option value='Deporte'>Deporte</option>
-              <option value='Musica'>Música</option>
-            </Select>
-          </div>
-          <Box mb="18px" mt='30px'>
-            <ImageWithButton
-              width={330}
-              height={140}
-              img={event?.event_image_url}
-              buttonTitle={eventId ? 'Cambiar flyer' : 'Subir flyer'}
-              onClick={eventId ? () => console.log('edit') : () => console.log('edit')}
-            />
-          </Box>
-          <HStack gap="15px" justifyContent='center'>
-            <ImageWithButton
-              width={150}
-              height={200}
-              img={event?.buy_image_1_url}
-              buttonTitle={eventId ? 'Cambiar foto 1' : 'Subir foto 1'}
-              onClick={eventId ? () => console.log('edit') : () => console.log('edit')}
-            />
-            <ImageWithButton
-              width={150}
-              height={200}
-              img={event?.buy_image_2_url}
-              buttonTitle={eventId ? 'Cambiar foto 2' : 'Subir foto 2'}
-              onClick={eventId ? () => console.log('edit') : () => console.log('edit')}
-            />
-          </HStack>
-          <Box w='100%'>
-            <Text sx={TicketsTitleStyle} align='left'>Tipos de ticket</Text>
-            {event?.tickets.map((ticket, index) => (
-              <TicketForm key={index} ticket={ticket}/>
-            ))}
-            <HStack my={5}>
-              <Button
-                colorScheme="gray"
-                color='black'
-                w={'100%'}
-                size='xs'
-                disabled={event?.tickets?.length <= 1}
-                onClick={() => setEvent(e => ({...e, tickets: [...e.tickets.slice(0, -1)]}))}
+      {loading ? (
+        <Loading/>
+      ) : (
+        <VStack pb={5} spacing={5}>
+          <Box backgroundColor="#121212">
+            <Stack alignItems="center" maxW={'338px'}>
+              <Text sx={TitlePageStyle}>{eventId ? 'Editar ' + event?.title : 'Crear un evento'}</Text>
+            </Stack>
+            <Box mb={8}>
+              <ImageWithButton
+                width={330}
+                height={400}
+                img={event?.ticket_image_url}
+                buttonTitle={eventId ? 'Cambiar imagen del NFT' : 'Subir imagen del NFT'}
+                onChange={(value) => onChangeEvent('ticket_image_url', value)}
+              />
+            </Box>
+            <div>
+              <Text sx={FormTitleStyle}>Nombre del evento</Text>
+              <Input
+                id='title'
+                type='text'
+                placeholder='Ingrese nombre del evento'
+                defaultValue={event?.title}
+                onChange={(e) => onChangeEvent("title", e.target.value)}
+                _focus={InputFocusStyle}
+                style={InputStyle}
+              />
+            </div>
+            <div>
+              <Text sx={FormTitleStyle}>Lugar</Text>
+              <Input
+                id='location'
+                type='text'
+                placeholder='Ingrese lugar del evento'
+                defaultValue={event?.location}
+                onChange={(e) => onChangeEvent("location", e.target.value)}
+                _focus={InputFocusStyle}
+                style={InputStyle}
+              />
+            </div>
+            <div>
+              <Text sx={FormTitleStyle}>Fecha y hora</Text>
+              <Input
+                id='date'
+                type='datetime-local'
+                placeholder='Seleccione fecha y hora'
+                defaultValue={
+                  event?.event_datetime
+                    ? (new Date(event?.event_datetime)).toISOString().slice(0, -8)
+                    : ''
+                }
+                onChange={(e) => onChangeEvent("event_datetime", e.target.value)}
+                _focus={InputFocusStyle}
+                style={InputStyle}
+                color="#ffffff"
+              />
+            </div>
+            <div>
+              <Text sx={FormTitleStyle}>Categoría</Text>
+              <Select
+                placeholder='Seleccione una categoría'
+                colorMode='dark'
+                style={InputStyle}
+                value={event?.event_type}
+                onChange={(e) => onChangeEvent("event_type", e.target.value)}
               >
-                Quitar
-              </Button>
-              <Button
-                colorScheme="main"
-                w={'100%'}
-                size='xs'
-                onClick={() => setEvent(e => ({...e, tickets: [...e.tickets, defaultTicket]}))}
-              >
-                Agregar
-              </Button>
+                <option value='Fiesta'>Fiesta</option>
+                <option value='Deporte'>Deporte</option>
+                <option value='Musica'>Música</option>
+              </Select>
+            </div>
+            <Box mb="18px" mt='30px'>
+              <ImageWithButton
+                width={330}
+                height={140}
+                img={event?.event_image_url}
+                buttonTitle={eventId ? 'Cambiar flyer' : 'Subir flyer'}
+                onChange={(value) => onChangeEvent('event_image_url', value)}
+              />
+            </Box>
+            <HStack gap="15px" justifyContent='center'>
+              <ImageWithButton
+                width={150}
+                height={200}
+                img={event?.buy_image_1_url}
+                buttonTitle={eventId ? 'Cambiar foto 1' : 'Subir foto 1'}
+                onChange={(value) => onChangeEvent('buy_image_1_url', value)}
+              />
+              <ImageWithButton
+                width={150}
+                height={200}
+                img={event?.buy_image_2_url}
+                buttonTitle={eventId ? 'Cambiar foto 2' : 'Subir foto 2'}
+                onChange={(value) => onChangeEvent('buy_image_2_url', value)}
+              />
             </HStack>
+            <Box w='100%'>
+              <Text sx={TicketsTitleStyle} align='left'>Tipos de ticket</Text>
+              {event?.tickets.map((ticket, index) => (
+                <TicketForm key={index} ticket={ticket} index={index} onChangeEventTicket={onChangeEventTicket}/>
+              ))}
+              <HStack my={5}>
+                <Button
+                  colorScheme="gray"
+                  color='black'
+                  w={'100%'}
+                  size='xs'
+                  disabled={event?.tickets?.length <= 1}
+                  onClick={() => setEvent(e => ({...e, tickets: [...e.tickets.slice(0, -1)]}))}
+                >
+                  Quitar
+                </Button>
+                <Button
+                  colorScheme="main"
+                  w={'100%'}
+                  size='xs'
+                  onClick={() => setEvent(e => ({...e, tickets: [...e.tickets, defaultTicket]}))}
+                >
+                  Agregar
+                </Button>
+              </HStack>
+            </Box>
+            <Button colorScheme="main" w={'100%'} mt={5} onClick={submitForm} disabled={disableSubmitButton}>
+              Guardar cambios
+            </Button>
           </Box>
-          <Button colorScheme="main" w={'100%'} mt={5}>
-            Guardar cambios
-          </Button>
-        </Box>
-      </VStack>
+        </VStack>
+      )}
     </>
-  );
-};
+  )
+}
