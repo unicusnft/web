@@ -1,4 +1,4 @@
-import { get, post } from "./Api";
+import { get, makeRequest, post } from "./Api";
 import {
   TRAER_EVENTOS,
   TRAER_USERS,
@@ -8,6 +8,7 @@ import {
   TRAER_NFT_BY_ID,
   TRANSFER_NFT,
   RESALE_NFT,
+  VALIDATE_NFT,
 } from "./Utils";
 
 // eventos
@@ -71,4 +72,8 @@ export const transferir_nft = async (nft_id, user_id) => {
 
 export const resaleTicket = async (nft_id) => {
   await post(RESALE_NFT.replace("{nft_id}", nft_id), {});
+};
+
+export const validateTicket = async (call) => {
+  return await makeRequest(() => fetch(call, { method: "POST" }));
 };

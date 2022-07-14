@@ -128,17 +128,19 @@ export const Event = () => {
               Editar evento
             </Button>
           </Link>
-          <Button
-            colorScheme="main"
-            size="xl"
-            py={3}
-            px={10}
-            variant="outline"
-            color={colors.mainColor}
-            w="100%"
-          >
-            Validar entrada
-          </Button>
+          <Link to={`/event/${event?.id}/validate-ticket`}>
+            <Button
+              colorScheme="main"
+              size="xl"
+              py={3}
+              px={10}
+              variant="outline"
+              color={colors.mainColor}
+              w="100%"
+            >
+              Validar entrada
+            </Button>
+          </Link>
         </Box>
       </VStack>
     </>
