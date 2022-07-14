@@ -31,6 +31,7 @@ const ModalConfirmarTransferTicket = ({
       onClose={onClose}
       size="md"
       isOpen={isOpen}
+      isCentered
     >
       <ModalOverlay />
       <ModalContent backgroundColor={colors.backgroundComponent}>

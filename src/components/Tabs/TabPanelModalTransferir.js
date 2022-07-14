@@ -52,6 +52,7 @@ const TabPanelModalTransferir = ({
             onClick={handleSearch}
             leftIcon={<SearchIcon/>}
             color={colors.mainColor}
+            mr={1}
           >
             Buscar
           </Button>
