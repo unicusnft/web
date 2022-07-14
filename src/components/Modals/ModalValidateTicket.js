@@ -45,9 +45,17 @@ export const ModalValidateTicket = ({
           disabled={isLoading}
         />
         <ModalBody>
-          <Text fontSize="sm" textAlign="center">
-            ¿Desea validar la entrada escaneada?
-          </Text>
+          {!isLoading && !isValidated && !validationError ? (
+            <Text fontSize="sm" textAlign="center">
+              ¿Desea validar la entrada escaneada?
+            </Text>
+          ) : (
+            isLoading && (
+              <Text fontSize="sm" textAlign="center">
+                Validando entrada...
+              </Text>
+            )
+          )}
         </ModalBody>
         <ModalFooter justifyContent="center">
           {isLoading ? (
