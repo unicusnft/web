@@ -27,7 +27,7 @@ export const HomeScreenOrganizer = () => {
     }
 
     fetchEvents().then(() => setLoading(false))
-  }, [])
+  }, [currentUser?.id])
 
   return (
     <>
